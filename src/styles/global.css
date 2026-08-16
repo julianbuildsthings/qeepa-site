@@ -4,18 +4,79 @@
 
 @import "shadcn/tailwind.css";
 
-@import "@fontsource-variable/inter";
+/* ---- Self-hosted brand fonts: Satoshi (UI) + Erode (display serif) ----
+   .woff2 files live in /public/fonts/. */
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Variable.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Italic-Variable.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Erode";
+  src: url("/fonts/Erode-300.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Erode";
+  src: url("/fonts/Erode-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Erode";
+  src: url("/fonts/Erode-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Erode";
+  src: url("/fonts/Erode-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Erode";
+  src: url("/fonts/Erode-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
 
 @custom-variant dark (&:is(.dark *));
 @custom-variant fixed (&:is(.layout-fixed *));
 
 @theme inline {
   --breakpoint-3xl: 1600px;
-  --font-sans: "Inter Variable", sans-serif;
+
+  /* ---- Fonts: Satoshi (UI) + Erode (display) ---- */
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* ---- Radius scale ---- */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* ---- shadcn semantic tokens ---- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -31,9 +92,31 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* ---- Brand colours (usable directly, e.g. text-peach-dark, bg-surface-2) ---- */
+  --color-peach-dark: var(--peach-dark);
+  --color-peach-light: var(--peach-light);
+  --color-blue-light: var(--blue-light);
+  --color-blue-dark: var(--blue-dark);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-surface-2: var(--surface-2);
+  --color-border-strong: var(--border-strong);
+
+  /* ---- Track colours (RAW → JPG → AFPHOTO) ---- */
+  --color-raw: var(--raw);
+  --color-raw-bg: var(--raw-bg);
+  --color-jpg: var(--jpg);
+  --color-jpg-bg: var(--jpg-bg);
+  --color-af: var(--af);
+  --color-af-bg: var(--af-bg);
+
+  /* ---- Charts + sidebar ---- */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -47,87 +130,119 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ---- Template extras (surface/selection) ---- */
   --color-surface: var(--surface);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
   --color-selection: var(--selection);
   --color-selection-foreground: var(--selection-foreground);
 }
 
 :root {
+  /* ---- Raw brand tokens ---- */
+  --cream-base: #ffffff;
+  --neutral-surface: #fffaf6;
+  --neutral-border: #e7e3dc;
+  --peach-light: #fdecd9;
+  --peach-accent: #fcba7f;
+  --peach-dark: #6f3b0f;
+  --surface-2: #f6f1ea;
+  --border-strong: #d8d2c8;
+  --blue-light: #e2e6e8;
+  --blue-dark: #6d7880;
+  --text-primary: #2b2621;
+  --text-secondary: #6b645a;
+  --text-tertiary: #9d958a;
+
+  /* ---- Track colours ---- */
+  --raw: #c8752a;
+  --raw-bg: #fbeedf;
+  --jpg: #2f6ea8;
+  --jpg-bg: #e6eff7;
+  --af: #6b4fa8;
+  --af-bg: #ede8f7;
+
+  /* ---- shadcn semantic tokens (mapped onto the brand) ---- */
+  --background: var(--cream-base);
+  --foreground: var(--text-primary);
+  --card: var(--neutral-surface);
+  --card-foreground: var(--text-primary);
+  --popover: var(--neutral-surface);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--peach-accent);
+  --primary-foreground: var(--text-primary);
+  --secondary: var(--neutral-surface);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--neutral-surface);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--peach-light);
+  --accent-foreground: var(--peach-dark);
+  --destructive: #b4432e;
+  --destructive-foreground: var(--cream-base);
+  --border: var(--neutral-border);
+  --input: var(--border-strong);
+  --ring: var(--peach-accent);
+
+  --chart-1: var(--peach-accent);
+  --chart-2: var(--peach-dark);
+  --chart-3: var(--blue-dark);
+  --chart-4: var(--peach-accent);
+  --chart-5: var(--text-secondary);
+
+  --sidebar: var(--neutral-surface);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--peach-accent);
+  --sidebar-primary-foreground: var(--text-primary);
+  --sidebar-accent: var(--peach-light);
+  --sidebar-accent-foreground: var(--peach-dark);
+  --sidebar-border: var(--neutral-border);
+  --sidebar-ring: var(--peach-accent);
+
   --radius: 0.625rem;
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.58 0.22 27);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --surface: oklch(0.98 0 0);
-  --selection: oklch(0.145 0 0);
-  --selection-foreground: oklch(1 0 0);
+
+  --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Erode", ui-serif, Georgia, serif;
+
+  /* ---- Template extras (kept for the base-vega utilities/components) ---- */
+  --surface: var(--surface-2);
+  --selection: var(--peach-light);
+  --selection-foreground: var(--peach-dark);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.87 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.371 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-  --surface: oklch(0.2 0 0);
-  --selection: oklch(0.922 0 0);
-  --selection-foreground: oklch(0.205 0 0);
+  /* ---- Raw brand tokens (Espresso) ---- */
+  --cream-base: #14100d;
+  --neutral-surface: #1c1612;
+  --neutral-border: #352a21;
+  --peach-light: #2e1f13;
+  --peach-accent: #ffc289;
+  --peach-dark: #ffd0a8;
+  --surface-2: #241c17;
+  --border-strong: #46392e;
+  --blue-light: #1a1f26;
+  --blue-dark: #8b959e;
+  --text-primary: #f5efe7;
+  --text-secondary: #c1b6a7;
+  --text-tertiary: #877b6c;
+
+  /* ---- Track colours ---- */
+  --raw: #e09a4f;
+  --raw-bg: #302514;
+  --jpg: #5b9bd5;
+  --jpg-bg: #18212d;
+  --af: #a98fd9;
+  --af-bg: #1e182b;
+
+  /* ---- shadcn semantic overrides (non-cascading) ---- */
+  --background: #000000;
+  --primary-foreground: #2b2621;
+  --destructive: #d96b52;
+  --destructive-foreground: #ffffff;
+  --sidebar-primary-foreground: #2b2621;
+
+  /* ---- Template extras ---- */
+  --surface: var(--surface-2);
+  --selection: var(--peach-light);
+  --selection-foreground: var(--peach-dark);
 }
 
 @layer base {

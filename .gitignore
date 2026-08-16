@@ -6,6 +6,12 @@ dist/
 # dependencies
 node_modules/
 
+# wrangler generated deploy config
+.wrangler/
+
+# pnpm local store (sandbox/CI)
+.pnpm-store/
+
 # logs
 npm-debug.log*
 yarn-debug.log*
@@ -20,3 +26,6 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 dev_server.log
+
+# agent workspace metadata
+.reasonix/
