@@ -84,8 +84,9 @@ pnpm deploy   # requires `wrangler login` (or CLOUDFLARE_API_TOKEN)
 
 ### Before going live
 
-- Set `SITE` in Cloudflare (see above) **and** fill in `siteConfig.url` in
-  `src/lib/config.ts`.
+- Confirm `SITE` is set in the Cloudflare build environment (see above). It is
+  read at **build** time, so a canonical/OG URL of `http://localhost:4321` in
+  production means `SITE` was missing when the build ran.
 - Remove the `noindex, nofollow` meta tag in `src/components/HeadSEO.astro`
   once the site should be indexed.
 

@@ -5,16 +5,29 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
 // Canonical site URL, used for <link rel="canonical"> and Open Graph tags.
-// Set SITE in the Cloudflare build environment (Workers Builds → Settings →
-// Environment variables), e.g. SITE=https://qeepa.com. Falls back to localhost
-// so local `astro dev` / `astro build` keep working.
+// Resolved at BUILD time, so it must be set in the build environment — a runtime
+// variable won't help. Set SITE in the Cloudflare build environment (Workers
+// Builds → Settings → Environment variables), e.g. SITE=https://qeepa.com.
 const site = process.env.SITE ?? "http://localhost:4321";
-const base = process.env.BASE || "/";
 
+// Warn only during a real deploy build (Cloudflare sets WORKERS_CI / CF_PAGES),
+// so local `astro dev` / `astro build` stay quiet.
+if (!process.env.SITE && (process.env.WORKERS_CI || process.env.CF_PAGES)) {
+  console.warn(
+    "[astro.config] SITE is not set: canonical and Open Graph URLs will fall " +
+      "back to http://localhost:4321. Set SITE in the Cloudflare build environment.",
+  );
+}
+
+// IMPORTANT: keep this an object literal. Astro's `defineConfig` accepts an
+// object only — unlike Vite's, which also accepts a function. A function default
+// export is silently dropped by Astro's config merger (it spreads the export to
+// `{}`), leaving output:"static" with no adapter and failing later with a
+// misleading JSX parse error. `src/astro-config.test.ts` guards against this.
 // https://astro.build/config
 export default defineConfig({
   site,
-  base,
+  base: process.env.BASE || "/",
   output: "server",
   adapter: cloudflare(),
   integrations: [react()],
