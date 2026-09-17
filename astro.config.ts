@@ -19,6 +19,11 @@ if (!process.env.SITE && (process.env.WORKERS_CI || process.env.CF_PAGES)) {
   );
 }
 
+// IMPORTANT: keep this an object literal. Astro's `defineConfig` accepts an
+// object only — unlike Vite's, which also accepts a function. A function default
+// export is silently dropped by Astro's config merger (it spreads the export to
+// `{}`), leaving output:"static" with no adapter and failing later with a
+// misleading JSX parse error. `src/astro-config.test.ts` guards against this.
 // https://astro.build/config
 export default defineConfig({
   site,
