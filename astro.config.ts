@@ -4,11 +4,11 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
-const site = process.env.VERCEL
-  ? process.env.VERCEL_ENV === "production"
-    ? "https://astro-shadcn-ui-template.vercel.app"
-    : `https://${process.env.VERCEL_URL}`
-  : (process.env.SITE ?? "http://localhost:4321");
+// Canonical site URL, used for <link rel="canonical"> and Open Graph tags.
+// Set SITE in the Cloudflare build environment (Workers Builds → Settings →
+// Environment variables), e.g. SITE=https://qeepa.com. Falls back to localhost
+// so local `astro dev` / `astro build` keep working.
+const site = process.env.SITE ?? "http://localhost:4321";
 const base = process.env.BASE || "/";
 
 // https://astro.build/config
