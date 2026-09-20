@@ -2,7 +2,7 @@
   "version": 1,
   "sessions": {
     "cbabd56b-75d1-43ce-a95d-c22c4fdc1a74": {
-      "updatedAt": 1789891425554,
+      "updatedAt": 1789891490951,
       "files": {
         "/Users/jubs/Desktop/Building/qeepa-site/.claude/worktrees/landing-page-v1/src/lib/config.test.ts": {
           "editCount": 1,
@@ -25,6 +25,11 @@
           "findings": [],
           "stopBaseline": { "version": 1, "engine": "0.1.5", "counts": {} },
           "cleanAcked": true
+        },
+        "/Users/jubs/Desktop/Building/qeepa-site/.claude/worktrees/landing-page-v1/src/lib/motion.ts": {
+          "editCount": 1,
+          "findings": [],
+          "stopBaseline": { "version": 1, "engine": "0.1.5", "counts": {} }
         }
       }
     }
