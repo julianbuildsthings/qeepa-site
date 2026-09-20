@@ -25,7 +25,7 @@ export const hero = {
 
 export const features: FeatureCopy[] = [
   {
-    body: "RAWs, exports and edits of the same shot are automatically bunched together as tracks. Switch between them instantly, compare the differences and move through your shoots without ever digging around in folders.",
+    body: "RAWs, exports and edits of the same shot are automatically bunched together as tracks. Switch between them instantly, compare the differences, and move through your shoots without ever digging around in folders.",
     heading: "Photo tracks",
     id: "tracks",
     subheading: "Every version of a photo, together.",

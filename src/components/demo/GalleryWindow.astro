@@ -22,10 +22,22 @@ type Props = {
 
 const { activeTrack, columns, pillRow = 1, shootName, tiles } = Astro.props;
 
+/** Row gap in px. Must match the `gap-3` on the grid below. */
+const GAP = 12;
+
 const rows = Math.ceil(tiles.length / columns);
-// Centre line of the target row, as a percentage of the grid's height. Rows are
-// equal height, so row N's centre sits (N - 0.5) rows down.
-const pillOffset = ((pillRow - 0.5) / rows) * 100;
+
+/*
+ * The exact centre line of the target row.
+ *
+ * A plain percentage is wrong here: the gaps are fixed pixels, so they are not
+ * part of the proportional split. Subtracting them first gives the true row
+ * height, then the gaps above the target row are added back. With two rows and
+ * a 12px gap this is the difference between 75% and 75% + 3px — small, but it
+ * is the difference between the pill sitting on the row and near it.
+ */
+const trackHeight = `(100% - ${(rows - 1) * GAP}px)`;
+const pillTop = `calc(${(pillRow - 0.5) / rows} * ${trackHeight} + ${(pillRow - 1) * GAP}px)`;
 ---
 
 <div
@@ -67,7 +79,7 @@ const pillOffset = ((pillRow - 0.5) / rows) * 100;
 
       <div
         class="pointer-events-none absolute inset-x-0 flex -translate-y-1/2 justify-center"
-        style={`top:${pillOffset}%`}
+        style={`top:${pillTop}`}
       >
         <TrackPill active={activeTrack} />
       </div>
