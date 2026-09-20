@@ -116,18 +116,14 @@ export function FloatingBar({ initial }: FloatingBarProps) {
             {current.brand ? (
               <a className={titleClass} href="/" translate="no">
                 {current.title}
-                <span className="text-raw">.</span>
               </a>
             ) : (
-              <span className={titleClass}>
-                {current.title}
-                <span className="text-raw">.</span>
-              </span>
+              <span className={titleClass}>{current.title}</span>
             )}
 
             {current.count !== null && (
               <p className="truncate text-[13px] leading-4 text-text-secondary tabular-nums">
-                {current.count}&nbsp;photos.
+                {current.count}&nbsp;photos
               </p>
             )}
           </motion.div>

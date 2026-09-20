@@ -45,7 +45,7 @@ export const trackOrder: TrackName[] = ["raw", "jpg", "edit"];
  * widens across the three, which is what makes the track switch legible.
  */
 export const trackRender: Record<TrackName, string> = {
-  edit: "linear-gradient(178deg,#FFF6E9 0%,#F9BF8C 42%,#E39E60 74%,#C5813F 100%)",
+  edit: "linear-gradient(178deg,#FFF8EE 0%,#FBCBA0 42%,#EFB27C 74%,#DA9A5E 100%)",
   jpg: "linear-gradient(178deg,#FFF3E2 0%,#FBCCA4 46%,#F0AE72 100%)",
   raw: "linear-gradient(178deg,#FEF1E4 0%,#F8DFC8 48%,#EFCFB0 100%)",
 };
