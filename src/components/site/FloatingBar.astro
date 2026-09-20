@@ -2,37 +2,42 @@
 import { siteConfig } from "@/lib/config";
 
 /**
- * Adapted from the app's own `floating-bar.tsx`: a 48px fully-rounded bar that
- * floats over the content rather than sitting in a header band with a rule.
+ * Adapted from the app's own `floating-bar.tsx`, matching its surface values
+ * exactly: 48px tall, fully rounded, `#FFFFFFF5` ground, `gap-2.5`, and the
+ * same `0px 10px 30px rgba(43,38,33,0.14)` shadow. The title sits in the app's
+ * Erode 17px slot and the count in its 13px secondary-label slot.
  *
- * The app's browse state is a shoot name in Erode 17px on the left and a count
- * on the right, which maps onto the site almost unchanged — the wordmark takes
- * the title slot and the count is the number of photo frames actually on this
- * page.
+ * Two deliberate departures. It is `sticky` rather than the app's `absolute`,
+ * because the app's bar lives in a fixed-height window and this one has to
+ * survive a scrolling page. And it aligns to the page's 120px content rail
+ * rather than the app's 32px window inset, so the bar and the headline share
+ * one left edge.
  *
- * The app's selection state (peach-light ground, star rating, Share) is
- * deliberately not built here; v1 stays in browse state throughout.
+ * The resting offset (`mt-*`) is margin rather than padding on purpose: margin
+ * sits outside the sticky box, so the bar starts low and rises to `top-4` as
+ * you scroll. Padding would travel with it and it would never rise. That offset
+ * is kept equal to the hero's own top padding — that equality is what centres
+ * the bar between the top of the viewport and the first line of copy.
  *
- * Sticky rather than the app's absolute: the app's bar lives in a fixed-height
- * window, this one has to survive a scrolling page.
+ * The app's selection state (peach-light ground, star rating, Share) is not
+ * built; v1 stays in browse state throughout.
  */
 type Props = { photoCount: number };
 
 const { photoCount } = Astro.props;
 ---
 
-{/* Aligned to the page's content rail rather than the app's 32px window inset,
-so the bar's left edge and the headline's share one lane. */}
-<div class="pointer-events-none sticky top-4 z-30 px-6 lg:px-[120px]">
+<div class="pointer-events-none sticky top-4 z-30 mt-8 px-6 lg:mt-14 lg:px-[120px]">
   <div class="mx-auto max-w-[1200px]">
     <div
-      class="pointer-events-auto flex h-12 items-center gap-2.5 rounded-full bg-[rgba(255,255,255,0.96)] pr-5 pl-5 shadow-[0px_10px_30px_rgba(43,38,33,0.14)] backdrop-blur-sm"
+      class="pointer-events-auto flex h-12 items-center gap-2.5 rounded-full bg-[#FFFFFFF5] pr-5 pl-5 shadow-[0px_10px_30px_rgba(43,38,33,0.14)]"
     >
       <a
-        class="rounded-sm font-serif text-[17px] leading-[22px] font-medium text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        class="rounded-sm font-serif text-[17px] leading-[22px] font-bold tracking-[-0.015em] text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         href="/"
-        translate="no">{siteConfig.name}.</a
-      >
+        translate="no"
+        >Qeepa<span class="text-raw">.</span>
+      </a>
 
       <div class="flex-1"></div>
 

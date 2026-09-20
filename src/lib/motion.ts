@@ -95,7 +95,7 @@ export const durations = {
  */
 export const cycle = {
   /** RAW → JPG → EDIT on the tracks demonstration. */
-  track: 2200,
+  track: 1400,
 };
 
 /** Content appearing in place. Pair with AnimatePresence for the exit half. */
