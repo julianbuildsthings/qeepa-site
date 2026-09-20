@@ -1,43 +1,21 @@
 ---
-import { cn } from "@/lib/utils";
-
 import HeadSEO from "@/components/HeadSEO.astro";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { Toaster } from "sonner";
 
 const { title, description, ogImage } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <HeadSEO title={title} description={description} ogImage={ogImage} />
-    <script is:inline>
-      (() => {
-        try {
-          const stored = localStorage.getItem("theme");
-          const prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)",
-          ).matches;
-          const dark = stored ? stored === "dark" : prefersDark;
-          document.documentElement.classList.toggle("dark", dark);
-        } catch {}
-      })();
-    </script>
+    <meta name="theme-color" content="#FFFFFF" />
   </head>
-  <body
-    class={cn(
-      "group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]",
-    )}
-  >
-    <div class="bg-background relative z-10 flex min-h-svh flex-col">
-      <Header client:load />
-      <main class="flex flex-1 flex-col">
-        <slot />
-      </main>
-      <Footer />
-    </div>
-    <Toaster client:load />
+  <body class="bg-background text-foreground antialiased">
+    <a
+      href="#main"
+      class="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:rounded-md focus-visible:bg-background focus-visible:px-4 focus-visible:py-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      >Skip to content</a
+    >
+    <slot />
   </body>
 </html>

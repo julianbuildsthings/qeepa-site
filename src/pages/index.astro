@@ -1,12 +1,8 @@
 ---
-import { ComponentExample } from "@/components/ComponentExample";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/lib/config";
 ---
 
-<BaseLayout
-  title={siteConfig.name}
-  description={siteConfig.description}
->
-  <ComponentExample client:load />
+<BaseLayout title={siteConfig.name} description={siteConfig.description}>
+  <main id="main"></main>
 </BaseLayout>
