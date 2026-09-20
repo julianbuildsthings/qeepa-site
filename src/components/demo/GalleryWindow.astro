@@ -1,0 +1,64 @@
+---
+import { TrackPill } from "@/components/demo/TrackPill";
+import { bloom, type TrackName, warm, type WarmName } from "@/lib/gradients";
+
+/**
+ * The app window as it appears on the marketing page: chrome strip, a grid of
+ * photo frames, and the track pill floating over the grid.
+ *
+ * The grid is decorative — the surrounding copy carries the meaning — so it is
+ * hidden from assistive technology rather than announcing a wall of blanks.
+ */
+type Props = {
+  activeTrack: TrackName;
+  columns: number;
+  shootName: string;
+  photoCount: number;
+  tiles: WarmName[];
+};
+
+const { activeTrack, columns, photoCount, shootName, tiles } = Astro.props;
+---
+
+<div
+  class="relative overflow-hidden rounded-t-2xl border border-[rgba(43,38,33,0.10)] bg-surface shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]"
+>
+  <div
+    class="flex h-[46px] items-center gap-4 border-b border-[rgba(43,38,33,0.08)] bg-[rgba(255,250,246,0.92)] px-[18px]"
+  >
+    <div aria-hidden="true" class="flex shrink-0 gap-2">
+      <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
+      <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
+      <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
+    </div>
+    <p class="flex-1 truncate text-center text-[13px] font-medium text-text-secondary">
+      {shootName}
+    </p>
+    <p class="shrink-0 text-[12px] text-text-tertiary tabular-nums">
+      {photoCount}&nbsp;photos
+    </p>
+  </div>
+
+  <div class="relative p-[18px]">
+    <div
+      aria-hidden="true"
+      class="grid gap-3"
+      style={`grid-template-columns: repeat(${columns}, minmax(0, 1fr));`}
+    >
+      {
+        tiles.map((tile) => (
+          <div
+            class="relative aspect-3/2 overflow-hidden rounded-[5px]"
+            style={`background:${warm[tile]}`}
+          >
+            <div class="absolute inset-0" style={`background:${bloom}`} />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="pointer-events-none absolute inset-x-0 top-[54%] flex justify-center">
+      <TrackPill active={activeTrack} />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+---
+import GalleryWindow from "@/components/demo/GalleryWindow.astro";
+import { hero } from "@/lib/copy";
+import { heroTileOrder } from "@/lib/gradients";
+
+/**
+ * Approved comp `1A · Left rail (Satoshi)`.
+ *
+ * Everything ranges left on one rail at 120px. The lede is capped at 716px so
+ * its right edge matches the headline's first line at the 1440px reference
+ * width — if the headline size changes, that number changes with it.
+ *
+ * The window is clipped rather than complete: the product continues past the
+ * frame, it is not a framed screenshot. The clip is a height on the wrapper,
+ * not a negative margin, so the section that follows flows normally.
+ */
+const [first, second, third] = hero.headline;
+---
+
+<section class="mx-auto max-w-[1440px] px-6 lg:px-[120px]">
+  <h1
+    class="max-w-[820px] pt-14 font-sans text-[clamp(40px,6.2vw,80px)] leading-[1.05] font-bold tracking-[-0.038em] text-balance text-text-primary lg:max-w-none lg:pt-[72px] lg:text-pretty"
+  >
+    {/* Hard breaks only at the width the comp was approved at; below lg the
+    headline rewraps to its own measure. */}
+    {first}<br class="hidden lg:inline" />{" "}{second}<br class="hidden lg:inline" />{" "}{third}
+  </h1>
+
+  <p
+    class="mt-8 max-w-[716px] font-sans text-[clamp(17px,1.4vw,19px)] leading-[1.6] text-text-secondary lg:mt-10"
+  >
+    {hero.lede}
+  </p>
+
+  <div
+    class="mt-12 h-[clamp(200px,26vw,340px)] overflow-hidden lg:mt-[72px]"
+    data-hero-window
+  >
+    <GalleryWindow
+      activeTrack="raw"
+      columns={5}
+      photoCount={428}
+      shootName="Tuscany — June"
+      tiles={heroTileOrder}
+    />
+  </div>
+</section>
