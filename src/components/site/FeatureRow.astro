@@ -12,6 +12,8 @@
  * would just make some rows read copy-first and others visual-first at random.
  */
 type Props = {
+  /** Frames in this row's demonstration, for the floating bar's count. */
+  barCount: number;
   body: string;
   heading: string;
   id: string;
@@ -19,11 +21,13 @@ type Props = {
   subheading: string;
 };
 
-const { body, heading, id, reversed = false, subheading } = Astro.props;
+const { barCount, body, heading, id, reversed = false, subheading } = Astro.props;
 ---
 
 <section
   class="mx-auto grid max-w-[1440px] scroll-mt-24 items-center gap-12 px-6 py-20 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-20 lg:px-[120px] lg:py-28"
+  data-bar-count={barCount}
+  data-bar-title={heading}
   id={id}
 >
   <div class:list={["order-1", reversed ? "lg:order-2" : "lg:order-1"]}>

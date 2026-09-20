@@ -2,6 +2,7 @@
 import GalleryWindow from "@/components/demo/GalleryWindow.astro";
 import { hero } from "@/lib/copy";
 import { heroTileOrder } from "@/lib/gradients";
+import { siteConfig } from "@/lib/config";
 
 /**
  * Approved comp `1A · Left rail (Satoshi)`.
@@ -17,7 +18,12 @@ import { heroTileOrder } from "@/lib/gradients";
 const [first, second, third] = hero.headline;
 ---
 
-<section class="mx-auto max-w-[1440px] px-6 lg:px-[120px]">
+<section
+  class="mx-auto max-w-[1440px] px-6 lg:px-[120px]"
+  data-bar-brand
+  data-bar-count={heroTileOrder.length}
+  data-bar-title={siteConfig.name}
+>
   <h1
     class="max-w-[660px] pt-8 font-sans text-[clamp(34px,4.7vw,62px)] leading-[1.07] font-bold tracking-[-0.036em] text-balance text-text-primary lg:max-w-none lg:pt-14 lg:text-pretty"
   >
@@ -32,15 +38,18 @@ const [first, second, third] = hero.headline;
     {hero.lede}
   </p>
 
-  <div
-    class="mt-12 h-[clamp(200px,26vw,340px)] overflow-hidden lg:mt-[72px]"
-    data-hero-window
-  >
+  {/*
+    No height clip. With ten tiles the window is exactly two rows, so there is
+    nothing left to crop — a viewport-relative clamp only ever cut into row two
+    at wide widths, which put the pill below the visible middle of the row it is
+    supposed to sit on. The window instead ends open-edged (square bottom, no
+    bottom border), which reads as continuing without hiding anything.
+  */}
+  <div class="mt-12 lg:mt-[72px]" data-hero-window>
     <GalleryWindow
       activeTrack="raw"
       columns={5}
       pillRow={2}
-      shootName="Tuscany — June"
       tiles={heroTileOrder}
     />
   </div>

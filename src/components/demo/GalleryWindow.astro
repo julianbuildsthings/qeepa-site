@@ -16,11 +16,10 @@ type Props = {
   activeTrack: TrackName;
   columns: number;
   pillRow?: number;
-  shootName: string;
   tiles: WarmName[];
 };
 
-const { activeTrack, columns, pillRow = 1, shootName, tiles } = Astro.props;
+const { activeTrack, columns, pillRow = 1, tiles } = Astro.props;
 
 /** Row gap in px. Must match the `gap-3` on the grid below. */
 const GAP = 12;
@@ -41,21 +40,16 @@ const pillTop = `calc(${(pillRow - 0.5) / rows} * ${trackHeight} + ${(pillRow - 
 ---
 
 <div
-  class="relative overflow-hidden rounded-t-2xl border border-[rgba(43,38,33,0.10)] bg-surface shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]"
+  class="relative overflow-hidden rounded-t-2xl border border-b-0 border-[rgba(43,38,33,0.10)] bg-surface shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]"
 >
   <div
-    class="flex h-[46px] items-center gap-4 border-b border-[rgba(43,38,33,0.08)] bg-[rgba(255,250,246,0.92)] px-[18px]"
+    class="flex h-[46px] items-center border-b border-[rgba(43,38,33,0.08)] bg-[rgba(255,250,246,0.92)] px-[18px]"
   >
     <div aria-hidden="true" class="flex shrink-0 gap-2">
       <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
       <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
       <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
     </div>
-    <p class="flex-1 truncate text-center text-[13px] font-medium text-text-secondary">
-      {shootName}
-    </p>
-    {/* Balances the traffic lights so the title stays optically centred. */}
-    <div aria-hidden="true" class="w-[49px] shrink-0"></div>
   </div>
 
   <div class="p-[18px]">

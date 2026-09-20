@@ -1,9 +1,8 @@
 ---
-import FloatingBar from "@/components/site/FloatingBar.astro";
+import { FloatingBar } from "@/components/site/FloatingBar";
 import SiteFooter from "@/components/site/SiteFooter.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/lib/config";
-import { totalPageTiles } from "@/lib/tiles";
 
 /**
  * Shell for the legal routes the footer links to. These exist so the footer has
@@ -16,7 +15,12 @@ const { heading, title } = Astro.props;
 ---
 
 <BaseLayout title={`${heading} — ${siteConfig.name}`} description={title}>
-  <FloatingBar photoCount={totalPageTiles} />
+  {/* A legal page has no photo frames, so the count is omitted rather than
+  claiming zero. */}
+  <FloatingBar
+    client:load
+    initial={{ brand: true, count: null, title: siteConfig.name }}
+  />
   <main class="mx-auto min-h-[60svh] max-w-[1440px] px-6 pt-20 pb-24 lg:px-[120px]" id="main">
     <h1
       class="font-sans text-[clamp(26px,2.6vw,36px)] leading-[1.12] font-bold tracking-[-0.03em] text-text-primary"
