@@ -75,12 +75,23 @@ reveal-in-folder on Windows and Linux.
 import and SQLite library catalog, the settings screen, and the language
 toggle all exist in code with no path to them through the UI.
 
-**Open decision — unverified against the code:** the landing brief describes a
-"Shoot Insights" feature (most-used camera settings and gear per shoot) that
-does not appear in the feature audit's shipped list. Treat it as unconfirmed
-until checked; do not demonstrate it as existing. The brief's "photo
-management" row is largely real — filter chips and reveal-in-Finder ship — but
-filtering specifically by export status is likewise unverified.
+**Shoot insights — confirmed shipped** (verified against the code on
+2026-09-20; the feature audit missed this). `summarise()` in
+`src/utils/photo-metadata.ts` returns a `MetadataSummary` carrying the most-used
+aperture, shutter and ISO each with a percentage, a focal-length range, and a
+gear list with per-item counts. `src/components/panel/folder-info-panel.tsx`
+renders it, and `src/routes/gallery.tsx` mounts that panel as the gallery's
+`gridInfoSlot`. It is reachable in normal use and may be described and
+demonstrated.
+
+**Filtering by export status — confirmed NOT shipped** (verified 2026-09-20).
+The filters that exist are **Unrated** and **Tags**
+(`galleryFilterUnrated`, `galleryFilterTags` in `src/localization/i18n.ts`,
+surfaced through `src/components/gallery/filter-chips.tsx`). There is no
+export-status or "delivered" filter anywhere in the codebase. The approved
+landing copy for the photo-management row claims filtering "by rating and
+export status"; the second half of that claim is not true today and must not
+be demonstrated.
 
 ## Brand Commitments
 

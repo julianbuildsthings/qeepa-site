@@ -49,7 +49,7 @@ export const features: FeatureCopy[] = [
     subheading: "Understand how you shoot and what you kept.",
   },
   {
-    body: "Filter a shoot by rating and export status to surface files that may no longer need to take up space. Reveal the results in Finder, review them in context and decide for yourself what stays or goes. Qeepa helps you find the files; it never deletes them for you.",
+    body: "Filter a shoot by rating and tags to surface files that may no longer need to take up space. Reveal the results in Finder, review them in context and decide for yourself what stays or goes. Qeepa helps you find the files; it never deletes them for you.",
     heading: "Photo management",
     id: "management",
     subheading: "Clear out clutter and find the photos you need.",

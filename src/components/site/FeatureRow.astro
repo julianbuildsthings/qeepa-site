@@ -24,8 +24,18 @@ type Props = {
 const { barCount, body, heading, id, reversed = false, subheading } = Astro.props;
 ---
 
+{/*
+  The wide column follows the visual, not the position — so a reversed row
+  swaps the template rather than just reordering the children. Reordering alone
+  handed the visual the one-third column and the copy the two-thirds one.
+*/}
 <section
-  class="mx-auto grid max-w-[1440px] scroll-mt-24 items-center gap-12 px-6 py-20 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-20 lg:px-[120px] lg:py-28"
+  class:list={[
+    "mx-auto grid max-w-[1440px] scroll-mt-24 items-center gap-12 px-6 py-20 lg:gap-20 lg:px-[120px] lg:py-28",
+    reversed
+      ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]"
+      : "lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]",
+  ]}
   data-bar-count={barCount}
   data-bar-title={heading}
   id={id}

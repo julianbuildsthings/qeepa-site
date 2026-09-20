@@ -1,4 +1,8 @@
 ---
+import { FilterReveal } from "@/components/demo/FilterReveal";
+import { GalleryScroll } from "@/components/demo/GalleryScroll";
+import { InsightsPanel } from "@/components/demo/InsightsPanel";
+import { SidecarDemo } from "@/components/demo/SidecarDemo";
 import { TrackStack } from "@/components/demo/TrackStack";
 import FeatureRow from "@/components/site/FeatureRow.astro";
 import { FloatingBar } from "@/components/site/FloatingBar";
@@ -9,7 +13,12 @@ import { siteConfig } from "@/lib/config";
 import { features } from "@/lib/copy";
 import { pageTileCounts } from "@/lib/tiles";
 
-const tracks = features[0]!;
+const [tracks, localFirst, performance, insights, management] = features;
+
+/*
+ * Orientation alternates down the page, starting with the visual on the left.
+ * `reversed` puts the visual on the right.
+ */
 ---
 
 <BaseLayout title={siteConfig.name} description={siteConfig.description}>
@@ -17,11 +26,30 @@ const tracks = features[0]!;
     client:load
     initial={{ brand: true, count: pageTileCounts.hero, title: siteConfig.name }}
   />
+
   <main class="scroll-mt-24" id="main">
     <Hero />
-    <FeatureRow {...tracks} barCount={pageTileCounts.tracks}>
+
+    <FeatureRow {...tracks!} barCount={pageTileCounts.tracks}>
       <TrackStack client:visible />
     </FeatureRow>
+
+    <FeatureRow {...localFirst!} barCount={pageTileCounts["local-first"]} reversed>
+      <SidecarDemo client:visible />
+    </FeatureRow>
+
+    <FeatureRow {...performance!} barCount={pageTileCounts.performance}>
+      <GalleryScroll client:visible />
+    </FeatureRow>
+
+    <FeatureRow {...insights!} barCount={pageTileCounts.insights} reversed>
+      <InsightsPanel client:visible />
+    </FeatureRow>
+
+    <FeatureRow {...management!} barCount={pageTileCounts.management}>
+      <FilterReveal client:visible />
+    </FeatureRow>
   </main>
+
   <SiteFooter />
 </BaseLayout>
