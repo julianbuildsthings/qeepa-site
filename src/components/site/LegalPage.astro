@@ -1,0 +1,30 @@
+---
+import SiteFooter from "@/components/site/SiteFooter.astro";
+import SiteHeader from "@/components/site/SiteHeader.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/lib/config";
+
+/**
+ * Shell for the legal routes the footer links to. These exist so the footer has
+ * no dead ends; the bodies are deliberately honest placeholders rather than
+ * invented legal text, which would be worse than an obviously unfinished page.
+ */
+type Props = { heading: string; title: string };
+
+const { heading, title } = Astro.props;
+---
+
+<BaseLayout title={`${heading} — ${siteConfig.name}`} description={title}>
+  <SiteHeader />
+  <main class="mx-auto min-h-[60svh] max-w-[1440px] px-6 py-24 lg:px-[120px]" id="main">
+    <h1
+      class="font-sans text-[clamp(32px,3.6vw,48px)] leading-[1.1] font-bold tracking-[-0.032em] text-text-primary"
+    >
+      {heading}
+    </h1>
+    <p class="mt-6 max-w-[620px] font-sans text-[17px] leading-[1.65] text-text-secondary">
+      <slot />
+    </p>
+  </main>
+  <SiteFooter />
+</BaseLayout>

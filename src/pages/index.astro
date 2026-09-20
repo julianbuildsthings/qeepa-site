@@ -1,8 +1,12 @@
 ---
+import SiteFooter from "@/components/site/SiteFooter.astro";
+import SiteHeader from "@/components/site/SiteHeader.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/lib/config";
 ---
 
 <BaseLayout title={siteConfig.name} description={siteConfig.description}>
-  <main id="main"></main>
+  <SiteHeader />
+  <main class="scroll-mt-24" id="main"></main>
+  <SiteFooter />
 </BaseLayout>
