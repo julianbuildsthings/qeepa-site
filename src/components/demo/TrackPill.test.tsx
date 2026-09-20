@@ -2,6 +2,8 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import type { TrackName } from "@/lib/gradients";
+
 import { TrackPill } from "@/components/demo/TrackPill";
 
 describe("TrackPill", () => {
@@ -29,7 +31,7 @@ describe("TrackPill", () => {
   });
 
   it("renders real buttons and reports selection when interactive", () => {
-    const onSelect = vi.fn();
+    const onSelect = vi.fn<(track: TrackName) => void>();
     render(<TrackPill active="raw" interactive onSelect={onSelect} />);
     const buttons = screen.getAllByRole("button");
     expect(buttons).toHaveLength(3);

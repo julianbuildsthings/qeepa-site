@@ -1,0 +1,48 @@
+---
+/**
+ * One feature per row, never a card grid. Roughly two-thirds visual to
+ * one-third copy, alternating orientation down the page.
+ *
+ * `heading` and `subheading` form a two-tier heading — the feature name set
+ * large, with the sentence beneath it. The subheading is never rendered as a
+ * small label above the heading; a kicker is banned on this page.
+ *
+ * Below `lg` the row stacks to one column with the visual always first,
+ * regardless of `reversed`: alternation is a desktop rhythm, and on a phone it
+ * would just make some rows read copy-first and others visual-first at random.
+ */
+type Props = {
+  body: string;
+  heading: string;
+  id: string;
+  reversed?: boolean;
+  subheading: string;
+};
+
+const { body, heading, id, reversed = false, subheading } = Astro.props;
+---
+
+<section
+  class="mx-auto grid max-w-[1440px] scroll-mt-24 items-center gap-12 px-6 py-20 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-20 lg:px-[120px] lg:py-28"
+  id={id}
+>
+  <div class:list={["order-1", reversed ? "lg:order-2" : "lg:order-1"]}>
+    <slot />
+  </div>
+
+  <div class:list={["order-2", reversed ? "lg:order-1" : "lg:order-2"]}>
+    <h2
+      class="font-sans text-[clamp(32px,3.2vw,44px)] leading-[1.09] font-bold tracking-[-0.032em] text-text-primary"
+    >
+      {heading}
+    </h2>
+    <p
+      class="mt-3.5 font-sans text-[clamp(20px,1.9vw,26px)] leading-[1.31] tracking-[-0.018em] text-balance text-text-primary"
+    >
+      {subheading}
+    </p>
+    <p class="mt-6 font-sans text-[17px] leading-[1.65] text-pretty text-text-secondary">
+      {body}
+    </p>
+  </div>
+</section>
