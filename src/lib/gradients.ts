@@ -22,26 +22,32 @@ export type WarmName =
   | "terracotta";
 
 export const warm: Record<WarmName, string> = {
-  amber: "linear-gradient(172deg,#FFE4C4 0%,#F09A50 48%,#C06E2C 100%)",
+  amber: "linear-gradient(172deg,#FFECD6 0%,#F5AE72 48%,#D48B4A 100%)",
   apricot: "linear-gradient(174deg,#FFF3E4 0%,#FCD6AE 48%,#F7BA85 100%)",
   blush: "linear-gradient(176deg,#FFF4EC 0%,#FBD3BE 48%,#F0A98C 100%)",
   clay: "linear-gradient(178deg,#FFF1E2 0%,#F3CDA8 48%,#DFA877 100%)",
   honey: "linear-gradient(174deg,#FFF8E8 0%,#FBDFA6 48%,#EFBC6A 100%)",
   peach: "linear-gradient(178deg,#FFF0DD 0%,#FCBA7F 54%,#EE9B54 100%)",
   sunbleached: "linear-gradient(176deg,#FFFDFA 0%,#FFF2E3 46%,#FDE3C8 100%)",
-  terracotta: "linear-gradient(180deg,#FDE0BF 0%,#EE9B54 46%,#C8752A 100%)",
+  terracotta: "linear-gradient(180deg,#FEE9D2 0%,#F3B07A 46%,#D8873F 100%)",
 };
 
 export type TrackName = "edit" | "jpg" | "raw";
+
+/**
+ * The order a shot's versions are presented in — the order the tracks demo
+ * cycles through, and the order the pill lists them. Capture to deliverable.
+ */
+export const trackOrder: TrackName[] = ["raw", "jpg", "edit"];
 
 /**
  * The same scene rendered three ways: flat, punchy, graded. The tonal spread
  * widens across the three, which is what makes the track switch legible.
  */
 export const trackRender: Record<TrackName, string> = {
-  edit: "linear-gradient(178deg,#FFF4E4 0%,#F8B478 42%,#DE8A43 74%,#B4652A 100%)",
-  jpg: "linear-gradient(178deg,#FFF0DC 0%,#FBC190 46%,#EC9A55 100%)",
-  raw: "linear-gradient(178deg,#FDEBD8 0%,#F6D6B8 48%,#E8BC97 100%)",
+  edit: "linear-gradient(178deg,#FFF6E9 0%,#F9BF8C 42%,#E39E60 74%,#C5813F 100%)",
+  jpg: "linear-gradient(178deg,#FFF3E2 0%,#FBCCA4 46%,#F0AE72 100%)",
+  raw: "linear-gradient(178deg,#FEF1E4 0%,#F8DFC8 48%,#EFCFB0 100%)",
 };
 
 /**

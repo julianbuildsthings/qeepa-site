@@ -26,31 +26,31 @@ export const hero = {
 export const features: FeatureCopy[] = [
   {
     body: "RAWs, exports and edits of the same shot are automatically bunched together as tracks. Switch between them instantly, compare the differences and move through your shoots without ever digging around in folders.",
-    heading: "Photo tracks.",
+    heading: "Photo tracks",
     id: "tracks",
     subheading: "Every version of a photo, together.",
   },
   {
     body: "Qeepa works directly with the photos already on your Mac. Because we don’t touch your files, it works alongside tools such as Lightroom, FastRawViewer, Affinity and everywhere you can work with your beautiful photos. It’s basically Finder on steroids, built with photographers in mind.",
-    heading: "Local-first.",
+    heading: "Local-first",
     id: "local-first",
     subheading: "No accounts, no cloud subscription, and no touching your photos.",
   },
   {
     body: "Large shoots stay quick to browse, scroll, and revisit without staring at a loading icon waiting for massive RAW files to open. JPEG previews and caching keep everything snappy and responsive.",
-    heading: "Fast performance.",
+    heading: "Fast performance",
     id: "performance",
     subheading: "Built to work with thousands of photos without skipping a beat.",
   },
   {
     body: "Qeepa shows you the most frequently used camera settings and gear for every shoot. Better yet, you can filter by the photos you kept or delivered to clients, so you can understand what settings made your photos stick.",
-    heading: "Shoot insights.",
+    heading: "Shoot insights",
     id: "insights",
     subheading: "Understand how you shoot and what you kept.",
   },
   {
     body: "Filter a shoot by rating and export status to surface files that may no longer need to take up space. Reveal the results in Finder, review them in context and decide for yourself what stays or goes. Qeepa helps you find the files; it never deletes them for you.",
-    heading: "Photo management.",
+    heading: "Photo management",
     id: "management",
     subheading: "Clear out clutter and find the photos you need.",
   },

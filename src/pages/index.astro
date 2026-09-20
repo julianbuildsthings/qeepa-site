@@ -1,18 +1,19 @@
 ---
 import { TrackStack } from "@/components/demo/TrackStack";
 import FeatureRow from "@/components/site/FeatureRow.astro";
+import FloatingBar from "@/components/site/FloatingBar.astro";
 import Hero from "@/components/site/Hero.astro";
 import SiteFooter from "@/components/site/SiteFooter.astro";
-import SiteHeader from "@/components/site/SiteHeader.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/lib/config";
 import { features } from "@/lib/copy";
+import { totalPageTiles } from "@/lib/tiles";
 
 const tracks = features[0]!;
 ---
 
 <BaseLayout title={siteConfig.name} description={siteConfig.description}>
-  <SiteHeader />
+  <FloatingBar photoCount={totalPageTiles} />
   <main class="scroll-mt-24" id="main">
     <Hero />
     <FeatureRow {...tracks}>

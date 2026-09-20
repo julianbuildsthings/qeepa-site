@@ -10,6 +10,10 @@ export default defineConfig({
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
+    // motion/react pulls framer-motion, which pnpm can resolve to a second
+    // React instance — its hooks then read a null dispatcher. Pin both to one
+    // copy so components using motion can be tested at all.
+    dedupe: ["react", "react-dom"],
   },
   test: {
     // Pure-logic tests stay on the fast node environment. Component tests opt

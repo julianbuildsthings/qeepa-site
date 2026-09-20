@@ -1,8 +1,9 @@
 ---
+import FloatingBar from "@/components/site/FloatingBar.astro";
 import SiteFooter from "@/components/site/SiteFooter.astro";
-import SiteHeader from "@/components/site/SiteHeader.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/lib/config";
+import { totalPageTiles } from "@/lib/tiles";
 
 /**
  * Shell for the legal routes the footer links to. These exist so the footer has
@@ -15,14 +16,14 @@ const { heading, title } = Astro.props;
 ---
 
 <BaseLayout title={`${heading} — ${siteConfig.name}`} description={title}>
-  <SiteHeader />
-  <main class="mx-auto min-h-[60svh] max-w-[1440px] px-6 py-24 lg:px-[120px]" id="main">
+  <FloatingBar photoCount={totalPageTiles} />
+  <main class="mx-auto min-h-[60svh] max-w-[1440px] px-6 pt-20 pb-24 lg:px-[120px]" id="main">
     <h1
-      class="font-sans text-[clamp(32px,3.6vw,48px)] leading-[1.1] font-bold tracking-[-0.032em] text-text-primary"
+      class="font-sans text-[clamp(26px,2.6vw,36px)] leading-[1.12] font-bold tracking-[-0.03em] text-text-primary"
     >
       {heading}
     </h1>
-    <p class="mt-6 max-w-[620px] font-sans text-[17px] leading-[1.65] text-text-secondary">
+    <p class="mt-5 max-w-[560px] font-sans text-[15px] leading-[1.7] text-text-secondary">
       <slot />
     </p>
   </main>

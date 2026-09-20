@@ -1,0 +1,44 @@
+---
+import { siteConfig } from "@/lib/config";
+
+/**
+ * Adapted from the app's own `floating-bar.tsx`: a 48px fully-rounded bar that
+ * floats over the content rather than sitting in a header band with a rule.
+ *
+ * The app's browse state is a shoot name in Erode 17px on the left and a count
+ * on the right, which maps onto the site almost unchanged — the wordmark takes
+ * the title slot and the count is the number of photo frames actually on this
+ * page.
+ *
+ * The app's selection state (peach-light ground, star rating, Share) is
+ * deliberately not built here; v1 stays in browse state throughout.
+ *
+ * Sticky rather than the app's absolute: the app's bar lives in a fixed-height
+ * window, this one has to survive a scrolling page.
+ */
+type Props = { photoCount: number };
+
+const { photoCount } = Astro.props;
+---
+
+{/* Aligned to the page's content rail rather than the app's 32px window inset,
+so the bar's left edge and the headline's share one lane. */}
+<div class="pointer-events-none sticky top-4 z-30 px-6 lg:px-[120px]">
+  <div class="mx-auto max-w-[1200px]">
+    <div
+      class="pointer-events-auto flex h-12 items-center gap-2.5 rounded-full bg-[rgba(255,255,255,0.96)] pr-5 pl-5 shadow-[0px_10px_30px_rgba(43,38,33,0.14)] backdrop-blur-sm"
+    >
+      <a
+        class="rounded-sm font-serif text-[17px] leading-[22px] font-medium text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        href="/"
+        translate="no">{siteConfig.name}.</a
+      >
+
+      <div class="flex-1"></div>
+
+      <p class="text-[13px] leading-4 text-text-secondary tabular-nums">
+        {photoCount}&nbsp;photos
+      </p>
+    </div>
+  </div>
+</div>

@@ -85,6 +85,19 @@ export const durations = {
   slow: 0.4,
 };
 
+/**
+ * Dwell time per step in a looping demonstration, in ms.
+ *
+ * Site-only: the app has no self-playing marketing loop, so there is nothing to
+ * port. This is a scheduling interval rather than a transition, which is why it
+ * is a token of its own and not a sixth preset — the presets describe how a
+ * change feels, this describes how long to wait before starting the next one.
+ */
+export const cycle = {
+  /** RAW → JPG → EDIT on the tracks demonstration. */
+  track: 2200,
+};
+
 /** Content appearing in place. Pair with AnimatePresence for the exit half. */
 export const fadeInUp = {
   animate: { opacity: 1, transition: presets.ui, y: 0 },

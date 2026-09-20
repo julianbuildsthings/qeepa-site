@@ -1,65 +1,111 @@
-import { useState } from "react";
+import { motion, MotionConfig, useReducedMotion } from "motion/react";
+import { useEffect, useState } from "react";
 
 import { TrackPill } from "@/components/demo/TrackPill";
-import { bloom, type TrackName, trackRender } from "@/lib/gradients";
+import { bloom, type TrackName, trackOrder, trackRender } from "@/lib/gradients";
+import { cycle, presets } from "@/lib/motion";
 
 /**
  * Approved comp `T3 · Tracks — stack`.
  *
- * Three renderings of the same shot, fanned as a stack of prints, with the
- * track pill on the front frame. The fan is what says "every version of a
- * photo, together" before a word is read.
+ * Three renderings of the same shot, fanned as a stack of prints. The stack
+ * cycles RAW → JPG → EDIT on its own, because the point being made is that
+ * every version is one shot — and watching it happen says that faster than
+ * reading it.
  *
- * All three frames are always mounted and only `transform` and `opacity`
- * change, so the eventual cross-fade runs on the compositor and no content
- * appears or vanishes for a screen reader. Motion itself is added in the motion
- * pass; the structure here is what makes it cheap.
+ * All three frames stay mounted and only `transform` and `opacity` animate, so
+ * the cross-fade runs on the compositor and nothing appears or vanishes for a
+ * screen reader.
+ *
+ * The loop runs longer than five seconds, so it needs a pause control. The pill
+ * is that control: clicking a segment pins that track and ends the loop for
+ * good. It also pauses while hovered or focused, and never starts at all under
+ * `prefers-reduced-motion`.
  */
-const ORDER: TrackName[] = ["raw", "jpg", "edit"];
 
 /** Per-step depth offset, in px. Matches the comp's 28px fan. */
 const OFFSET = { x: 28, y: -28 };
 
 export function TrackStack() {
-  const [active, setActive] = useState<TrackName>("edit");
-  const activeIndex = ORDER.indexOf(active);
+  const [active, setActive] = useState<TrackName>("raw");
+  const [pinned, setPinned] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  const looping = !pinned && !paused && !reduceMotion;
+
+  useEffect(() => {
+    if (!looping) return;
+
+    const id = setInterval(() => {
+      setActive((current) => {
+        const next = (trackOrder.indexOf(current) + 1) % trackOrder.length;
+        return trackOrder[next] as TrackName;
+      });
+    }, cycle.track);
+
+    return () => clearInterval(id);
+  }, [looping]);
+
+  const activeIndex = trackOrder.indexOf(active);
+
+  const pin = (track: TrackName) => {
+    setPinned(true);
+    setActive(track);
+  };
 
   return (
-    <div className="relative aspect-716/496 w-full">
-      {ORDER.map((track, index) => {
-        // 0 is the front frame; higher values sit further back in the fan.
-        const depth = (activeIndex - index + ORDER.length) % ORDER.length;
-        const isFront = depth === 0;
+    <MotionConfig reducedMotion="user">
+      {/* Hover and focus pause the loop. The wrapper is not focusable itself —
+      focus lands on the pill's buttons, which bubble through focus-within. */}
+      {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
+      <div
+        className="relative aspect-716/496 w-full"
+        onBlur={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {trackOrder.map((track, index) => {
+          // 0 is the front frame; higher values sit further back in the fan.
+          const depth = (activeIndex - index + trackOrder.length) % trackOrder.length;
+          const isFront = depth === 0;
 
-        return (
-          <div
-            aria-hidden="true"
-            className="absolute bottom-0 left-0 h-[89%] w-[92%] overflow-hidden rounded-[10px] shadow-[0_2px_6px_rgba(43,38,33,0.07),0_30px_64px_-24px_rgba(43,38,33,0.28)]"
-            data-depth={depth}
-            data-track={track}
-            key={track}
-            style={{
-              background: trackRender[track],
-              transform: `translate(${depth * OFFSET.x}px, ${depth * OFFSET.y}px)`,
-              zIndex: ORDER.length - depth,
-            }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{ background: bloom, opacity: isFront ? 1 : 0.4 }}
-            />
-            {/* Frames behind recede with a warm veil rather than a grey one. */}
-            <div
-              className="absolute inset-0 bg-[rgba(255,252,246,0.10)]"
-              style={{ opacity: isFront ? 0 : 1 }}
-            />
-          </div>
-        );
-      })}
+          return (
+            <motion.div
+              animate={{
+                x: depth * OFFSET.x,
+                y: depth * OFFSET.y,
+                zIndex: trackOrder.length - depth,
+              }}
+              aria-hidden="true"
+              className="absolute bottom-0 left-0 h-[89%] w-[92%] overflow-hidden rounded-[10px] shadow-[0_2px_6px_rgba(43,38,33,0.07),0_30px_64px_-24px_rgba(43,38,33,0.28)]"
+              data-depth={depth}
+              data-track={track}
+              key={track}
+              style={{ background: trackRender[track] }}
+              transition={presets.ui}
+            >
+              <motion.div
+                animate={{ opacity: isFront ? 1 : 0.4 }}
+                className="absolute inset-0"
+                style={{ background: bloom }}
+                transition={presets.ui}
+              />
+              {/* Frames behind recede with a warm veil rather than a grey one. */}
+              <motion.div
+                animate={{ opacity: isFront ? 0 : 1 }}
+                className="absolute inset-0 bg-[rgba(255,252,246,0.10)]"
+                transition={presets.ui}
+              />
+            </motion.div>
+          );
+        })}
 
-      <div className="absolute bottom-[8%] left-0 z-10 flex w-[92%] justify-center">
-        <TrackPill active={active} interactive onSelect={setActive} />
+        <div className="absolute bottom-[8%] left-0 z-10 flex w-[92%] justify-center">
+          <TrackPill active={active} interactive onSelect={pin} />
+        </div>
       </div>
-    </div>
+    </MotionConfig>
   );
 }
