@@ -118,8 +118,8 @@ export const cycle = {
  * one; the thing that should stay constant is how fast it looks.
  */
 export const speeds = {
-  /** The gallery strip browsing itself — roughly one row of thumbnails a second. */
-  gallery: 72,
+  /** The gallery strip browsing itself — roughly two rows of thumbnails a second. */
+  gallery: 144,
 };
 
 /** Content appearing in place. Pair with AnimatePresence for the exit half. */

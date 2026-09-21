@@ -19,6 +19,13 @@ import { frameBorder, scatterTones, tones } from "@/lib/tones";
  * a tone reads as a photograph at thumbnail size and as a colour wash when it
  * fills half a row.
  *
+ * The panel is shorter than the 716/496 the other demonstrations use. Eight
+ * rows of eight put sixty-odd frames on screen at once, which stopped reading
+ * as a large shoot and started reading as a wall; at roughly five rows it is
+ * still plainly dense but the eye has somewhere to rest. Rows are deliberately
+ * cut off at the top and bottom edge rather than fitting a whole number —
+ * a strip that ends flush looks like it stopped.
+ *
  * Three things here are less obvious than they look:
  *
  * 1. The strip is rendered twice and travels exactly one strip, so the copy
@@ -96,7 +103,7 @@ export function GalleryScroll() {
     <MotionConfig reducedMotion="user">
       {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
       <div
-        className="aspect-716/496 w-full overflow-hidden rounded-xl border border-[rgba(43,38,33,0.10)] bg-white p-3 shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]"
+        className="aspect-716/296 w-full overflow-hidden rounded-xl border border-[rgba(43,38,33,0.10)] bg-white p-3 shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]"
         onBlur={() => hold(false)}
         onFocus={() => hold(true)}
         onMouseEnter={() => hold(true)}
