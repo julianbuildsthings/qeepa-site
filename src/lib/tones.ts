@@ -162,6 +162,45 @@ export function contrastRatio(a: string, b: string): number {
   return (lighter! + 0.05) / (darker! + 0.05);
 }
 
+/**
+ * xorshift32. Deliberately not a multiplicative hash: the usual constants are
+ * odd, so `index * k % 8` collapses back to `index % 8` — which is exactly the
+ * stripe `scatterTones` exists to remove.
+ */
+function mix(index: number): number {
+  let x = index + 1;
+  x = (x ^ (x << 13)) >>> 0;
+  x = (x ^ (x >>> 17)) >>> 0;
+  x = (x ^ (x << 5)) >>> 0;
+  return x >>> 0;
+}
+
+/**
+ * A scatter of tones across a grid, with no tone repeating immediately to the
+ * left of or above itself.
+ *
+ * Deterministic, which matters twice over: Astro renders these on the server
+ * and React has to produce the same markup on hydration, and a guard can only
+ * assert against a fixed sequence. So this is a scatter, not randomness.
+ *
+ * It replaces `index % palette.length`, which on an eight-wide grid with eight
+ * tones laid an identical tone down every column. That read as stripes rather
+ * than as a shoot — the one thing a wall of photo frames must not look like.
+ */
+export function scatterTones(count: number, columns: number): ToneName[] {
+  const names = Object.keys(tones) as ToneName[];
+  const scattered: ToneName[] = [];
+
+  for (let index = 0; index < count; index++) {
+    const left = index % columns === 0 ? null : scattered[index - 1];
+    const above = index < columns ? null : scattered[index - columns];
+    const choices = names.filter((name) => name !== left && name !== above);
+    scattered.push(choices[mix(index) % choices.length]!);
+  }
+
+  return scattered;
+}
+
 export function hexToHsl(hex: string): { h: number; l: number; s: number } {
   const r = Number.parseInt(hex.slice(1, 3), 16) / 255;
   const g = Number.parseInt(hex.slice(3, 5), 16) / 255;

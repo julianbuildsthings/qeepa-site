@@ -109,6 +109,19 @@ export const cycle = {
   track: 1400,
 };
 
+/**
+ * Continuous linear travel, in px per second.
+ *
+ * A speed rather than a duration, because the distance these travel depends on
+ * how much content there is and how wide the viewport is. A fixed duration
+ * would mean the same strip crawled on a narrow screen and raced on a wide
+ * one; the thing that should stay constant is how fast it looks.
+ */
+export const speeds = {
+  /** The gallery strip browsing itself — roughly one row of thumbnails a second. */
+  gallery: 72,
+};
+
 /** Content appearing in place. Pair with AnimatePresence for the exit half. */
 export const fadeInUp = {
   animate: { opacity: 1, transition: presets.ui, y: 0 },

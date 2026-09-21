@@ -7,6 +7,7 @@ import {
   heroTileMeta,
   heroTileOrder,
   hexToHsl,
+  scatterTones,
   tones,
   trackOrder,
   trackTone,
@@ -56,6 +57,58 @@ describe("proportion bars", () => {
 
   it("keeps the track the paler of the two", () => {
     expect(contrastRatio(barTrack, "#FFFFFF")).toBeLessThan(contrastRatio(barFill, "#FFFFFF"));
+  });
+});
+
+describe("scatterTones", () => {
+  const COLUMNS = 8;
+  const grid = scatterTones(96, COLUMNS);
+
+  it("returns one tone per cell", () => {
+    expect(grid).toHaveLength(96);
+    for (const tone of grid) {
+      expect(Object.keys(tones)).toContain(tone);
+    }
+  });
+
+  it("is deterministic, so the server and the client agree", () => {
+    expect(scatterTones(96, COLUMNS)).toEqual(grid);
+  });
+
+  it("never repeats a tone beside itself", () => {
+    const pairs = grid.flatMap((tone, index) =>
+      index % COLUMNS === 0 ? [] : [[index, tone, grid[index - 1]] as const],
+    );
+
+    for (const [index, tone, left] of pairs) {
+      expect(tone, `cell ${index} matches its left neighbour`).not.toBe(left);
+    }
+  });
+
+  it("never repeats a tone above itself", () => {
+    const pairs = grid.flatMap((tone, index) =>
+      index < COLUMNS ? [] : [[index, tone, grid[index - COLUMNS]] as const],
+    );
+
+    for (const [index, tone, above] of pairs) {
+      expect(tone, `cell ${index} matches the cell above`).not.toBe(above);
+    }
+  });
+
+  /*
+   * The bug this function exists to fix. With eight tones and eight columns,
+   * `index % length` gave every column a single tone all the way down, and the
+   * grid read as stripes.
+   */
+  it("never lays a single tone down a whole column", () => {
+    for (let column = 0; column < COLUMNS; column++) {
+      const down = grid.filter((_, index) => index % COLUMNS === column);
+      expect(new Set(down).size, `column ${column}`).toBeGreaterThan(1);
+    }
+  });
+
+  it("uses the whole palette rather than favouring a few tones", () => {
+    expect(new Set(grid).size).toBe(Object.keys(tones).length);
   });
 });
 
