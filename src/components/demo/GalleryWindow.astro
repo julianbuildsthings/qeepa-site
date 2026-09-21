@@ -1,14 +1,17 @@
 ---
+import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { TrackPill } from "@/components/demo/TrackPill";
-import { frameBorder, pipEmpty, type ToneName, tones, type TrackName } from "@/lib/tones";
+import { type ToneName, tones, type TrackName } from "@/lib/tones";
 
 /**
  * The app window as it appears on the marketing page: chrome strip, a grid of
  * photo frames, and the track pill floating over the grid.
  *
- * Frames are flat tones carrying a photo's metadata — track dot, rating pips,
- * frame number — rather than an image. The metadata is what makes a flat
- * rectangle read as a photo preview.
+ * Frames render through `PhotoFrame` rather than repeating its markup here.
+ * An earlier version inlined the chrome, and the two promptly drifted — the
+ * rating pips were restyled in one place and not the other. PhotoFrame is
+ * server-rendered here; it needs no hydration because nothing in the hero
+ * moves.
  *
  * The grid is decorative — the surrounding copy carries the meaning — so it is
  * hidden from assistive technology rather than announcing a wall of blanks.
@@ -43,20 +46,12 @@ const rows = Math.ceil(frames.length / columns);
  */
 const trackHeight = `(100% - ${(rows - 1) * GAP}px)`;
 const pillTop = `calc(${(pillRow - 0.5) / rows} * ${trackHeight} + ${(pillRow - 1) * GAP}px)`;
-
-const DOT: Record<TrackName, string> = {
-  edit: "var(--color-af)",
-  jpg: "var(--color-jpg)",
-  raw: "var(--color-raw)",
-};
 ---
 
 <div
-  class="relative overflow-hidden rounded-t-2xl border border-b-0 border-[rgba(43,38,33,0.10)] bg-surface shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]"
+  class="relative overflow-hidden rounded-t-2xl border border-b-0 border-[rgba(43,38,33,0.10)] bg-white shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]"
 >
-  <div
-    class="flex h-[46px] items-center border-b border-[rgba(43,38,33,0.08)] bg-[rgba(255,250,246,0.92)] px-[18px]"
-  >
+  <div class="flex h-[46px] items-center border-b border-[rgba(43,38,33,0.08)] bg-white px-[18px]">
     <div aria-hidden="true" class="flex shrink-0 gap-2">
       <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
       <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
@@ -73,28 +68,13 @@ const DOT: Record<TrackName, string> = {
       >
         {
           frames.map((frame, index) => (
-            <div
-              class="relative aspect-3/2 rounded-[5px]"
-              style={`background:${tones[frame.tone]}; border:1px solid ${frameBorder}`}
-            >
-              <span
-                class="absolute top-2.5 right-2.5 size-[5px] rounded-full"
-                style={`background:${DOT[frame.track]}`}
-              />
-              {frame.rating !== null && (
-                <span class="absolute bottom-[9px] left-2.5 flex gap-0.5">
-                  {Array.from({ length: 5 }, (_, pip) => (
-                    <span
-                      class="size-[5px] shrink-0 rounded-[1px]"
-                      style={`background:${pip < frame.rating! ? "var(--color-raw)" : pipEmpty}`}
-                    />
-                  ))}
-                </span>
-              )}
-              <span class="absolute right-2.5 bottom-2 font-sans text-[9px] leading-3 tracking-[0.02em] text-text-tertiary">
-                {startNumber + index}
-              </span>
-            </div>
+            <PhotoFrame
+              className="aspect-3/2"
+              frameNumber={startNumber + index}
+              rating={frame.rating}
+              tone={tones[frame.tone]}
+              track={frame.track}
+            />
           ))
         }
       </div>

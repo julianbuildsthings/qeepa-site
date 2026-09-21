@@ -62,8 +62,8 @@ export function SidecarDemo() {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        <div className="w-full overflow-hidden rounded-xl border border-[rgba(43,38,33,0.10)] bg-surface shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]">
-          <p className="border-b border-[rgba(43,38,33,0.08)] bg-[rgba(255,250,246,0.92)] px-5 py-3 text-[12px] text-text-tertiary">
+        <div className="w-full overflow-hidden rounded-xl border border-[rgba(43,38,33,0.10)] bg-white shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]">
+          <p className="border-b border-[rgba(43,38,33,0.08)] bg-white px-5 py-3 text-[12px] text-text-tertiary">
             Pictures › Shoots › June
           </p>
 

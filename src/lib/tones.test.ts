@@ -39,16 +39,23 @@ describe("tone palette", () => {
 });
 
 describe("track tones", () => {
-  it("separates raw, jpg and edit enough to be told apart", () => {
+  it("draws from the same scheme as every other frame on the page", () => {
+    for (const hex of Object.values(trackTone)) {
+      expect(Object.values(tones)).toContain(hex);
+    }
+  });
+
+  it("orders raw palest through to edit deepest", () => {
     const raw = hexToHsl(trackTone.raw).l;
     const jpg = hexToHsl(trackTone.jpg).l;
     const edit = hexToHsl(trackTone.edit).l;
 
     expect(raw).toBeGreaterThan(jpg);
     expect(jpg).toBeGreaterThan(edit);
-    // Wider than the gallery's spread on purpose: the tracks row claims you
-    // can see the difference, so the tones have to make that true.
-    expect(raw - edit).toBeGreaterThan(12);
+  });
+
+  it("gives each track its own tone, so no two frames look identical", () => {
+    expect(new Set(Object.values(trackTone)).size).toBe(3);
   });
 
   it("lists every track in capture-to-deliverable order", () => {

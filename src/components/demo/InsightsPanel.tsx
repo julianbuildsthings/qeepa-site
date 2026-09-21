@@ -55,7 +55,7 @@ export function InsightsPanel() {
           ))}
         </div>
 
-        <div className="rounded-xl border border-[rgba(43,38,33,0.10)] bg-surface p-5 shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]">
+        <div className="rounded-xl border border-[rgba(43,38,33,0.10)] bg-white p-5 shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]">
           <ul className="flex flex-col gap-3.5">
             {STATS.map((stat, index) => (
               <li key={stat.label}>

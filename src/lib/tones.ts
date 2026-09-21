@@ -43,8 +43,13 @@ export const tones: Record<ToneName, string> = {
 /** Hairline on every frame. Warm-tinted, never neutral grey. */
 export const frameBorder = "#2B262114";
 
-/** An unfilled rating pip. */
-export const pipEmpty = "#2B26211F";
+/**
+ * Rating pips. Deliberately quiet: a rating is a fact about a frame, not the
+ * point of the page, and at full accent strength a grid of them pulled the eye
+ * straight past the headline.
+ */
+export const pipFilled = "var(--color-peach)";
+export const pipEmpty = "#2B262114";
 
 export type TrackName = "edit" | "jpg" | "raw";
 
@@ -55,18 +60,21 @@ export type TrackName = "edit" | "jpg" | "raw";
 export const trackOrder: TrackName[] = ["raw", "jpg", "edit"];
 
 /**
- * Tones for the three renderings of one shot.
+ * Tones for the three renderings of one shot — drawn from the same scheme as
+ * every other frame on the page, so the tracks row does not read as a
+ * different material.
  *
- * Deliberately separated more widely than the gallery tones. The tracks
- * demonstration's whole claim is that you can *see* the difference between a
- * RAW, its export and its edit — and near-identical near-whites would make
- * that claim false. Still light, but far enough apart to read at a glance:
- * RAW flattest and palest, EDIT deepest.
+ * An earlier version separated these much more widely, because three
+ * near-white frames overlapping on white read as one shape and the row's whole
+ * claim disappeared. Giving the stacked frames their chrome solved that better:
+ * each carries its own coloured track dot, so the *information* tells them
+ * apart and the tones no longer have to. Still ordered palest to deepest, which
+ * is true to how a RAW, an export and a graded edit differ.
  */
 export const trackTone: Record<TrackName, string> = {
-  edit: "#E5C39E",
-  jpg: "#F3E0C8",
-  raw: "#FDF9F4",
+  edit: tones.almond,
+  jpg: tones.wheat,
+  raw: tones.chalk,
 };
 
 /**

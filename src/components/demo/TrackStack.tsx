@@ -1,9 +1,10 @@
 import { motion, MotionConfig, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
+import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { TrackPill } from "@/components/demo/TrackPill";
 import { cycle, presets } from "@/lib/motion";
-import { stackBorder, type TrackName, trackOrder, trackTone } from "@/lib/tones";
+import { type TrackName, trackOrder, trackTone } from "@/lib/tones";
 
 /**
  * Approved comp `T3 · Tracks — stack`.
@@ -29,6 +30,9 @@ import { stackBorder, type TrackName, trackOrder, trackTone } from "@/lib/tones"
  * stack rather than a shadow.
  */
 const OFFSET = { x: 38, y: -38 };
+
+/** One shot, so one rating — it follows the photo across all three tracks. */
+const TRACK_RATING = 4;
 
 export function TrackStack() {
   const [active, setActive] = useState<TrackName>("raw");
@@ -81,13 +85,21 @@ export function TrackStack() {
                 zIndex: trackOrder.length - depth,
               }}
               aria-hidden="true"
-              className="absolute bottom-0 left-0 h-[89%] w-[92%] overflow-hidden rounded-[10px] shadow-[0_2px_6px_rgba(43,38,33,0.07),0_30px_64px_-24px_rgba(43,38,33,0.28)]"
+              className="absolute bottom-0 left-0 h-[89%] w-[92%] rounded-[10px] shadow-[0_2px_6px_rgba(43,38,33,0.07),0_30px_64px_-24px_rgba(43,38,33,0.28)]"
               data-depth={depth}
               data-track={track}
               key={track}
-              style={{ background: trackTone[track], border: `1px solid ${stackBorder}` }}
               transition={presets.ui}
-            />
+            >
+              <PhotoFrame
+                className="h-full w-full rounded-[10px]"
+                frameNumber={4821}
+                rating={TRACK_RATING}
+                size="large"
+                tone={trackTone[track]}
+                track={track}
+              />
+            </motion.div>
           );
         })}
 
