@@ -7,9 +7,13 @@
  * large, with the sentence beneath it. The subheading is never rendered as a
  * small label above the heading; a kicker is banned on this page.
  *
- * Below `lg` the row stacks to one column with the visual always first,
+ * Below `xl` the row stacks to one column with the visual always first,
  * regardless of `reversed`: alternation is a desktop rhythm, and on a phone it
  * would just make some rows read copy-first and others visual-first at random.
+ *
+ * The split engages at `xl`, not `lg`. At 1024 the copy column came out 287px
+ * — about 34 characters — which no subheading survives; the row is better
+ * stacked and full width until there is room for two real columns.
  */
 type Props = {
   /** Frames in this row's demonstration, for the floating bar's count. */
@@ -33,18 +37,18 @@ const { barCount, body, heading, id, reversed = false, subheading } = Astro.prop
   class:list={[
     "mx-auto grid max-w-[1440px] scroll-mt-24 items-center gap-12 px-6 py-20 lg:gap-20 lg:px-[120px] lg:py-28",
     reversed
-      ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]"
-      : "lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]",
+      ? "xl:grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)]"
+      : "xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]",
   ]}
   data-bar-count={barCount}
   data-bar-title={heading}
   id={id}
 >
-  <div class:list={["order-1", reversed ? "lg:order-2" : "lg:order-1"]}>
+  <div class:list={["order-1", reversed ? "xl:order-2" : "xl:order-1"]}>
     <slot />
   </div>
 
-  <div class:list={["order-2", reversed ? "lg:order-1" : "lg:order-2"]}>
+  <div class:list={["order-2", reversed ? "xl:order-1" : "xl:order-2"]}>
     <h2
       class="font-sans text-[clamp(26px,2.4vw,34px)] leading-[1.12] font-bold tracking-[-0.03em] text-text-primary"
     >

@@ -40,7 +40,7 @@ export const features: FeatureCopy[] = [
     body: "Large shoots stay quick to browse, scroll, and revisit, without staring at a loading icon for your RAWs to render.",
     heading: "Fast performance",
     id: "performance",
-    subheading: "Built to work with thousands of photos without skipping a beat.",
+    subheading: "Handles thousands of photos seamlessly.",
   },
   {
     body: "Qeepa shows you the most frequently used camera settings and gear for every shoot, so you understand what sticks.",

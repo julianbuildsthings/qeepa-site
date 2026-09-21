@@ -33,17 +33,17 @@ const SIZES = {
     pips: "bottom-[9px] left-2.5 gap-0.5",
   },
   /*
-   * Pips sit top-left here, not bottom-left as they do on a gallery frame.
-   * The large size exists for the stacked tracks, and the stack fans up and to
-   * the right — so each frame behind shows its top and right edges and hides
-   * its bottom-left under the frame in front. Ratings on the bottom-left would
-   * be visible on exactly one of the three.
+   * Same corners as the default size, just scaled. Note that on the stacked
+   * tracks only the front frame's rating is visible: the stack fans up and to
+   * the right, so the frames behind hide their bottom-left under the frame in
+   * front. That is what a stack of prints does, and it reads as the rating of
+   * the photo you are actually looking at.
    */
   large: {
     dot: "size-2 top-4 right-4",
     number: "right-4 bottom-3.5 text-[12px] leading-4",
     pip: "size-2 rounded-[2px]",
-    pips: "top-4 left-4 gap-1",
+    pips: "bottom-4 left-4 gap-1",
   },
 } as const;
 

@@ -44,12 +44,16 @@ export const tones: Record<ToneName, string> = {
 export const frameBorder = "#2B262114";
 
 /**
- * Rating pips. Deliberately quiet: a rating is a fact about a frame, not the
- * point of the page, and at full accent strength a grid of them pulled the eye
- * straight past the headline.
+ * Rating pips.
+ *
+ * Deliberately between the two extremes this has already been through. At
+ * `--color-raw` a grid of them pulled the eye straight past the headline; at
+ * `--color-peach` they vanished into the near-white frames entirely. This sits
+ * halfway: legible against every tone in the palette without competing with
+ * the type.
  */
-export const pipFilled = "var(--color-peach)";
-export const pipEmpty = "#2B262114";
+export const pipFilled = "#E29754";
+export const pipEmpty = "#2B26211F";
 
 export type TrackName = "edit" | "jpg" | "raw";
 
