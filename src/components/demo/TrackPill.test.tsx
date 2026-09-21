@@ -2,7 +2,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { TrackName } from "@/lib/gradients";
+import type { TrackName } from "@/lib/tones";
 
 import { TrackPill } from "@/components/demo/TrackPill";
 

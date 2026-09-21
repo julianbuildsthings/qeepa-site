@@ -1,9 +1,9 @@
 import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
-import { bloom, warm, type WarmName } from "@/lib/gradients";
+import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { cycle, durations, easings, presets } from "@/lib/motion";
-import { demoFrames } from "@/lib/tiles";
+import { type ToneName, tones, type TrackName } from "@/lib/tones";
 
 /**
  * Row five, photo management.
@@ -14,40 +14,38 @@ import { demoFrames } from "@/lib/tiles";
  * them for you" — so the demonstration has to read as narrowing a view. A
  * frame that looks destroyed contradicts the copy beside it.
  *
- * The two filters are Unrated and a tag, which are the filters the app
- * actually has. An earlier draft of the copy claimed filtering by export
- * status; no such filter exists in the codebase, and the copy was corrected
- * rather than the demonstration faking it.
+ * The filters are Unrated and a tag, which are the filters the app actually
+ * has. An earlier draft of the copy claimed filtering by export status; no
+ * such filter exists in the codebase, and the copy was corrected rather than
+ * the demonstration faking it.
+ *
+ * The survivors are exactly the frames carrying no rating. That is not
+ * decoration — the filter says "Unrated", so anything left holding stars would
+ * make the demonstration a lie about its own control.
  *
  * Clicking a chip pins the filtered state and stops the loop, matching how the
  * track pill behaves — that is also the pause control this loop needs.
  */
-const RECIPES: WarmName[] = [
-  "peach",
-  "sunbleached",
-  "terracotta",
-  "clay",
-  "honey",
-  "amber",
-  "apricot",
-  "blush",
-  "peach",
-  "honey",
-  "clay",
-  "apricot",
+const FRAMES: { rating: number | null; tone: ToneName; track: TrackName }[] = [
+  { rating: 4, tone: "shell", track: "raw" },
+  { rating: null, tone: "chalk", track: "jpg" },
+  { rating: 2, tone: "bisque", track: "raw" },
+  { rating: 5, tone: "wheat", track: "edit" },
+  { rating: null, tone: "linen", track: "raw" },
+  { rating: 3, tone: "oat", track: "jpg" },
+  { rating: 1, tone: "almond", track: "raw" },
+  { rating: null, tone: "ivory", track: "edit" },
+  { rating: 4, tone: "shell", track: "raw" },
+  { rating: null, tone: "linen", track: "jpg" },
+  { rating: 2, tone: "wheat", track: "raw" },
+  { rating: 5, tone: "chalk", track: "edit" },
 ];
 
-const ALL = Array.from({ length: demoFrames.management }, (_, index) => index);
+const ALL = FRAMES.map((_, index) => index);
 
-/** Which frames survive both filters. Fixed so the result is stable. */
-const KEPT = [1, 4, 7, 10];
+/** Everything the Unrated filter leaves behind. */
+const KEPT = FRAMES.flatMap((frame, index) => (frame.rating === null ? [index] : []));
 
-/*
- * Unrated is a real filter. The second is a tag — tags are user-authored, so a
- * plausible one is honest. Deliberately not "Delivered" or "Exported": those
- * read as a status filter, which is the exact capability that does not exist
- * and that the copy was corrected to stop claiming.
- */
 const CHIPS = ["Unrated", "Portfolio"];
 
 export function FilterReveal() {
@@ -114,15 +112,18 @@ export function FilterReveal() {
             {visible.map((index) => (
               <motion.div
                 animate={{ opacity: 1, scale: 1 }}
-                className="relative aspect-3/2 overflow-hidden rounded-[5px]"
                 exit={{ opacity: 0, scale: 0.92 }}
                 initial={{ opacity: 0, scale: 0.92 }}
                 key={index}
                 layout
-                style={{ background: warm[RECIPES[index] as WarmName] }}
                 transition={presets.gentle}
               >
-                <div className="absolute inset-0" style={{ background: bloom }} />
+                <PhotoFrame
+                  className="aspect-3/2"
+                  rating={FRAMES[index]!.rating}
+                  tone={tones[FRAMES[index]!.tone]}
+                  track={FRAMES[index]!.track}
+                />
               </motion.div>
             ))}
           </AnimatePresence>

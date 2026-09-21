@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
 import { features } from "@/lib/copy";
-import { heroTileOrder, trackOrder } from "@/lib/gradients";
 import { demoFrames, pageTileCounts, totalPageTiles } from "@/lib/tiles";
+import { heroTileOrder, trackOrder } from "@/lib/tones";
 
 describe("page tile census", () => {
   it("derives each count from the data that renders it", () => {

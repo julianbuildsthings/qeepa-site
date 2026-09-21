@@ -1,10 +1,14 @@
 ---
 import { TrackPill } from "@/components/demo/TrackPill";
-import { bloom, type TrackName, warm, type WarmName } from "@/lib/gradients";
+import { frameBorder, pipEmpty, type ToneName, tones, type TrackName } from "@/lib/tones";
 
 /**
  * The app window as it appears on the marketing page: chrome strip, a grid of
  * photo frames, and the track pill floating over the grid.
+ *
+ * Frames are flat tones carrying a photo's metadata — track dot, rating pips,
+ * frame number — rather than an image. The metadata is what makes a flat
+ * rectangle read as a photo preview.
  *
  * The grid is decorative — the surrounding copy carries the meaning — so it is
  * hidden from assistive technology rather than announcing a wall of blanks.
@@ -12,31 +16,39 @@ import { bloom, type TrackName, warm, type WarmName } from "@/lib/gradients";
  * `pillRow` is 1-indexed and positions the pill on the centre line of that row
  * rather than at a fixed offset, so it stays put as the tiles resize.
  */
+type Frame = { rating: number | null; tone: ToneName; track: TrackName };
+
 type Props = {
   activeTrack: TrackName;
   columns: number;
+  frames: Frame[];
   pillRow?: number;
-  tiles: WarmName[];
+  /** Frame numbers count up from here. */
+  startNumber?: number;
 };
 
-const { activeTrack, columns, pillRow = 1, tiles } = Astro.props;
+const { activeTrack, columns, frames, pillRow = 1, startNumber = 4821 } = Astro.props;
 
 /** Row gap in px. Must match the `gap-3` on the grid below. */
 const GAP = 12;
 
-const rows = Math.ceil(tiles.length / columns);
+const rows = Math.ceil(frames.length / columns);
 
 /*
  * The exact centre line of the target row.
  *
  * A plain percentage is wrong here: the gaps are fixed pixels, so they are not
  * part of the proportional split. Subtracting them first gives the true row
- * height, then the gaps above the target row are added back. With two rows and
- * a 12px gap this is the difference between 75% and 75% + 3px — small, but it
- * is the difference between the pill sitting on the row and near it.
+ * height, then the gaps above the target row are added back.
  */
 const trackHeight = `(100% - ${(rows - 1) * GAP}px)`;
 const pillTop = `calc(${(pillRow - 0.5) / rows} * ${trackHeight} + ${(pillRow - 1) * GAP}px)`;
+
+const DOT: Record<TrackName, string> = {
+  edit: "var(--color-af)",
+  jpg: "var(--color-jpg)",
+  raw: "var(--color-raw)",
+};
 ---
 
 <div
@@ -60,12 +72,28 @@ const pillTop = `calc(${(pillRow - 0.5) / rows} * ${trackHeight} + ${(pillRow - 
         style={`grid-template-columns: repeat(${columns}, minmax(0, 1fr));`}
       >
         {
-          tiles.map((tile) => (
+          frames.map((frame, index) => (
             <div
-              class="relative aspect-3/2 overflow-hidden rounded-[5px]"
-              style={`background:${warm[tile]}`}
+              class="relative aspect-3/2 rounded-[5px]"
+              style={`background:${tones[frame.tone]}; border:1px solid ${frameBorder}`}
             >
-              <div class="absolute inset-0" style={`background:${bloom}`} />
+              <span
+                class="absolute top-2.5 right-2.5 size-[5px] rounded-full"
+                style={`background:${DOT[frame.track]}`}
+              />
+              {frame.rating !== null && (
+                <span class="absolute bottom-[9px] left-2.5 flex gap-0.5">
+                  {Array.from({ length: 5 }, (_, pip) => (
+                    <span
+                      class="size-[5px] shrink-0 rounded-[1px]"
+                      style={`background:${pip < frame.rating! ? "var(--color-raw)" : pipEmpty}`}
+                    />
+                  ))}
+                </span>
+              )}
+              <span class="absolute right-2.5 bottom-2 font-sans text-[9px] leading-3 tracking-[0.02em] text-text-tertiary">
+                {startNumber + index}
+              </span>
             </div>
           ))
         }

@@ -1,7 +1,8 @@
 import { motion, MotionConfig } from "motion/react";
 
-import { bloom, warm, type WarmName } from "@/lib/gradients";
+import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { durations, easings, presets, stagger } from "@/lib/motion";
+import { type ToneName, tones, type TrackName } from "@/lib/tones";
 
 /**
  * Row four, shoot insights.
@@ -31,21 +32,26 @@ const GEAR: { count: number; label: string }[] = [
   { count: 110, label: "RF 35mm F1.8" },
 ];
 
-const FRAMES: WarmName[] = ["peach", "clay", "honey"];
+const FRAMES: { rating: number | null; tone: ToneName; track: TrackName }[] = [
+  { rating: 5, tone: "shell", track: "raw" },
+  { rating: null, tone: "wheat", track: "jpg" },
+  { rating: 4, tone: "linen", track: "raw" },
+];
 
 export function InsightsPanel() {
   return (
     <MotionConfig reducedMotion="user">
       <div className="flex aspect-716/496 w-full flex-col justify-center gap-3">
         <div aria-hidden="true" className="grid grid-cols-3 gap-3">
-          {FRAMES.map((recipe) => (
-            <div
-              className="relative aspect-3/2 overflow-hidden rounded-[5px]"
-              key={recipe}
-              style={{ background: warm[recipe] }}
-            >
-              <div className="absolute inset-0" style={{ background: bloom }} />
-            </div>
+          {FRAMES.map((frame, index) => (
+            <PhotoFrame
+              className="aspect-3/2"
+              frameNumber={4821 + index}
+              key={frame.tone}
+              rating={frame.rating}
+              tone={tones[frame.tone]}
+              track={frame.track}
+            />
           ))}
         </div>
 

@@ -1,9 +1,9 @@
 import { motion, MotionConfig, useReducedMotion } from "motion/react";
 import { useState } from "react";
 
-import { bloom, warm, type WarmName } from "@/lib/gradients";
 import { durations, easings, stagger } from "@/lib/motion";
 import { demoFrames } from "@/lib/tiles";
+import { frameBorder, type ToneName, tones } from "@/lib/tones";
 
 /**
  * Row three, fast performance.
@@ -18,20 +18,20 @@ import { demoFrames } from "@/lib/tiles";
  * it fills half a row.
  */
 const COLUMNS = 8;
-const RECIPES: WarmName[] = [
-  "peach",
-  "sunbleached",
-  "terracotta",
-  "clay",
-  "honey",
-  "amber",
-  "apricot",
-  "blush",
+const RECIPES: ToneName[] = [
+  "shell",
+  "chalk",
+  "bisque",
+  "wheat",
+  "linen",
+  "oat",
+  "almond",
+  "ivory",
 ];
 
 const TILES = Array.from(
   { length: demoFrames.performance },
-  (_, index) => RECIPES[index % RECIPES.length] as WarmName,
+  (_, index) => RECIPES[index % RECIPES.length] as ToneName,
 );
 
 /** One full scroll of the strip, in seconds. Slow enough to read as browsing. */
@@ -66,19 +66,17 @@ export function GalleryScroll() {
             <motion.div
               animate={{ opacity: 1, scale: 1 }}
               aria-hidden="true"
-              className="relative aspect-3/2 overflow-hidden rounded-[3px]"
+              className="aspect-3/2 rounded-[3px]"
               initial={{ opacity: 0, scale: 0.94 }}
               // biome-ignore lint/suspicious/noArrayIndexKey: fixed-length decorative grid
               key={index}
-              style={{ background: warm[recipe] }}
+              style={{ background: tones[recipe], border: `1px solid ${frameBorder}` }}
               transition={{
                 delay: index * stagger.tight,
                 duration: durations.quick,
                 ease: easings.enter,
               }}
-            >
-              <div className="absolute inset-0" style={{ background: bloom }} />
-            </motion.div>
+            />
           ))}
         </motion.div>
       </div>

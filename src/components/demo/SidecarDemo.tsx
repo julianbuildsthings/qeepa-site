@@ -2,8 +2,8 @@ import { Star } from "lucide-react";
 import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
-import { bloom, warm, type WarmName } from "@/lib/gradients";
 import { cycle, distance, durations, easings, presets } from "@/lib/motion";
+import { frameBorder, type ToneName, tones } from "@/lib/tones";
 
 /**
  * Row two, local-first.
@@ -17,24 +17,23 @@ import { cycle, distance, durations, easings, presets } from "@/lib/motion";
  * Filenames and sizes are plausible placeholders. The sidecar naming follows
  * the app's real Lightroom-style convention.
  */
-const FILES: { gradient: WarmName; name: string; size: string }[] = [
-  { gradient: "peach", name: "IMG_4821.CR3", size: "28.4 MB" },
-  { gradient: "apricot", name: "IMG_4821.JPG", size: "4.1 MB" },
-  { gradient: "honey", name: "IMG_4821.afphoto", size: "61.7 MB" },
+const FILES: { name: string; size: string; tone: ToneName }[] = [
+  { name: "IMG_4821.CR3", size: "28.4 MB", tone: "shell" },
+  { name: "IMG_4821.JPG", size: "4.1 MB", tone: "chalk" },
+  { name: "IMG_4821.afphoto", size: "61.7 MB", tone: "bisque" },
 ];
 
 const STARS = 5;
 const RATING = 4;
 
-function Frame({ gradient }: { gradient: WarmName }) {
+/** At 48x32 there is no room for chrome, so this is a bare tone. */
+function Frame({ tone }: { tone: ToneName }) {
   return (
     <div
       aria-hidden="true"
-      className="relative h-8 w-12 shrink-0 overflow-hidden rounded-[3px]"
-      style={{ background: warm[gradient] }}
-    >
-      <div className="absolute inset-0" style={{ background: bloom }} />
-    </div>
+      className="h-8 w-12 shrink-0 rounded-[3px]"
+      style={{ background: tones[tone], border: `1px solid ${frameBorder}` }}
+    />
   );
 }
 
@@ -71,7 +70,7 @@ export function SidecarDemo() {
           <ul className="divide-y divide-[rgba(43,38,33,0.06)]">
             {FILES.map((file, index) => (
               <li className="flex items-center gap-3 px-5 py-2.5" key={file.name}>
-                <Frame gradient={file.gradient} />
+                <Frame tone={file.tone} />
                 <span className="flex-1 truncate text-[13px] text-text-primary">{file.name}</span>
 
                 {index === 0 && (

@@ -1,7 +1,7 @@
 ---
 import GalleryWindow from "@/components/demo/GalleryWindow.astro";
 import { hero } from "@/lib/copy";
-import { heroTileOrder } from "@/lib/gradients";
+import { heroTileMeta, heroTileOrder } from "@/lib/tones";
 import { siteConfig } from "@/lib/config";
 
 /**
@@ -16,6 +16,12 @@ import { siteConfig } from "@/lib/config";
  * not a negative margin, so the section that follows flows normally.
  */
 const [first, second, third] = hero.headline;
+
+const heroFrames = heroTileOrder.map((tone, index) => ({
+  rating: heroTileMeta[index]!.rating,
+  tone,
+  track: heroTileMeta[index]!.track,
+}));
 ---
 
 <section
@@ -49,8 +55,8 @@ const [first, second, third] = hero.headline;
     <GalleryWindow
       activeTrack="raw"
       columns={5}
+      frames={heroFrames}
       pillRow={2}
-      tiles={heroTileOrder}
     />
   </div>
 </section>

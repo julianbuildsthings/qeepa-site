@@ -2,8 +2,8 @@ import { motion, MotionConfig, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { TrackPill } from "@/components/demo/TrackPill";
-import { bloom, type TrackName, trackOrder, trackRender } from "@/lib/gradients";
 import { cycle, presets } from "@/lib/motion";
+import { stackBorder, type TrackName, trackOrder, trackTone } from "@/lib/tones";
 
 /**
  * Approved comp `T3 · Tracks — stack`.
@@ -23,8 +23,12 @@ import { cycle, presets } from "@/lib/motion";
  * `prefers-reduced-motion`.
  */
 
-/** Per-step depth offset, in px. Matches the comp's 28px fan. */
-const OFFSET = { x: 28, y: -28 };
+/**
+ * Per-step depth offset, in px. Wider than the comp's 28px: with flat tones on
+ * a white page the frames behind need more of themselves showing to read as a
+ * stack rather than a shadow.
+ */
+const OFFSET = { x: 38, y: -38 };
 
 export function TrackStack() {
   const [active, setActive] = useState<TrackName>("raw");
@@ -69,8 +73,6 @@ export function TrackStack() {
         {trackOrder.map((track, index) => {
           // 0 is the front frame; higher values sit further back in the fan.
           const depth = (activeIndex - index + trackOrder.length) % trackOrder.length;
-          const isFront = depth === 0;
-
           return (
             <motion.div
               animate={{
@@ -83,22 +85,9 @@ export function TrackStack() {
               data-depth={depth}
               data-track={track}
               key={track}
-              style={{ background: trackRender[track] }}
+              style={{ background: trackTone[track], border: `1px solid ${stackBorder}` }}
               transition={presets.ui}
-            >
-              <motion.div
-                animate={{ opacity: isFront ? 1 : 0.4 }}
-                className="absolute inset-0"
-                style={{ background: bloom }}
-                transition={presets.ui}
-              />
-              {/* Frames behind recede with a warm veil rather than a grey one. */}
-              <motion.div
-                animate={{ opacity: isFront ? 0 : 1 }}
-                className="absolute inset-0 bg-[rgba(255,252,246,0.10)]"
-                transition={presets.ui}
-              />
-            </motion.div>
+            />
           );
         })}
 

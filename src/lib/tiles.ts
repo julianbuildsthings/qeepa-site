@@ -1,4 +1,4 @@
-import { heroTileOrder, trackOrder } from "@/lib/gradients";
+import { heroTileOrder, trackOrder } from "@/lib/tones";
 
 /**
  * How many photo frames each section of the landing page renders.
@@ -15,7 +15,7 @@ export const demoFrames = {
   insights: 3,
   /** Enough to read as a large shoot rather than a sample. */
   performance: 40,
-  /** Twelve before filtering, four after. */
+  /** Twelve before filtering, four after. Matches FRAMES in FilterReveal. */
   management: 12,
 } satisfies Record<string, number>;
 
