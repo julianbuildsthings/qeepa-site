@@ -13,7 +13,7 @@ const everyString = [
 
 describe("page copy", () => {
   it("keeps the hero headline as three approved lines", () => {
-    expect(hero.headline).toEqual(["Picking your keepers", "shouldn’t feel", "like a chore."]);
+    expect(hero.headline).toEqual(["Choosing your keepers", "shouldn’t feel", "like a chore."]);
   });
 
   it("ships all five feature rows in brief order", () => {

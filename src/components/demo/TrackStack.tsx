@@ -31,8 +31,12 @@ import { type TrackName, trackOrder, trackTone } from "@/lib/tones";
  */
 const OFFSET = { x: 38, y: -38 };
 
-/** One shot, so one rating — it follows the photo across all three tracks. */
-const TRACK_RATING = 4;
+/** Frame number and rating per track. */
+const TRACK_META: Record<TrackName, { number: number; rating: number }> = {
+  edit: { number: 524, rating: 5 },
+  jpg: { number: 523, rating: 3 },
+  raw: { number: 522, rating: 4 },
+};
 
 export function TrackStack() {
   const [active, setActive] = useState<TrackName>("raw");
@@ -93,8 +97,8 @@ export function TrackStack() {
             >
               <PhotoFrame
                 className="h-full w-full rounded-[10px]"
-                frameNumber={4821}
-                rating={TRACK_RATING}
+                frameNumber={TRACK_META[track].number}
+                rating={TRACK_META[track].rating}
                 size="large"
                 tone={trackTone[track]}
                 track={track}

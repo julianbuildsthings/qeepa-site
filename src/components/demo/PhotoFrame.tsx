@@ -32,11 +32,18 @@ const SIZES = {
     pip: "size-[5px] rounded-[1px]",
     pips: "bottom-[9px] left-2.5 gap-0.5",
   },
+  /*
+   * Pips sit top-left here, not bottom-left as they do on a gallery frame.
+   * The large size exists for the stacked tracks, and the stack fans up and to
+   * the right — so each frame behind shows its top and right edges and hides
+   * its bottom-left under the frame in front. Ratings on the bottom-left would
+   * be visible on exactly one of the three.
+   */
   large: {
     dot: "size-2 top-4 right-4",
     number: "right-4 bottom-3.5 text-[12px] leading-4",
     pip: "size-2 rounded-[2px]",
-    pips: "bottom-4 left-4 gap-1",
+    pips: "top-4 left-4 gap-1",
   },
 } as const;
 

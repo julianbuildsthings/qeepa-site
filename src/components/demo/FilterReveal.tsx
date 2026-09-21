@@ -72,7 +72,7 @@ export function FilterReveal() {
     <MotionConfig reducedMotion="user">
       {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
       <div
-        className="flex aspect-716/496 w-full flex-col justify-center gap-4"
+        className="flex aspect-716/496 w-full flex-col justify-center gap-4 rounded-xl border border-[rgba(43,38,33,0.10)] bg-white p-5 shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]"
         onBlur={() => setPaused(false)}
         onFocus={() => setPaused(true)}
         onMouseEnter={() => setPaused(true)}
