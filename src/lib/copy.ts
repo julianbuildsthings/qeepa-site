@@ -34,7 +34,7 @@ export const features: FeatureCopy[] = [
     body: "Qeepa works directly with the photos already on your Mac. Because we don’t touch your files, it’s cross-compatible with almost anything.",
     heading: "Local-first",
     id: "local-first",
-    subheading: "No accounts, no cloud subscription, and no touching your photos.",
+    subheading: "No accounts or cloud subscriptions.",
   },
   {
     body: "Large shoots stay quick to browse, scroll, and revisit, without staring at a loading icon for your RAWs to render.",

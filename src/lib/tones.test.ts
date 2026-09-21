@@ -1,6 +1,16 @@
 import { describe, expect, it } from "vitest";
 
-import { heroTileMeta, heroTileOrder, hexToHsl, tones, trackOrder, trackTone } from "@/lib/tones";
+import {
+  barFill,
+  barTrack,
+  contrastRatio,
+  heroTileMeta,
+  heroTileOrder,
+  hexToHsl,
+  tones,
+  trackOrder,
+  trackTone,
+} from "@/lib/tones";
 
 const allTones = [...Object.values(tones), ...Object.values(trackTone)];
 
@@ -13,6 +23,39 @@ describe("hexToHsl", () => {
   it("reads hue", () => {
     expect(hexToHsl("#EACDAB").h).toBeGreaterThan(20);
     expect(hexToHsl("#EACDAB").h).toBeLessThan(45);
+  });
+});
+
+describe("contrastRatio", () => {
+  it("brackets the scale", () => {
+    expect(contrastRatio("#FFFFFF", "#000000")).toBeCloseTo(21, 1);
+    expect(contrastRatio("#FFFFFF", "#FFFFFF")).toBeCloseTo(1, 5);
+  });
+
+  it("is order-independent", () => {
+    expect(contrastRatio("#B67B47", "#FFFFFF")).toBeCloseTo(contrastRatio("#FFFFFF", "#B67B47"), 5);
+  });
+});
+
+describe("proportion bars", () => {
+  it("uses the brand primary for the fill", () => {
+    expect(barFill).toBe("#FCBA7F");
+  });
+
+  it("runs that fill in a warm track, never a grey one", () => {
+    // Grey and peach-accent sit at almost the same luminance, so a grey track
+    // cannot separate from this fill at any opacity. The pair has to part on
+    // hue and saturation instead.
+    for (const colour of [barFill, barTrack]) {
+      const { h, s } = hexToHsl(colour);
+      expect(h, colour).toBeGreaterThan(15);
+      expect(h, colour).toBeLessThan(45);
+      expect(s, colour).toBeGreaterThan(20);
+    }
+  });
+
+  it("keeps the track the paler of the two", () => {
+    expect(contrastRatio(barTrack, "#FFFFFF")).toBeLessThan(contrastRatio(barFill, "#FFFFFF"));
   });
 });
 

@@ -56,6 +56,30 @@ export const frameBorder = "#2B262114";
 export const pipFilled = "#EEA767";
 export const pipEmpty = "#2B26211F";
 
+/**
+ * The filled portion of a proportion bar, and the track it runs in.
+ *
+ * The fill is `--primary` / `--peach-accent` and the track is `--peach-light`:
+ * the same peach at two depths, so a bar reads as one channel partly filled
+ * rather than as a coloured mark laid on a grey rule.
+ *
+ * The earlier grey track was the reason these bars were hard to see. Grey and
+ * peach-accent sit at almost the same luminance, so deepening the grey does
+ * not separate them — it passes *through* the fill (1.04:1 at 24% black) and
+ * only parts again once the track has gone dark enough to dominate the card.
+ * A warm track separates on hue and saturation instead, which is what the app
+ * does everywhere else.
+ *
+ * At 1.46:1 this pair is below WCAG 1.4.11's 3:1 floor for a graphical object,
+ * and that is acceptable here for one specific reason: every bar's number is
+ * already written beside it, as "Aperture · 62%". The bar reinforces a figure
+ * the label states outright, so it is never the sole carrier of information.
+ * InsightsPanel.test.tsx guards that, and the day a bar loses its printed
+ * percentage the guard fails and the fill has to darken.
+ */
+export const barFill = "#FCBA7F";
+export const barTrack = "#FDECD9";
+
 export type TrackName = "edit" | "jpg" | "raw";
 
 /**
@@ -121,6 +145,22 @@ export const heroTileMeta: { rating: number | null; track: TrackName }[] = [
   { rating: 2, track: "raw" },
   { rating: null, track: "jpg" },
 ];
+
+/** Relative luminance, per WCAG 2.1. Opaque `#rrggbb` only. */
+export function luminance(hex: string): number {
+  const channels = [1, 3, 5].map((offset) => {
+    const value = Number.parseInt(hex.slice(offset, offset + 2), 16) / 255;
+    return value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  });
+
+  return 0.2126 * channels[0]! + 0.7152 * channels[1]! + 0.0722 * channels[2]!;
+}
+
+/** WCAG contrast ratio between two opaque colours, 1–21. */
+export function contrastRatio(a: string, b: string): number {
+  const [lighter, darker] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (lighter! + 0.05) / (darker! + 0.05);
+}
 
 export function hexToHsl(hex: string): { h: number; l: number; s: number } {
   const r = Number.parseInt(hex.slice(1, 3), 16) / 255;

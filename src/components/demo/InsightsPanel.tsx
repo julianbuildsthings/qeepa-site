@@ -2,7 +2,7 @@ import { motion, MotionConfig } from "motion/react";
 
 import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { durations, easings, presets, stagger } from "@/lib/motion";
-import { type ToneName, tones, type TrackName } from "@/lib/tones";
+import { barFill, barTrack, type ToneName, tones, type TrackName } from "@/lib/tones";
 
 /**
  * Row four, shoot insights.
@@ -67,15 +67,38 @@ export function InsightsPanel() {
                     {stat.value}
                   </span>
                 </div>
-                <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-[rgba(43,38,33,0.07)]">
+                {/*
+                  The track carries `whileInView`, not the fill, and hands the
+                  state down as a variant.
+
+                  The fill starts at `scaleX: 0`, which makes its border box
+                  zero pixels wide — and an IntersectionObserver whose target
+                  has zero area never reports as intersecting. With the
+                  observer on the fill itself that deadlocked: the bar could
+                  not grow until it was seen, and could not be seen until it
+                  had grown, so it sat at zero forever. The track is always
+                  full width, so it is always observable.
+
+                  6px, not 4px: at 4px a bar under a label/value row reads as a
+                  divider rather than as a quantity.
+                */}
+                <motion.div
+                  className="mt-1.5 h-1.5 overflow-hidden rounded-full"
+                  initial="hidden"
+                  style={{ background: barTrack }}
+                  viewport={{ margin: "-80px", once: true }}
+                  whileInView="shown"
+                >
                   <motion.div
-                    className="h-full rounded-full bg-primary"
-                    initial={{ transformOrigin: "0% 50%", scaleX: 0 }}
+                    className="h-full rounded-full"
+                    style={{ background: barFill, transformOrigin: "0% 50%" }}
                     transition={{ ...presets.gentle, delay: index * stagger.relaxed }}
-                    viewport={{ margin: "-80px", once: true }}
-                    whileInView={{ scaleX: stat.percentage / 100 }}
+                    variants={{
+                      hidden: { scaleX: 0 },
+                      shown: { scaleX: stat.percentage / 100 },
+                    }}
                   />
-                </div>
+                </motion.div>
               </li>
             ))}
           </ul>
