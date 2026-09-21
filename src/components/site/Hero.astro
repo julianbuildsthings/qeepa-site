@@ -14,6 +14,11 @@ import { siteConfig } from "@/lib/config";
  * The window is clipped rather than complete: the product continues past the
  * frame, it is not a framed screenshot. The clip is a height on the wrapper,
  * not a negative margin, so the section that follows flows normally.
+ *
+ * The bottom padding matches a feature row's own, so the hero-to-tracks
+ * transition is the same 224px every row-to-row transition is. Without it the
+ * hero contributed nothing and the first feature sat at half the page's
+ * rhythm — the only cramped seam on the page.
  */
 const [first, second, third] = hero.headline;
 
@@ -25,7 +30,7 @@ const heroFrames = heroTileOrder.map((tone, index) => ({
 ---
 
 <section
-  class="mx-auto max-w-[1440px] px-6 lg:px-[120px]"
+  class="mx-auto max-w-[1440px] px-6 pb-20 lg:px-[120px] lg:pb-28"
   data-bar-brand
   data-bar-count={heroTileOrder.length}
   data-bar-title={siteConfig.name}

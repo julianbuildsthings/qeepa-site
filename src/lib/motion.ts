@@ -94,6 +94,17 @@ export const durations = {
  * change feels, this describes how long to wait before starting the next one.
  */
 export const cycle = {
+  /**
+   * Dwell on the settled state of a two-state demonstration — long enough to
+   * read the caption that state writes.
+   */
+  hold: 2200,
+  /**
+   * Dwell on that demonstration's starting state. Half a `hold`, because it is
+   * the state the viewer has already read; holding it as long only produces
+   * dead air between plays.
+   */
+  reset: 1100,
   /** RAW → JPG → EDIT on the tracks demonstration. */
   track: 1400,
 };

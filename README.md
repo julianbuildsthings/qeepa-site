@@ -26,15 +26,15 @@ pnpm dev        # http://localhost:4321
 
 ## Scripts
 
-| Script | What it does |
-| --- | --- |
-| `pnpm dev` | Start the Astro dev server. |
-| `pnpm build` | Build the site to `dist/`. |
+| Script         | What it does                                                                |
+| -------------- | --------------------------------------------------------------------------- |
+| `pnpm dev`     | Start the Astro dev server.                                                 |
+| `pnpm build`   | Build the site to `dist/`.                                                  |
 | `pnpm preview` | Build, then serve locally through Wrangler (`astro build && wrangler dev`). |
-| `pnpm deploy` | Build, then deploy to Cloudflare (`astro build && wrangler deploy`). |
-| `pnpm lint` | Lint with oxlint. |
-| `pnpm test` | Run unit tests with Vitest. |
-| `pnpm fmt` | Format with oxfmt. |
+| `pnpm deploy`  | Build, then deploy to Cloudflare (`astro build && wrangler deploy`).        |
+| `pnpm lint`    | Lint with oxlint.                                                           |
+| `pnpm test`    | Run unit tests with Vitest.                                                 |
+| `pnpm fmt`     | Format with oxfmt.                                                          |
 
 A pre-commit hook (Husky) runs lint-staged + the unit tests.
 

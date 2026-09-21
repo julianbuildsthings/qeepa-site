@@ -32,6 +32,7 @@
 The repo is a shadcn/Astro starter. Its header (GitHub star counter, command menu, nav, theme toggle), footer and demo component are not Qeepa and must go before anything else is built on top of them.
 
 **Files:**
+
 - Modify: `src/lib/config.ts`
 - Modify: `src/layouts/BaseLayout.astro`
 - Modify: `src/pages/index.astro`
@@ -39,6 +40,7 @@ The repo is a shadcn/Astro starter. Its header (GitHub star counter, command men
 - Modify: `src/lib/config.test.ts` (create)
 
 **Interfaces:**
+
 - Produces: `siteConfig` with fields `name`, `description`, `url`, `links.github`, `legal.privacy`, `legal.terms`, `contactEmail`. Consumed by Tasks 6 and 10.
 
 - [ ] **Step 1: Write the failing test**
@@ -168,11 +170,13 @@ git commit -m "chore: strip starter template chrome and establish Qeepa page she
 The app enforces "never inline a duration". The site inherits that registry verbatim so the two share one physics vocabulary, and so the discipline exists before the first component rather than being retrofitted.
 
 **Files:**
+
 - Create: `src/lib/motion.ts`
 - Create: `src/lib/motion.test.ts`
 - Read (reference only, do not modify): `/Users/jubs/Desktop/Building/Keepa/src/utils/motion.ts`, `/Users/jubs/Desktop/Building/Keepa/MOTION.md`
 
 **Interfaces:**
+
 - Produces: `presets` (`Record<PresetName, Transition>` with keys `ambient|gentle|lively|snap|ui`), `distance` (`{ enter: 16, hover: 4, panel: 32 }`), `stagger` (`{ base: 0.06, relaxed: 0.12, tight: 0.03 }`), `easings` (`Record<"enter"|"exit"|"standard", [number,number,number,number]>`), `durations`, and composed variants `fadeInUp`, `staggerContainer`, `staggerItem`. Consumed by Tasks 5, 8, 9, 12.
 
 - [ ] **Step 1: Write the failing test**
@@ -186,13 +190,7 @@ import { distance, easings, presets, stagger } from "@/lib/motion";
 
 describe("motion tokens", () => {
   it("ships exactly the five app presets", () => {
-    expect(Object.keys(presets).sort()).toEqual([
-      "ambient",
-      "gentle",
-      "lively",
-      "snap",
-      "ui",
-    ]);
+    expect(Object.keys(presets).sort()).toEqual(["ambient", "gentle", "lively", "snap", "ui"]);
   });
 
   it("matches the app's spring values so both share one feel", () => {
@@ -260,10 +258,12 @@ git commit -m "feat: port the app's motion token registry to the site"
 Every image surface on the page is a gradient. This task makes the palette a tested, enumerable thing rather than fifteen inlined strings, and encodes the two rules that took several design passes to settle: all warm, all near-vertical.
 
 **Files:**
+
 - Create: `src/lib/gradients.ts`
 - Create: `src/lib/gradients.test.ts`
 
 **Interfaces:**
+
 - Produces: `warm: Record<WarmName, string>` with keys `sunbleached|apricot|blush|honey|peach|amber|clay|terracotta`; `trackRender: Record<TrackName, string>` with keys `raw|jpg|edit`; `bloom: string`; `heroTileOrder: WarmName[]` (10 entries, the approved 1A order); helpers `gradientHexes(css: string): string[]`, `gradientAngle(css: string): number`, `hexToHsl(hex: string): { h: number; s: number; l: number }`. Consumed by Tasks 5, 7, 8, 9.
 
 - [ ] **Step 1: Write the failing test**
@@ -391,14 +391,7 @@ Create `src/lib/gradients.ts`. Values are taken from the approved Paper artboard
  *    as graphic rather than photographic.
  */
 export type WarmName =
-  | "amber"
-  | "apricot"
-  | "blush"
-  | "clay"
-  | "honey"
-  | "peach"
-  | "sunbleached"
-  | "terracotta";
+  "amber" | "apricot" | "blush" | "clay" | "honey" | "peach" | "sunbleached" | "terracotta";
 
 export const warm: Record<WarmName, string> = {
   amber: "linear-gradient(172deg,#FFE4C4 0%,#F09A50 48%,#C06E2C 100%)",
@@ -485,10 +478,12 @@ git commit -m "feat: add the warm gradient registry with palette guards"
 Copy is approved verbatim from the brief. Putting it in one module makes it diffable, keeps the fabrication ban testable, and stops an em-dash or straight quote creeping in during a later edit.
 
 **Files:**
+
 - Create: `src/lib/copy.ts`
 - Create: `src/lib/copy.test.ts`
 
 **Interfaces:**
+
 - Produces: `hero: { headline: string[]; lede: string }`, `features: FeatureCopy[]` (5 entries, each `{ id, heading, subheading, body }`), `closing: { heading: string; body: string }`, `footer: { links: { label, href }[]; copyright: string }`. Consumed by Tasks 7, 8, 9, 10.
 
 - [ ] **Step 1: Write the failing test**
@@ -512,11 +507,7 @@ const everyString = [
 
 describe("page copy", () => {
   it("keeps the hero headline as three approved lines", () => {
-    expect(hero.headline).toEqual([
-      "Picking your keepers",
-      "shouldn’t feel",
-      "like a chore.",
-    ]);
+    expect(hero.headline).toEqual(["Picking your keepers", "shouldn’t feel", "like a chore."]);
   });
 
   it("ships all five feature rows in brief order", () => {
@@ -538,7 +529,16 @@ describe("page copy", () => {
   it("invents no price, date or social proof", () => {
     for (const s of everyString) {
       const lower = s.toLowerCase();
-      for (const banned of ["$", "£", "€", "per month", "customers", "rated", "trusted by", "reviews"]) {
+      for (const banned of [
+        "$",
+        "£",
+        "€",
+        "per month",
+        "customers",
+        "rated",
+        "trusted by",
+        "reviews",
+      ]) {
         expect(lower, s).not.toContain(banned);
       }
       expect(/\b(19|20)\d{2}\b/.test(s.replace(footer.copyright, "")), s).toBe(false);
@@ -578,8 +578,7 @@ export type FeatureCopy = {
 
 export const hero = {
   headline: ["Picking your keepers", "shouldn’t feel", "like a chore."],
-  lede:
-    "Qeepa is a modern, local-first photo manager for photographers who shoot in RAW and want to seamlessly sort through their photos. Cull, compare, and keep your edits.",
+  lede: "Qeepa is a modern, local-first photo manager for photographers who shoot in RAW and want to seamlessly sort through their photos. Cull, compare, and keep your edits.",
 };
 
 export const features: FeatureCopy[] = [
@@ -649,6 +648,7 @@ git commit -m "feat: add the approved page copy as a single tested module"
 These two components appear in the hero and in three feature rows. Building them once, tested, prevents the pill drifting between sections. This task also adds a DOM test environment, because from here on components have structure worth asserting.
 
 **Files:**
+
 - Modify: `vitest.config.mts`
 - Modify: `package.json` (add `happy-dom`, `@testing-library/react` as devDependencies)
 - Create: `src/components/demo/PhotoFrame.tsx`
@@ -656,6 +656,7 @@ These two components appear in the hero and in three feature rows. Building them
 - Create: `src/components/demo/TrackPill.test.tsx`
 
 **Interfaces:**
+
 - Produces: `PhotoFrame({ gradient, className, radius })` renders a `<div>` with the gradient plus bloom overlay. `TrackPill({ active, onSelect, interactive })` where `active: TrackName`; renders a `<ul>` of three items, each a `<button>` when `interactive`, otherwise a `<span>`. Consumed by Tasks 7, 8, 9.
 
 - [ ] **Step 1: Add the DOM test environment**
@@ -832,11 +833,13 @@ git commit -m "feat: add PhotoFrame and TrackPill primitives with DOM tests"
 ### Task 6: Site header and footer
 
 **Files:**
+
 - Create: `src/components/site/SiteHeader.astro`
 - Create: `src/components/site/SiteFooter.astro`
 - Modify: `src/pages/index.astro`
 
 **Interfaces:**
+
 - Consumes: `siteConfig` (Task 1), `footer` copy (Task 4).
 - Produces: two Astro components taking no props.
 
@@ -934,11 +937,13 @@ git commit -m "feat: add the wordmark-only site header, legal footer and page st
 Implements approved artboard `1A`. Static HTML — no island. The gallery grid is decorative and is hidden from assistive technology; the headline carries the meaning.
 
 **Files:**
+
 - Create: `src/components/site/Hero.astro`
 - Create: `src/components/demo/GalleryWindow.astro`
 - Modify: `src/pages/index.astro`
 
 **Interfaces:**
+
 - Consumes: `hero` copy (Task 4), `warm` + `heroTileOrder` + `bloom` (Task 3), `TrackPill` (Task 5).
 - Produces: `Hero.astro`, and `GalleryWindow.astro` taking `{ tiles: WarmName[]; columns: number; activeTrack: TrackName }` — reused by Task 9's performance row.
 
@@ -1044,12 +1049,14 @@ git commit -m "feat: build the hero section from approved comp 1A"
 Implements approved artboard `T3`. The first row where motion matters: the stack cross-fades between tracks. Built with the DOM shaped for that — one container, three absolutely-positioned children — even though motion itself lands in Task 12.
 
 **Files:**
+
 - Create: `src/components/site/FeatureRow.astro`
 - Create: `src/components/demo/TrackStack.tsx`
 - Create: `src/components/demo/TrackStack.test.tsx`
 - Modify: `src/pages/index.astro`
 
 **Interfaces:**
+
 - Consumes: `features` copy (Task 4), `trackRender` (Task 3), `TrackPill` (Task 5).
 - Produces: `FeatureRow.astro` taking `{ id: string; heading: string; subheading: string; body: string; reversed?: boolean }` with a `<slot />` for the visual — consumed by Task 9 for the remaining four rows. `TrackStack` React island taking no props.
 
@@ -1215,13 +1222,14 @@ git commit -m "feat: add the feature row wrapper and the Tracks row from comp T3
 
 ### Task 9: The remaining four feature rows — DESIGN-GATED
 
-> **This task cannot start until rows two to five have approved comps.** Only the hero (1A) and the Tracks row (T3) have been designed and signed off. The table below fixes each row's *structure, orientation and interface* so the rest of the plan is stable, but the visual for each is a design decision, not an implementation one. Writing the component code now would mean inventing four designs nobody has reviewed.
+> **This task cannot start until rows two to five have approved comps.** Only the hero (1A) and the Tracks row (T3) have been designed and signed off. The table below fixes each row's _structure, orientation and interface_ so the rest of the plan is stable, but the visual for each is a design decision, not an implementation one. Writing the component code now would mean inventing four designs nobody has reviewed.
 >
 > **Executor: stop here and request comps.** Each row gets the same treatment Tracks did — a few variants in Paper, reviewed, then built. Return to this task once a row is approved, and implement that row alone.
 
 Rows two to five. Each reuses `FeatureRow` and alternates orientation. Per the direction contract, no row uses a single large gradient as its visual — at this scale a bare gradient reads as a colour wash, so each visual is built from multiple frames or app chrome.
 
 **Files:**
+
 - Create: `src/components/demo/ShootFolders.astro` (row 2, local-first)
 - Create: `src/components/demo/GalleryScroll.tsx` (row 3, performance)
 - Create: `src/components/demo/SettingsCarousel.tsx` (row 4, insights)
@@ -1230,17 +1238,18 @@ Rows two to five. Each reuses `FeatureRow` and alternates orientation. Per the d
 - Modify: `src/pages/index.astro`
 
 **Interfaces:**
+
 - Consumes: `FeatureRow` (Task 8), `GalleryWindow` (Task 7), `PhotoFrame`/`TrackPill` (Task 5), `warm` (Task 3), `features` copy (Task 4).
 
 Orientation, alternating from row one (visual left):
 
-| Row | id | Visual side | Demonstration |
-| --- | --- | --- | --- |
-| 1 | `tracks` | left | `TrackStack` (built in Task 8) |
-| 2 | `local-first` | right | `ShootFolders` — a folder path resolving into three shoot cards, each a small frame plus name and count. Static Astro; no motion needed. |
-| 3 | `performance` | left | `GalleryScroll` — `GalleryWindow` at 6 columns with more rows than fit, clipped, scrolling slowly on a loop. |
-| 4 | `insights` | right | `SettingsCarousel` — a row of setting chips (`1/125`, `ISO 800`, `f/2.8`, `35 mm`) cycling. |
-| 5 | `management` | left | `FilterReveal` — a grid of 12 frames narrowing to 4 as two filter chips activate. |
+| Row | id            | Visual side | Demonstration                                                                                                                            |
+| --- | ------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `tracks`      | left        | `TrackStack` (built in Task 8)                                                                                                           |
+| 2   | `local-first` | right       | `ShootFolders` — a folder path resolving into three shoot cards, each a small frame plus name and count. Static Astro; no motion needed. |
+| 3   | `performance` | left        | `GalleryScroll` — `GalleryWindow` at 6 columns with more rows than fit, clipped, scrolling slowly on a loop.                             |
+| 4   | `insights`    | right       | `SettingsCarousel` — a row of setting chips (`1/125`, `ISO 800`, `f/2.8`, `35 mm`) cycling.                                              |
+| 5   | `management`  | left        | `FilterReveal` — a grid of 12 frames narrowing to 4 as two filter chips activate.                                                        |
 
 - [ ] **Step 1: Write the failing test for the one component with real logic**
 
@@ -1323,6 +1332,7 @@ git commit -m "feat: add the remaining four feature rows"
 Calm and spacious. Availability as a status, never a call to action — there is no working download, so a button would be a lie.
 
 **Files:**
+
 - Create: `src/components/site/Closing.astro`
 - Modify: `src/pages/index.astro`
 

@@ -42,15 +42,26 @@ export function SidecarDemo() {
   const [paused, setPaused] = useState(false);
   const reduceMotion = useReducedMotion();
 
+  /*
+   * Asymmetric dwell, on a timeout chain rather than an interval. A fixed
+   * interval gave both states the same 2.8s, and since the whole state change
+   * plays in under 400ms the loop was mostly dead air — worst of all in the
+   * unrated state, which is only the setup for the thing being demonstrated.
+   * The rated state now holds long enough to read its caption; the starting
+   * state passes through in half that.
+   */
   useEffect(() => {
     if (paused || reduceMotion) return;
 
-    const id = setInterval(() => {
-      setRated((current) => !current);
-    }, cycle.track * 2);
+    const id = setTimeout(
+      () => {
+        setRated((current) => !current);
+      },
+      rated ? cycle.hold : cycle.reset,
+    );
 
-    return () => clearInterval(id);
-  }, [paused, reduceMotion]);
+    return () => clearTimeout(id);
+  }, [paused, rated, reduceMotion]);
 
   return (
     <MotionConfig reducedMotion="user">

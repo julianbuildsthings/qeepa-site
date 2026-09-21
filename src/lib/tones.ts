@@ -46,13 +46,14 @@ export const frameBorder = "#2B262114";
 /**
  * Rating pips.
  *
- * Deliberately between the two extremes this has already been through. At
- * `--color-raw` a grid of them pulled the eye straight past the headline; at
- * `--color-peach` they vanished into the near-white frames entirely. This sits
- * halfway: legible against every tone in the palette without competing with
- * the type.
+ * Bracketed between two extremes this has already been through. At `--color-raw`
+ * (#C8752A) a grid of them pulled the eye straight past the headline; at
+ * `--peach-accent` (#FCBA7F) they vanished into the near-white frames entirely.
+ * The midpoint was still too heavy, so this sits about 45% of the way from the
+ * dark end toward the peach: present at a glance across a twelve-frame grid,
+ * but never the first thing the eye lands on.
  */
-export const pipFilled = "#E29754";
+export const pipFilled = "#EEA767";
 export const pipEmpty = "#2B26211F";
 
 export type TrackName = "edit" | "jpg" | "raw";

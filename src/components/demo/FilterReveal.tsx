@@ -70,9 +70,16 @@ export function FilterReveal() {
 
   return (
     <MotionConfig reducedMotion="user">
+      {/*
+        The panel is anchored to the top, not centred. Under `justify-center`
+        the whole block re-centred every time the grid lost two rows, so the
+        chip row slid 110px down the panel and back on every pass and the space
+        above it swung between 48px and 158px. A filter toolbar does not move
+        when its results change; the grid empties downward beneath it.
+      */}
       {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
       <div
-        className="flex aspect-716/496 w-full flex-col justify-center gap-4 rounded-xl border border-[rgba(43,38,33,0.10)] bg-white p-5 shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]"
+        className="flex aspect-716/496 w-full flex-col gap-4 rounded-xl border border-[rgba(43,38,33,0.10)] bg-white p-5 shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]"
         onBlur={() => setPaused(false)}
         onFocus={() => setPaused(true)}
         onMouseEnter={() => setPaused(true)}
@@ -107,7 +114,10 @@ export function FilterReveal() {
           </motion.span>
         </div>
 
-        <div aria-hidden="true" className="grid grid-cols-4 gap-3">
+        {/* `flex-1` plus `content-start` keeps the surviving frames exactly
+        where they were when twelve were showing, rather than letting the grid
+        re-centre itself in the space the other eight left. */}
+        <div aria-hidden="true" className="grid flex-1 grid-cols-4 content-start gap-3">
           <AnimatePresence mode="popLayout">
             {visible.map((index) => (
               <motion.div
