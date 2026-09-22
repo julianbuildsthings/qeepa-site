@@ -182,6 +182,16 @@ describe("FloatingBar", () => {
     scrollTo.mockRestore();
   });
 
+  it("offers a Back button home on a page a step away from it", () => {
+    render(<FloatingBar backHref="/" brand={BRAND} sections={SECTIONS} />);
+    expect(screen.getByRole("link", { name: "Back to home" })).toHaveAttribute("href", "/");
+  });
+
+  it("has no Back button on the home page", () => {
+    render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
+    expect(screen.queryByRole("link", { name: "Back to home" })).not.toBeInTheDocument();
+  });
+
   it("offers nothing but the stars and the button on the right", () => {
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
     expect(screen.getAllByRole("button").map((button) => button.textContent)).toEqual([

@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { ChevronLeft, Star } from "lucide-react";
 import { animate, AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
 import { type MouseEvent, useEffect, useRef, useState } from "react";
 
@@ -47,6 +47,12 @@ type FloatingBarProps = {
    * `count` is null on pages with no photo frames, rather than claiming zero.
    */
   brand: { count: number | null; title: string };
+  /**
+   * Where the Back button goes, on pages that are a step away from the home
+   * page (the legal pages). Omit on the home page itself, which has nowhere
+   * to go back to.
+   */
+  backHref?: string;
   /**
    * A section after the features — the closing — where the bar names the
    * product again, with every star lit, instead of going on naming the last
@@ -112,7 +118,7 @@ function scrollTargetFor(element: HTMLElement): number {
   return Math.min(Math.max(top, 0), Math.max(max, 0));
 }
 
-export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
+export function FloatingBar({ backHref, brand, endId, sections }: FloatingBarProps) {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const [previewed, setPreviewed] = useState<number | null>(null);
   /*
@@ -262,7 +268,9 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
         */}
           <div
             className={cn(
-              "pointer-events-auto relative flex h-12 items-center gap-2.5 rounded-full pr-1.5 pl-5 shadow-[0px_10px_30px_rgba(43,38,33,0.14)] transition-colors duration-(--motion-base) ease-(--ease-standard) motion-reduce:transition-none",
+              "pointer-events-auto relative flex h-12 items-center gap-2.5 rounded-full pr-1.5 shadow-[0px_10px_30px_rgba(43,38,33,0.14)] transition-colors duration-(--motion-base) ease-(--ease-standard) motion-reduce:transition-none",
+              // The app tightens the left edge when a round button sits there.
+              backHref ? "pl-1.5" : "pl-5",
               selecting ? "bg-peach-light" : "bg-[#FFFFFFF5]",
             )}
             data-state={selecting ? "selection" : "browse"}
@@ -271,6 +279,22 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
           is the server's HTML, and a label that starts at opacity 0 is an
           invisible brand name until the island hydrates. Only later changes of
           section fade in. */}
+            {/*
+              The app's Back button, as its floating bar draws it: a 36px round
+              button on the surface-2 fill with a 15px chevron, at the bar's
+              left edge. A link rather than `history.back()`, so it always
+              lands on the home page, however the visitor arrived.
+            */}
+            {backHref && (
+              <a
+                aria-label="Back to home"
+                className="extend-touch-target flex size-9 shrink-0 items-center justify-center rounded-full bg-surface-2 text-text-secondary transition-colors duration-(--motion-quick) ease-(--ease-standard) hover:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none motion-reduce:transition-none"
+                href={backHref}
+              >
+                <ChevronLeft aria-hidden="true" size={15} />
+              </a>
+            )}
+
             <AnimatePresence initial={false}>
               <motion.div
                 animate={{ opacity: 1 }}
