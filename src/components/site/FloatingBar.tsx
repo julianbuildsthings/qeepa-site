@@ -1,5 +1,4 @@
-import { Menu } from "@base-ui/react/menu";
-import { ChevronDown, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
@@ -19,8 +18,7 @@ import { cn } from "@/lib/utils";
  * the joke, and it only works because the stars are exactly the app's.
  *
  * The features come in as a prop from `copy.ts` rather than being discovered,
- * so the stars, the Features menu and the section labels cannot disagree about
- * order or names. Which one is *current* is still read from the DOM on scroll,
+ * so the stars and the section labels cannot disagree about order or names. Which one is *current* is still read from the DOM on scroll,
  * because that is a question about layout.
  *
  * Get Qeepa is a real disabled button until there is something to get. It is
@@ -52,12 +50,21 @@ type FloatingBarProps = {
   sections: BarSection[];
 };
 
-/** How far down the viewport a section must reach before the bar adopts it. */
-const ADOPT_LINE_PX = 140;
+/**
+ * How far down the viewport a section's top must reach before the bar adopts
+ * it, as a fraction of the viewport height — the middle of the screen.
+ *
+ * An earlier fixed line at 140px from the top switched far too late: every row
+ * has 112px of padding above its content, so the next feature was well on
+ * screen, and the previous one largely gone, before the bar changed. At the
+ * midpoint the bar names whichever section holds the middle of the screen.
+ */
+const ADOPT_LINE = 0.5;
 
 /**
  * The id of the last section whose top has passed the adopt line, or null
- * while the hero is still current.
+ * while the hero is still current. Measured against the viewport's current
+ * height on every pass, so it holds when the window is resized.
  *
  * Queried on each pass rather than cached at mount. This island hydrates with
  * `client:load` and sits above `<main>`, so on a cold load the effect can run
@@ -65,11 +72,12 @@ const ADOPT_LINE_PX = 140;
  * empty list and the bar never updated again.
  */
 function currentSectionId(ids: string[]): string | null {
+  const line = window.innerHeight * ADOPT_LINE;
   let current: string | null = null;
 
   for (const id of ids) {
     const element = document.getElementById(id);
-    if (element && element.getBoundingClientRect().top <= ADOPT_LINE_PX) current = id;
+    if (element && element.getBoundingClientRect().top <= line) current = id;
   }
 
   return current;
@@ -168,7 +176,7 @@ export function FloatingBar({ brand, sections }: FloatingBarProps) {
           {/*
             Centred on the bar, not placed in the flow, so it holds still while
             the label beside it changes length — the app's centre slot does the
-            same. Hidden below md, where the label and the two controls need the
+            same. Hidden below md, where the label and the button need the
             width.
           */}
           <div className="pointer-events-none absolute inset-0 hidden items-center justify-center md:flex">
@@ -208,53 +216,6 @@ export function FloatingBar({ brand, sections }: FloatingBarProps) {
           </div>
 
           <div className="flex-1" />
-
-          <Menu.Root>
-            {/* Below sm the label goes and the trigger becomes a 36px round
-            button, the size of the app's own icon buttons: on a phone the two
-            controls otherwise leave about 75px for the section name. The
-            accessible name stays "Features" at every width. */}
-            <Menu.Trigger
-              aria-label="Features"
-              className="relative inline-flex size-9 shrink-0 touch-manipulation items-center justify-center gap-[7px] rounded-full border border-border-strong text-[13px] leading-4 font-medium text-text-primary transition-colors hover:bg-[rgba(43,38,33,0.04)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none data-popup-open:bg-[rgba(43,38,33,0.04)] sm:h-auto sm:w-auto sm:px-4 sm:py-2"
-            >
-              <span className="hidden sm:inline">Features</span>
-              <ChevronDown aria-hidden="true" size={12} strokeWidth={2} />
-            </Menu.Trigger>
-            <Menu.Portal>
-              <Menu.Positioner align="end" className="z-40 outline-none" sideOffset={10}>
-                <Menu.Popup className="min-w-56 origin-(--transform-origin) rounded-2xl bg-white p-1.5 shadow-[0px_10px_30px_rgba(43,38,33,0.14)] ring-1 ring-[rgba(43,38,33,0.06)] transition-[opacity,transform] duration-150 outline-none data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-starting-style:opacity-0 motion-reduce:transition-none">
-                  {sections.map((section) => (
-                    <Menu.LinkItem
-                      aria-current={section.id === currentId ? "location" : undefined}
-                      className={cn(
-                        "flex items-center justify-between gap-6 rounded-xl px-3 py-2 text-[13px] leading-4 outline-none select-none data-highlighted:bg-surface-2",
-                        section.id === currentId
-                          ? "bg-peach-light font-medium text-peach-dark data-highlighted:bg-peach-light"
-                          : "text-text-primary",
-                      )}
-                      // Base UI leaves link items' menus open by default, on the
-                      // assumption the link leaves the page. These jump within it,
-                      // so the menu has to get out of the way of where you landed.
-                      closeOnClick
-                      href={sectionHref(section.id)}
-                      key={section.id}
-                    >
-                      {section.title}
-                      <span
-                        className={cn(
-                          "tabular-nums",
-                          section.id === currentId ? "text-peach-dark" : "text-text-tertiary",
-                        )}
-                      >
-                        {section.count}
-                      </span>
-                    </Menu.LinkItem>
-                  ))}
-                </Menu.Popup>
-              </Menu.Positioner>
-            </Menu.Portal>
-          </Menu.Root>
 
           <button
             className="inline-flex shrink-0 cursor-not-allowed items-center rounded-full bg-[rgba(43,38,33,0.06)] px-4 py-[9px] text-[13px] leading-4 font-medium text-text-tertiary sm:px-5"

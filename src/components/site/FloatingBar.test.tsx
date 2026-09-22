@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
-import { act, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { render, screen, within } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { type BarSection, FloatingBar } from "@/components/site/FloatingBar";
 import { barSections } from "@/lib/bar";
@@ -15,9 +15,16 @@ const SECTIONS: BarSection[] = [
 
 const BRAND = { count: 10, title: "Qeepa" };
 
+/** Fixed, so the adopt line — the middle of the viewport — sits at 400px. */
+const VIEWPORT_HEIGHT = 800;
+
+beforeEach(() => {
+  window.innerHeight = VIEWPORT_HEIGHT;
+});
+
 /**
  * Lay the sections into the document with fixed tops, since happy-dom does no
- * layout. A top at or above the bar's adopt line (140px) counts as reached.
+ * layout. A top at or above the middle of the viewport counts as reached.
  */
 function placeSections(tops: Record<string, number>) {
   for (const [id, top] of Object.entries(tops)) {
@@ -92,27 +99,29 @@ describe("FloatingBar", () => {
     expect(screen.getByRole("button", { name: "Get Qeepa" })).toBeDisabled();
   });
 
-  it("always offers the Features menu", async () => {
-    placeSections({ "local-first": 80, performance: 1100, tracks: -700 });
+  /*
+   * The regression this guards: the bar used to adopt a section only once its
+   * top reached 140px from the top of the screen, which — with 112px of
+   * padding above every row's content — meant the next feature was well on
+   * screen before the bar changed. It now adopts at the middle of the screen.
+   */
+  it("adopts a section as soon as its top reaches the middle of the screen", () => {
+    placeSections({ "local-first": 300, performance: 1400, tracks: -500 });
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
-    await act(async () => {});
-    expect(screen.getByRole("button", { name: "Features" })).toBeInTheDocument();
+    expect(screen.getByText("Local-first")).toBeInTheDocument();
   });
 
-  /*
-   * Base UI keeps a link item's menu open unless told otherwise. These links
-   * jump within the page, so a menu left open sits over where you landed.
-   */
-  it("closes the Features menu once a section is chosen", async () => {
+  it("holds the previous section until the next one reaches the middle", () => {
+    placeSections({ "local-first": 460, performance: 1400, tracks: -500 });
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
-    const trigger = screen.getByRole("button", { name: "Features" });
+    expect(screen.getByText("Photo tracks")).toBeInTheDocument();
+  });
 
-    await act(async () => trigger.click());
-    const item = await screen.findByRole("menuitem", { name: /Local-first/ });
-    expect(item).toHaveAttribute("href", "/#local-first");
-
-    await act(async () => item.click());
-    expect(trigger).toHaveAttribute("aria-expanded", "false");
+  it("offers nothing but the stars and the button on the right", () => {
+    render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
+    expect(screen.getAllByRole("button").map((button) => button.textContent)).toEqual([
+      "Get Qeepa",
+    ]);
   });
 
   it("omits the count on pages with no photo frames rather than claiming zero", () => {
