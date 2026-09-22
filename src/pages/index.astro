@@ -4,6 +4,7 @@ import { GalleryScroll } from "@/components/demo/GalleryScroll";
 import { InsightsPanel } from "@/components/demo/InsightsPanel";
 import { SidecarDemo } from "@/components/demo/SidecarDemo";
 import { TrackStack } from "@/components/demo/TrackStack";
+import Closing from "@/components/site/Closing.astro";
 import FeatureRow from "@/components/site/FeatureRow.astro";
 import { FloatingBar } from "@/components/site/FloatingBar";
 import Hero from "@/components/site/Hero.astro";
@@ -16,6 +17,9 @@ import { pageTileCounts } from "@/lib/tiles";
 
 const [tracks, localFirst, performance, insights, management] = features;
 
+/** The closing section, and the point where the bar returns to the brand. */
+const CLOSING_ID = "availability";
+
 /*
  * Orientation alternates down the page, starting with the visual on the left.
  * `reversed` puts the visual on the right.
@@ -26,6 +30,7 @@ const [tracks, localFirst, performance, insights, management] = features;
   <FloatingBar
     brand={{ count: pageTileCounts.hero, title: siteConfig.name }}
     client:load
+    endId={CLOSING_ID}
     sections={barSections}
   />
 
@@ -51,6 +56,8 @@ const [tracks, localFirst, performance, insights, management] = features;
     <FeatureRow {...management!}>
       <FilterReveal client:visible />
     </FeatureRow>
+
+    <Closing id={CLOSING_ID} />
   </main>
 
   <SiteFooter />

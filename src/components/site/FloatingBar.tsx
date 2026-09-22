@@ -46,6 +46,12 @@ type FloatingBarProps = {
    * `count` is null on pages with no photo frames, rather than claiming zero.
    */
   brand: { count: number | null; title: string };
+  /**
+   * A section after the features where the bar returns to the brand state —
+   * the closing, so the bar stops naming the last feature once you are past
+   * it. Omit on pages without one.
+   */
+  endId?: string;
   /** The features, in page order. The nth is marked by n stars. */
   sections: BarSection[];
 };
@@ -91,12 +97,14 @@ function sectionHref(id: string): string {
   return `/#${id}`;
 }
 
-export function FloatingBar({ brand, sections }: FloatingBarProps) {
+export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const [previewed, setPreviewed] = useState<number | null>(null);
 
   useEffect(() => {
-    const ids = sections.map((section) => section.id);
+    // The end section is tracked like any other, but it is not a feature, so
+    // when it is current no star is marked and the bar reads as the brand.
+    const ids = [...sections.map((section) => section.id), ...(endId ? [endId] : [])];
     let frame = 0;
 
     const update = () => {
@@ -118,11 +126,19 @@ export function FloatingBar({ brand, sections }: FloatingBarProps) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [sections]);
+  }, [endId, sections]);
 
   const index = sections.findIndex((section) => section.id === currentId);
   const current = index === -1 ? null : sections[index]!;
   const selecting = current !== null;
+
+  /*
+   * The count names frames the viewer can see. Over the hero that is the
+   * hero's grid; at the closing there are none, so the bar shows the name
+   * alone rather than repeating a count for a grid long since scrolled away.
+   */
+  const atEnd = endId !== undefined && currentId === endId;
+  const count = current ? current.count : atEnd ? null : brand.count;
 
   /** How many stars read as filled: the current section, or the one hovered. */
   const filled = previewed ?? index + 1;
@@ -155,7 +171,7 @@ export function FloatingBar({ brand, sections }: FloatingBarProps) {
               animate={{ opacity: 1 }}
               className="flex min-w-0 items-center gap-2.5"
               initial={{ opacity: 0 }}
-              key={current?.id ?? "brand"}
+              key={current?.id ?? (atEnd ? "end" : "brand")}
               transition={{ duration: durations.quick, ease: easings.standard }}
             >
               {current ? (
@@ -165,9 +181,9 @@ export function FloatingBar({ brand, sections }: FloatingBarProps) {
                   {brand.title}
                 </a>
               )}
-              {(current?.count ?? brand.count) !== null && (
+              {count !== null && (
                 <p className="hidden truncate text-[13px] leading-4 text-text-secondary tabular-nums sm:block">
-                  {current?.count ?? brand.count}&nbsp;photos
+                  {count}&nbsp;photos
                 </p>
               )}
             </motion.div>

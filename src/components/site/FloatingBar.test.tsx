@@ -117,6 +117,24 @@ describe("FloatingBar", () => {
     expect(screen.getByText("Photo tracks")).toBeInTheDocument();
   });
 
+  it("returns to the brand once the closing section is reached", () => {
+    placeSections({
+      availability: 120,
+      "local-first": -2000,
+      performance: -1000,
+      tracks: -3000,
+    });
+    const { container } = render(
+      <FloatingBar brand={BRAND} endId="availability" sections={SECTIONS} />,
+    );
+
+    expect(screen.getByRole("link", { name: "Qeepa" })).toBeInTheDocument();
+    expect(container.querySelector("[data-state]")).toHaveAttribute("data-state", "browse");
+    for (const star of stars()) expect(star).not.toHaveAttribute("aria-current");
+    // No frames are on screen at the closing, so no count is claimed there.
+    expect(screen.queryByText(/photos/)).not.toBeInTheDocument();
+  });
+
   it("offers nothing but the stars and the button on the right", () => {
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
     expect(screen.getAllByRole("button").map((button) => button.textContent)).toEqual([
