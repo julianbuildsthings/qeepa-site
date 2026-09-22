@@ -56,9 +56,14 @@ export const stagger = {
   relaxed: 0.12,
   /** Long grids, where the offset should be barely perceptible. */
   tight: 0.03,
+  /**
+   * Between the rendered lines of a copy block as they rise, heading through
+   * body, so the block reads as one sentence arriving.
+   */
+  line: 0.07,
 };
 
-export type EasingName = "enter" | "exit" | "linear" | "standard";
+export type EasingName = "enter" | "exit" | "linear" | "rise" | "standard";
 
 /**
  * Cubic-bézier easing for tween work — opacity, colour, and anything else that
@@ -76,6 +81,12 @@ export const easings: Record<EasingName, [number, number, number, number]> = {
    * where any acceleration would make a loop visibly breathe at its seam.
    */
   linear: [0, 0, 1, 1],
+  /**
+   * Exponential ease-out for a line rising out of its mask: it covers most of
+   * the distance at once and then settles, so the text is legible early and
+   * the arrival is soft. Site-only, for the copy's line reveal.
+   */
+  rise: [0.16, 1, 0.3, 1],
   /** Symmetric in/out — the default for fades. */
   standard: [0.42, 0, 0.58, 1],
 };
@@ -88,6 +99,11 @@ export const durations = {
   editorial: 0.35,
   /** Hover, focus, colour and fades. */
   quick: 0.15,
+  /**
+   * One line of copy rising out of its mask. Long because `easings.rise`
+   * spends most of it settling; the line is readable well before it ends.
+   */
+  line: 0.8,
   /** Larger surfaces. */
   slow: 0.4,
 };
@@ -175,5 +191,8 @@ export function motionCssVariables(): string {
     `--ease-standard: ${bezier(easings.standard)}`,
     `--reveal-distance: ${distance.enter}px`,
     `--reveal-stagger: ${stagger.relaxed}s`,
+    `--line-duration: ${durations.line}s`,
+    `--ease-rise: ${bezier(easings.rise)}`,
+    `--line-stagger: ${stagger.line}s`,
   ].join("; ");
 }

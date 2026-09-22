@@ -103,6 +103,11 @@ against these, not flag them as drift.
   icon.
 - **The track pill** appears in the hero and the Photo tracks row. Adding it to
   further rows is open, not required.
+- **Copy enters line by line.** Chosen by the user from four directions (slide,
+  handoff, editorial rise, developing wipe), with every line rather than the
+  heading alone: the feature copy and the closing rise out of per-line masks,
+  heading through body, in one stagger. The whole-block fade is retired for
+  copy; visuals keep it.
 
 ## Unresolved
 

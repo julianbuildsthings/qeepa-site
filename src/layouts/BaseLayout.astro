@@ -35,23 +35,138 @@ const { title, description, ogImage } = Astro.props;
     */}
     <script is:inline>
       (() => {
-        const targets = document.querySelectorAll("[data-reveal]");
         const reveal = (target) => target.setAttribute("data-revealed", "");
-        if (!("IntersectionObserver" in window)) {
-          targets.forEach(reveal);
+        const observing = "IntersectionObserver" in window;
+        const observer =
+          observing &&
+          new IntersectionObserver(
+            (entries) => {
+              let revealed = false;
+              for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                reveal(entry.target);
+                observer.unobserve(entry.target);
+                revealed = true;
+              }
+              /*
+                Content the reader has already passed — skipped over by a fast
+                scroll or an anchor jump, which the observer never reports — is
+                revealed as well, so scrolling back up never finds it hidden.
+              */
+              if (!revealed) return;
+              for (const target of watched) {
+                if (target.hasAttribute("data-revealed")) continue;
+                if (target.getBoundingClientRect().bottom > 0) continue;
+                reveal(target);
+                observer.unobserve(target);
+              }
+            },
+            { rootMargin: "0px 0px -10% 0px" },
+          );
+        const watched = new Set();
+        const observe = (target) => {
+          if (!observing) return reveal(target);
+          watched.add(target);
+          observer.observe(target);
+        };
+
+        document.querySelectorAll("[data-reveal]").forEach(observe);
+
+        /*
+          The copy's line reveal. Each `[data-lines]` element is rebuilt as one
+          masked block per rendered line, numbered down its `[data-line-reveal]`
+          block. The words are measured where they sit, so the lines are the
+          ones the reader would see, after balance and pretty wrapping. The
+          full text stays in the element for assistive technology; the split
+          copy is hidden from it.
+
+          Only when motion is welcome and the observer exists; otherwise the
+          blocks are marked split and revealed, which the CSS treats as plain
+          text. Split after the fonts load, since the wrap depends on them, and
+          again whenever the width changes the wrap.
+        */
+        const blocks = [...document.querySelectorAll("[data-line-reveal]")];
+        const moving = matchMedia("(prefers-reduced-motion: no-preference)").matches;
+        const texts = new Map();
+
+        const splitLines = (element, index) => {
+          if (!texts.has(element)) {
+            texts.set(element, element.textContent.trim().replace(/\s+/g, " "));
+          }
+          const words = texts.get(element).split(" ");
+          const probes = words.map((word) => {
+            const probe = document.createElement("span");
+            probe.textContent = word;
+            return probe;
+          });
+          element.replaceChildren(
+            ...probes.flatMap((probe, i) => (i ? [document.createTextNode(" "), probe] : [probe])),
+          );
+
+          const lines = [];
+          let top = null;
+          for (const probe of probes) {
+            if (probe.offsetTop !== top) {
+              lines.push([]);
+              top = probe.offsetTop;
+            }
+            lines.at(-1).push(probe.textContent);
+          }
+
+          const spoken = document.createElement("span");
+          spoken.className = "sr-only";
+          spoken.textContent = texts.get(element);
+          const shown = document.createElement("span");
+          shown.setAttribute("aria-hidden", "true");
+          for (const line of lines) {
+            const mask = document.createElement("span");
+            mask.className = "reveal-mask";
+            const text = document.createElement("span");
+            text.className = "reveal-line";
+            text.style.setProperty("--line-index", String(index++));
+            text.textContent = line.join(" ");
+            mask.append(text);
+            shown.append(mask);
+          }
+          element.replaceChildren(spoken, shown);
+          return index;
+        };
+
+        const split = () => {
+          for (const block of blocks) {
+            let index = 0;
+            for (const element of block.querySelectorAll("[data-lines]")) {
+              index = splitLines(element, index);
+            }
+            block.setAttribute("data-split", "");
+          }
+        };
+
+        if (!moving || !observing) {
+          blocks.forEach((block) => {
+            block.setAttribute("data-split", "");
+            reveal(block);
+          });
           return;
         }
-        const observer = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (!entry.isIntersecting) continue;
-              reveal(entry.target);
-              observer.unobserve(entry.target);
-            }
-          },
-          { rootMargin: "0px 0px -10% 0px" },
-        );
-        targets.forEach((target) => observer.observe(target));
+
+        document.fonts.ready.then(() => {
+          split();
+          blocks.forEach(observe);
+
+          // Once per burst of resize events, and only when the width — and so
+          // possibly the wrap — has changed.
+          let width = innerWidth;
+          let pending = 0;
+          addEventListener("resize", () => {
+            if (pending || innerWidth === width) return;
+            pending = setTimeout(() => {
+              pending = 0;
+              width = innerWidth;
+              split();
+            });
+          });
+        });
       })();
     </script>
   </body>

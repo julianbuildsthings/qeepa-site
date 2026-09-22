@@ -342,6 +342,49 @@
     opacity: 1;
     transform: none;
   }
+
+  /*
+   * The copy's line reveal. The base layout splits each `[data-lines]` element
+   * of a `[data-line-reveal]` block into its rendered lines, once the fonts
+   * have loaded and the wrap is final, and numbers them down the block as
+   * `--line-index`. Each line then rises out of its own mask, one
+   * `--line-stagger` after the last, heading through body. `--line-lead`
+   * holds the whole block back, so a feature row's visual still arrives first.
+   *
+   * Until the split, the block is hidden, so the unsplit text never shows and
+   * then jumps. Under reduced motion none of this applies: nothing is split
+   * or hidden, and the copy is simply there.
+   */
+  .js [data-line-reveal]:not([data-split]) {
+    opacity: 0;
+  }
+
+  .js [data-line-reveal] .reveal-line {
+    transform: translateY(110%);
+  }
+
+  .js [data-line-reveal][data-revealed] .reveal-line {
+    transform: none;
+    transition: transform var(--line-duration) var(--ease-rise);
+    transition-delay: calc(var(--line-lead, 0s) + var(--line-index, 0) * var(--line-stagger));
+  }
+}
+
+/*
+ * A line's mask. A little padding below, taken back by the margin, so
+ * descenders are not clipped and the lines keep their original spacing. A
+ * rendered line never wraps again once it is split.
+ */
+.reveal-mask {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.reveal-line {
+  display: block;
+  white-space: nowrap;
 }
 
 /*

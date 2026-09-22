@@ -21,7 +21,7 @@ describe("motion tokens", () => {
 
   it("exposes travel distances and stagger delays", () => {
     expect(distance).toEqual({ enter: 16, hover: 4, panel: 32 });
-    expect(stagger).toEqual({ base: 0.06, relaxed: 0.12, tight: 0.03 });
+    expect(stagger).toEqual({ base: 0.06, line: 0.07, relaxed: 0.12, tight: 0.03 });
   });
 
   it("exposes four-point cubic beziers for tween work", () => {

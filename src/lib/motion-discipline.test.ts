@@ -135,4 +135,10 @@ describe("motionCssVariables", () => {
   it("carries the stagger between revealed siblings", () => {
     expect(css).toContain(`--reveal-stagger: ${stagger.relaxed}s`);
   });
+
+  it("carries the copy's line reveal", () => {
+    expect(css).toContain(`--line-duration: ${durations.line}s`);
+    expect(css).toContain(`--ease-rise: cubic-bezier(${easings.rise.join(", ")})`);
+    expect(css).toContain(`--line-stagger: ${stagger.line}s`);
+  });
 });
