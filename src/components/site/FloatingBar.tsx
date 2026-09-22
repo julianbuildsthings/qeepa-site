@@ -1,8 +1,8 @@
 import { Star } from "lucide-react";
-import { AnimatePresence, motion, MotionConfig } from "motion/react";
-import { useEffect, useState } from "react";
+import { animate, AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 
-import { durations, easings } from "@/lib/motion";
+import { durations, easings, presets } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /**
@@ -98,9 +98,30 @@ function sectionHref(id: string): string {
   return `/#${id}`;
 }
 
+/** Input that means the reader has taken the scroll back. */
+const TAKEOVER_EVENTS = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
+
+/**
+ * Where the page must scroll for a section to land as a native anchor jump
+ * would: its top, less its `scroll-margin-top`, clamped to what can scroll.
+ */
+function scrollTargetFor(element: HTMLElement): number {
+  const margin = Number.parseFloat(getComputedStyle(element).scrollMarginTop) || 0;
+  const top = element.getBoundingClientRect().top + window.scrollY - margin;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  return Math.min(Math.max(top, 0), Math.max(max, 0));
+}
+
 export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const [previewed, setPreviewed] = useState<number | null>(null);
+  /*
+   * The section a star was clicked for, while the page travels to it. The bar
+   * names it from the click on, rather than naming every section it passes.
+   */
+  const [travellingTo, setTravellingTo] = useState<string | null>(null);
+  const travel = useRef<{ stop: () => void } | null>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     // The end section is tracked like any other, but it is not a feature, so
@@ -110,6 +131,7 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
 
     const update = () => {
       frame = 0;
+      if (travel.current) return;
       setCurrentId(currentSectionId(ids));
     };
 
@@ -129,7 +151,69 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
     };
   }, [endId, sections]);
 
-  const index = sections.findIndex((section) => section.id === currentId);
+  // Stop any travel still running when the bar goes away.
+  useEffect(() => () => travel.current?.stop(), []);
+
+  /**
+   * A star's click on the home page. The page travels by a spring the bar
+   * drives itself, rather than by the browser's smooth anchor scroll, for two
+   * reasons found in use:
+   *
+   * 1. The native scroll fires scroll events through every section on the
+   *    way, so the bar flickered through each one — Shoot insights for a
+   *    moment on the way from Photo management to Photo tracks.
+   * 2. Passing the pointer over a graphic mid-scroll could stop the page
+   *    short. The demos pause their loops on hover; the browser's own smooth
+   *    scroll is fragile to what happens beneath it, and it gave up.
+   *
+   * A spring set frame by frame answers to nothing but this code. It stops only
+   * when the reader takes the scroll back — a wheel, a touch, a key, a press —
+   * and the bar then names wherever they have stopped. Under reduced motion
+   * the page jumps.
+   */
+  const travelTo = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    // Off the home page the link navigates there, as a link.
+    const target = document.getElementById(id);
+    if (!target || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+
+    travel.current?.stop();
+    history.pushState(null, "", `#${id}`);
+    const top = scrollTargetFor(target);
+
+    const finish = () => {
+      for (const name of TAKEOVER_EVENTS) window.removeEventListener(name, takeover);
+      travel.current = null;
+      setTravellingTo(null);
+      // Name wherever the page came to rest.
+      window.dispatchEvent(new Event("scroll"));
+    };
+    const takeover = () => {
+      animation?.stop();
+      finish();
+    };
+
+    if (reduceMotion) {
+      window.scrollTo({ behavior: "instant", top });
+      return;
+    }
+
+    setTravellingTo(id);
+    setCurrentId(id);
+    // `instant` on each step, or the page's CSS `scroll-behavior: smooth`
+    // would turn every frame of the spring into a smooth scroll of its own.
+    const animation = animate(window.scrollY, top, {
+      ...presets.gentle,
+      onComplete: finish,
+      onUpdate: (y) => window.scrollTo({ behavior: "instant", top: y }),
+    });
+    travel.current = { stop: takeover };
+    for (const name of TAKEOVER_EVENTS) {
+      window.addEventListener(name, takeover, { once: true, passive: true });
+    }
+  };
+
+  const index = sections.findIndex((section) => section.id === (travellingTo ?? currentId));
   const current = index === -1 ? null : sections[index]!;
   const atEnd = endId !== undefined && currentId === endId;
 
@@ -225,6 +309,7 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
                           className="flex size-6 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                           href={sectionHref(section.id)}
                           onBlur={() => setPreviewed(null)}
+                          onClick={(event) => travelTo(event, section.id)}
                           onFocus={() => setPreviewed(position + 1)}
                           onMouseEnter={() => setPreviewed(position + 1)}
                           onMouseLeave={() => setPreviewed(null)}

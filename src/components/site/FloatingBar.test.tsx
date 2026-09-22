@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
-import { render, screen, within } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { fireEvent, render, screen, within } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type BarSection, FloatingBar } from "@/components/site/FloatingBar";
 import { barSections } from "@/lib/bar";
@@ -20,6 +20,11 @@ const VIEWPORT_HEIGHT = 800;
 
 beforeEach(() => {
   window.innerHeight = VIEWPORT_HEIGHT;
+  // A page tall enough to scroll, since happy-dom does no layout.
+  Object.defineProperty(document.documentElement, "scrollHeight", {
+    configurable: true,
+    value: 10_000,
+  });
 });
 
 /**
@@ -137,6 +142,44 @@ describe("FloatingBar", () => {
     }
     // No frames are on screen at the closing, so no count is claimed there.
     expect(screen.queryByText(/photos/)).not.toBeInTheDocument();
+  });
+
+  /*
+   * The regressions these guard: clicking a far star left the page to the
+   * browser's smooth scroll, whose scroll events named every section on the
+   * way, and which could stop short when the pointer crossed a graphic.
+   */
+  it("names the clicked section at once, and holds it through the travel", async () => {
+    placeSections({ "local-first": 1600, performance: 2600, tracks: 900 });
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
+
+    fireEvent.click(stars()[2]!);
+    expect(screen.getByText("Fast performance")).toBeInTheDocument();
+    expect(window.location.hash).toBe("#performance");
+
+    // Mid-travel the page passes Local-first; the bar does not name it.
+    for (const section of document.querySelectorAll("section")) section.remove();
+    placeSections({ "local-first": 100, performance: 1100, tracks: -900 });
+    fireEvent.scroll(window);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(screen.queryByText("Local-first")).not.toBeInTheDocument();
+    expect(scrollTo).toHaveBeenCalled();
+    scrollTo.mockRestore();
+  });
+
+  it("hands the scroll back the moment the reader scrolls", async () => {
+    placeSections({ "local-first": 1600, performance: 2600, tracks: 900 });
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
+
+    fireEvent.click(stars()[2]!);
+    for (const section of document.querySelectorAll("section")) section.remove();
+    placeSections({ "local-first": 100, performance: 1100, tracks: -900 });
+    fireEvent.wheel(window);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(screen.getByText("Local-first")).toBeInTheDocument();
+    scrollTo.mockRestore();
   });
 
   it("offers nothing but the stars and the button on the right", () => {
