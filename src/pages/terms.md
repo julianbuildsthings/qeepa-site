@@ -118,13 +118,13 @@ Some of our Services are offered as a one-time purchase rather than a recurring 
 
 Your purchase grants access to the Service for as long as we continue to make it available. We are under no obligation to release, maintain, or continue any particular feature, update, or version. Where we release a new version, we may offer it separately, and it may be subject to new or additional terms.
 
-We will not intentionally remove your access to the features available to you at the time of your purchase, except where required by these Terms or applicable law. Beyond this, your purchase is not conditional on the release of any future feature, functionality, or version, and we make no commitment and accept no obligation in relation to any public statement we may have made about future development. We may modify, suspend, or discontinue the Service, in whole or in part, in accordance with our Discontinuation and Material Changes sections. Except where applicable law provides otherwise, or where we expressly state otherwise, payments for one-time purchases are non-refundable once access to the Service has been provided.
+We will not intentionally remove your access to the features available to you at the time of your purchase, except where required by these Terms or applicable law. Beyond this, your purchase is not conditional on the release of any future feature, functionality, or version, and we make no commitment and accept no obligation in relation to any public statement we may have made about future development. We may modify, suspend, or discontinue the Service, in whole or in part, in accordance with our Service Updates and Changes and Discontinuation sections. Except where applicable law provides otherwise, or under our Money-Back Guarantee, payments for one-time purchases are non-refundable once access to the Service has been provided.
 
 ## Money-Back Guarantee
 
-We offer a one month money-back guarantee on your first paid subscription with us (the "Guarantee"). If you are not satisfied with our Services, you may request a full refund within one month of your initial purchase by contacting us using the details at the base of these Terms.
+We offer a one month money-back guarantee on your first purchase with us (the "Guarantee"). If you are not satisfied with our Services, you may request a full refund within one month of your initial purchase by contacting us using the details at the base of these Terms.
 
-The Guarantee applies once per customer and to your first paid subscription only. Subsequent purchases, plan renewals, upgrades, add-ons, third-party charges, and any non-refundable taxes or transaction fees are not eligible.
+The Guarantee applies once per customer and to your first purchase only. Subsequent purchases, upgrades, add-ons, third-party charges, and any non-refundable taxes or transaction fees are not eligible.
 
 We reserve the right, in our sole discretion, to refuse a refund where we reasonably suspect fraud, abuse of the Guarantee, or breach of these Terms.
 
@@ -212,8 +212,6 @@ From time to time, our team may use Artificial Intelligence ("AI") to support th
 
 We use AI for:
 
-- Automated decision making.
-- Personalization.
 - Customer support.
 - Content generation.
 - Data entry and administrative tasks.
