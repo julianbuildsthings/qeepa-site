@@ -1,0 +1,686 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-22T12:45:16.408Z",
+  "title": "Design System: Qeepa",
+  "extensions": {
+    "colorMeta": {
+      "cream-base": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff",
+        "purpose": "Page ground, window and panel surfaces.",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 89.9)",
+          "oklch(26.0% 0.000 89.9)",
+          "oklch(37.0% 0.000 89.9)",
+          "oklch(48.0% 0.000 89.9)",
+          "oklch(60.0% 0.000 89.9)",
+          "oklch(71.0% 0.000 89.9)",
+          "oklch(83.0% 0.000 89.9)",
+          "oklch(95.0% 0.000 89.9)"
+        ]
+      },
+      "peach-accent": {
+        "role": "primary",
+        "displayName": "Peach Accent",
+        "canonical": "#fcba7f",
+        "purpose": "The single accent: active pill fill, proportion-bar fill, focus ring.",
+        "tonalRamp": [
+          "oklch(15.0% 0.107 62.3)",
+          "oklch(26.0% 0.107 62.3)",
+          "oklch(37.0% 0.107 62.3)",
+          "oklch(48.0% 0.107 62.3)",
+          "oklch(60.0% 0.107 62.3)",
+          "oklch(71.0% 0.107 62.3)",
+          "oklch(83.0% 0.107 62.3)",
+          "oklch(95.0% 0.107 62.3)"
+        ]
+      },
+      "peach-light": {
+        "role": "primary",
+        "displayName": "Peach Light",
+        "canonical": "#fdecd9",
+        "purpose": "Selection surface: bar selection state, active chips, bar track.",
+        "tonalRamp": [
+          "oklch(15.0% 0.031 70.5)",
+          "oklch(26.0% 0.031 70.5)",
+          "oklch(37.0% 0.031 70.5)",
+          "oklch(48.0% 0.031 70.5)",
+          "oklch(60.0% 0.031 70.5)",
+          "oklch(71.0% 0.031 70.5)",
+          "oklch(83.0% 0.031 70.5)",
+          "oklch(95.0% 0.031 70.5)"
+        ]
+      },
+      "peach-dark": {
+        "role": "primary",
+        "displayName": "Peach Dark",
+        "canonical": "#6f3b0f",
+        "purpose": "Text on peach surfaces.",
+        "tonalRamp": [
+          "oklch(15.0% 0.091 55.5)",
+          "oklch(26.0% 0.091 55.5)",
+          "oklch(37.0% 0.091 55.5)",
+          "oklch(48.0% 0.091 55.5)",
+          "oklch(60.0% 0.091 55.5)",
+          "oklch(71.0% 0.091 55.5)",
+          "oklch(83.0% 0.091 55.5)",
+          "oklch(95.0% 0.091 55.5)"
+        ]
+      },
+      "surface-2": {
+        "role": "neutral",
+        "displayName": "Warm Stone",
+        "canonical": "#f6f1ea",
+        "purpose": "Inactive chip and gear-chip fill.",
+        "tonalRamp": [
+          "oklch(15.0% 0.011 76.6)",
+          "oklch(26.0% 0.011 76.6)",
+          "oklch(37.0% 0.011 76.6)",
+          "oklch(48.0% 0.011 76.6)",
+          "oklch(60.0% 0.011 76.6)",
+          "oklch(71.0% 0.011 76.6)",
+          "oklch(83.0% 0.011 76.6)",
+          "oklch(95.0% 0.011 76.6)"
+        ]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#2b2621",
+        "purpose": "Headings, subheadings, values; the tint of every hairline and shadow.",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 67.3)",
+          "oklch(26.0% 0.012 67.3)",
+          "oklch(37.0% 0.012 67.3)",
+          "oklch(48.0% 0.012 67.3)",
+          "oklch(60.0% 0.012 67.3)",
+          "oklch(71.0% 0.012 67.3)",
+          "oklch(83.0% 0.012 67.3)",
+          "oklch(95.0% 0.012 67.3)"
+        ]
+      },
+      "text-secondary": {
+        "role": "neutral",
+        "displayName": "Umber Grey",
+        "canonical": "#6b645a",
+        "purpose": "Lede, body, captions, inactive pill labels.",
+        "tonalRamp": [
+          "oklch(15.0% 0.018 76.9)",
+          "oklch(26.0% 0.018 76.9)",
+          "oklch(37.0% 0.018 76.9)",
+          "oklch(48.0% 0.018 76.9)",
+          "oklch(60.0% 0.018 76.9)",
+          "oklch(71.0% 0.018 76.9)",
+          "oklch(83.0% 0.018 76.9)",
+          "oklch(95.0% 0.018 76.9)"
+        ]
+      },
+      "text-tertiary": {
+        "role": "neutral",
+        "displayName": "Pebble",
+        "canonical": "#9d958a",
+        "purpose": "Frame numbers, file sizes, disabled label. Not at small sizes on tinted surfaces.",
+        "tonalRamp": [
+          "oklch(15.0% 0.018 76.0)",
+          "oklch(26.0% 0.018 76.0)",
+          "oklch(37.0% 0.018 76.0)",
+          "oklch(48.0% 0.018 76.0)",
+          "oklch(60.0% 0.018 76.0)",
+          "oklch(71.0% 0.018 76.0)",
+          "oklch(83.0% 0.018 76.0)",
+          "oklch(95.0% 0.018 76.0)"
+        ]
+      },
+      "track-raw": {
+        "role": "secondary",
+        "displayName": "Burnt Apricot",
+        "canonical": "#c8752a",
+        "purpose": "RAW track dot; filled rating stars.",
+        "tonalRamp": [
+          "oklch(15.0% 0.135 58.1)",
+          "oklch(26.0% 0.135 58.1)",
+          "oklch(37.0% 0.135 58.1)",
+          "oklch(48.0% 0.135 58.1)",
+          "oklch(60.0% 0.135 58.1)",
+          "oklch(71.0% 0.135 58.1)",
+          "oklch(83.0% 0.135 58.1)",
+          "oklch(95.0% 0.135 58.1)"
+        ]
+      },
+      "track-jpg": {
+        "role": "secondary",
+        "displayName": "Export Blue",
+        "canonical": "#2f6ea8",
+        "purpose": "JPG track dot. Non-warm; always beside a label.",
+        "tonalRamp": [
+          "oklch(15.0% 0.112 249.2)",
+          "oklch(26.0% 0.112 249.2)",
+          "oklch(37.0% 0.112 249.2)",
+          "oklch(48.0% 0.112 249.2)",
+          "oklch(60.0% 0.112 249.2)",
+          "oklch(71.0% 0.112 249.2)",
+          "oklch(83.0% 0.112 249.2)",
+          "oklch(95.0% 0.112 249.2)"
+        ]
+      },
+      "track-af": {
+        "role": "secondary",
+        "displayName": "Working-File Violet",
+        "canonical": "#6b4fa8",
+        "purpose": "EDIT track dot. Non-warm; always beside a label.",
+        "tonalRamp": [
+          "oklch(15.0% 0.138 295.5)",
+          "oklch(26.0% 0.138 295.5)",
+          "oklch(37.0% 0.138 295.5)",
+          "oklch(48.0% 0.138 295.5)",
+          "oklch(60.0% 0.138 295.5)",
+          "oklch(71.0% 0.138 295.5)",
+          "oklch(83.0% 0.138 295.5)",
+          "oklch(95.0% 0.138 295.5)"
+        ]
+      },
+      "pip-filled": {
+        "role": "tertiary",
+        "displayName": "Rating Pip",
+        "canonical": "#EEA767",
+        "purpose": "Filled rating pips on photo frames.",
+        "tonalRamp": [
+          "oklch(15.0% 0.116 61.8)",
+          "oklch(26.0% 0.116 61.8)",
+          "oklch(37.0% 0.116 61.8)",
+          "oklch(48.0% 0.116 61.8)",
+          "oklch(60.0% 0.116 61.8)",
+          "oklch(71.0% 0.116 61.8)",
+          "oklch(83.0% 0.116 61.8)",
+          "oklch(95.0% 0.116 61.8)"
+        ]
+      },
+      "pip-empty": {
+        "role": "tertiary",
+        "displayName": "Empty Pip",
+        "canonical": "#2B26211F",
+        "purpose": "Ink at 12%: unfilled pips."
+      },
+      "frame-border": {
+        "role": "neutral",
+        "displayName": "Frame Hairline",
+        "canonical": "#2B262114",
+        "purpose": "Ink at 8%: border on every photo frame."
+      },
+      "stack-border": {
+        "role": "neutral",
+        "displayName": "Stack Hairline",
+        "canonical": "#2B26211F",
+        "purpose": "Ink at 12%: firmer border for overlapping stacked frames."
+      },
+      "tone-almond": {
+        "role": "tertiary",
+        "displayName": "Almond Tone",
+        "canonical": "#F8EBDC",
+        "purpose": "Flat photo stand-in; warm, light, scattered via scatterTones().",
+        "tonalRamp": [
+          "oklch(15.0% 0.024 71.5)",
+          "oklch(26.0% 0.024 71.5)",
+          "oklch(37.0% 0.024 71.5)",
+          "oklch(48.0% 0.024 71.5)",
+          "oklch(60.0% 0.024 71.5)",
+          "oklch(71.0% 0.024 71.5)",
+          "oklch(83.0% 0.024 71.5)",
+          "oklch(95.0% 0.024 71.5)"
+        ]
+      },
+      "tone-bisque": {
+        "role": "tertiary",
+        "displayName": "Bisque Tone",
+        "canonical": "#F9EEE1",
+        "purpose": "Flat photo stand-in; warm, light, scattered via scatterTones().",
+        "tonalRamp": [
+          "oklch(15.0% 0.021 72.2)",
+          "oklch(26.0% 0.021 72.2)",
+          "oklch(37.0% 0.021 72.2)",
+          "oklch(48.0% 0.021 72.2)",
+          "oklch(60.0% 0.021 72.2)",
+          "oklch(71.0% 0.021 72.2)",
+          "oklch(83.0% 0.021 72.2)",
+          "oklch(95.0% 0.021 72.2)"
+        ]
+      },
+      "tone-chalk": {
+        "role": "tertiary",
+        "displayName": "Chalk Tone",
+        "canonical": "#FEFAF6",
+        "purpose": "Flat photo stand-in; warm, light, scattered via scatterTones().",
+        "tonalRamp": [
+          "oklch(15.0% 0.007 67.7)",
+          "oklch(26.0% 0.007 67.7)",
+          "oklch(37.0% 0.007 67.7)",
+          "oklch(48.0% 0.007 67.7)",
+          "oklch(60.0% 0.007 67.7)",
+          "oklch(71.0% 0.007 67.7)",
+          "oklch(83.0% 0.007 67.7)",
+          "oklch(95.0% 0.007 67.7)"
+        ]
+      },
+      "tone-ivory": {
+        "role": "tertiary",
+        "displayName": "Ivory Tone",
+        "canonical": "#FDF8F2",
+        "purpose": "Flat photo stand-in; warm, light, scattered via scatterTones().",
+        "tonalRamp": [
+          "oklch(15.0% 0.010 72.7)",
+          "oklch(26.0% 0.010 72.7)",
+          "oklch(37.0% 0.010 72.7)",
+          "oklch(48.0% 0.010 72.7)",
+          "oklch(60.0% 0.010 72.7)",
+          "oklch(71.0% 0.010 72.7)",
+          "oklch(83.0% 0.010 72.7)",
+          "oklch(95.0% 0.010 72.7)"
+        ]
+      },
+      "tone-linen": {
+        "role": "tertiary",
+        "displayName": "Linen Tone",
+        "canonical": "#FBF2E8",
+        "purpose": "Flat photo stand-in; warm, light, scattered via scatterTones().",
+        "tonalRamp": [
+          "oklch(15.0% 0.016 70.5)",
+          "oklch(26.0% 0.016 70.5)",
+          "oklch(37.0% 0.016 70.5)",
+          "oklch(48.0% 0.016 70.5)",
+          "oklch(60.0% 0.016 70.5)",
+          "oklch(71.0% 0.016 70.5)",
+          "oklch(83.0% 0.016 70.5)",
+          "oklch(95.0% 0.016 70.5)"
+        ]
+      },
+      "tone-oat": {
+        "role": "tertiary",
+        "displayName": "Oat Tone",
+        "canonical": "#FAF0E5",
+        "purpose": "Flat photo stand-in; warm, light, scattered via scatterTones().",
+        "tonalRamp": [
+          "oklch(15.0% 0.018 70.2)",
+          "oklch(26.0% 0.018 70.2)",
+          "oklch(37.0% 0.018 70.2)",
+          "oklch(48.0% 0.018 70.2)",
+          "oklch(60.0% 0.018 70.2)",
+          "oklch(71.0% 0.018 70.2)",
+          "oklch(83.0% 0.018 70.2)",
+          "oklch(95.0% 0.018 70.2)"
+        ]
+      },
+      "tone-shell": {
+        "role": "tertiary",
+        "displayName": "Shell Tone",
+        "canonical": "#FCF5ED",
+        "purpose": "Flat photo stand-in; warm, light, scattered via scatterTones().",
+        "tonalRamp": [
+          "oklch(15.0% 0.013 71.3)",
+          "oklch(26.0% 0.013 71.3)",
+          "oklch(37.0% 0.013 71.3)",
+          "oklch(48.0% 0.013 71.3)",
+          "oklch(60.0% 0.013 71.3)",
+          "oklch(71.0% 0.013 71.3)",
+          "oklch(83.0% 0.013 71.3)",
+          "oklch(95.0% 0.013 71.3)"
+        ]
+      },
+      "tone-wheat": {
+        "role": "tertiary",
+        "displayName": "Wheat Tone",
+        "canonical": "#FDF7F0",
+        "purpose": "Flat photo stand-in; warm, light, scattered via scatterTones().",
+        "tonalRamp": [
+          "oklch(15.0% 0.011 71.9)",
+          "oklch(26.0% 0.011 71.9)",
+          "oklch(37.0% 0.011 71.9)",
+          "oklch(48.0% 0.011 71.9)",
+          "oklch(60.0% 0.011 71.9)",
+          "oklch(71.0% 0.011 71.9)",
+          "oklch(83.0% 0.011 71.9)",
+          "oklch(95.0% 0.011 71.9)"
+        ]
+      },
+      "bar-browse": {
+        "role": "neutral",
+        "displayName": "Bar White",
+        "canonical": "#FFFFFFF5",
+        "purpose": "White at 96%: floating bar browse state."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero h1 only; hard breaks from lg, balanced rewrap below."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Closing availability heading, centred."
+      },
+      "title": {
+        "displayName": "Feature Title",
+        "purpose": "Feature row h2: the feature name."
+      },
+      "subheading": {
+        "displayName": "Subheading",
+        "purpose": "Sentence beneath the title, ink; never above it."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Hero paragraph, capped at 560px."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Feature body, text-secondary."
+      },
+      "body-closing": {
+        "displayName": "Closing Body",
+        "purpose": "Closing paragraph, max 620px."
+      },
+      "wordmark": {
+        "displayName": "Wordmark (Erode)",
+        "purpose": "Brand name and section names in the floating bar only."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Footer links and copyright; insights panel values (medium weight)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Pill segments, bar count, bar button."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Panel text, chips, file sizes."
+      },
+      "frame-number": {
+        "displayName": "Frame Number",
+        "purpose": "Photo frame chrome; 12px/16px on large frames from sm."
+      }
+    },
+    "shadows": [
+      {
+        "name": "window",
+        "value": "0 1px 3px rgba(43,38,33,0.05), 0 28px 64px -24px rgba(43,38,33,0.20)",
+        "purpose": "Hero window and fast-performance window."
+      },
+      {
+        "name": "panel",
+        "value": "0 1px 3px rgba(43,38,33,0.05), 0 24px 56px -24px rgba(43,38,33,0.20)",
+        "purpose": "Sidecar listing, insights panel, filter panel."
+      },
+      {
+        "name": "print",
+        "value": "0 2px 6px rgba(43,38,33,0.07), 0 30px 64px -24px rgba(43,38,33,0.28)",
+        "purpose": "Stacked track frames."
+      },
+      {
+        "name": "pill",
+        "value": "0 1px 2px rgba(43,38,33,0.08), 0 10px 28px -4px rgba(43,38,33,0.28)",
+        "purpose": "Track pill floating over a grid."
+      },
+      {
+        "name": "bar",
+        "value": "0px 10px 30px rgba(43,38,33,0.14)",
+        "purpose": "Floating bar; single layer, value from the app."
+      }
+    ],
+    "motion": [
+      {
+        "name": "preset-ambient",
+        "value": "{ duration: 2, ease: easeInOut, repeat: Infinity }",
+        "purpose": "Continuous background motion."
+      },
+      {
+        "name": "preset-gentle",
+        "value": "spring { damping: 26, stiffness: 170 }",
+        "purpose": "Large surfaces; sidecar row, filter reflow, proportion bars."
+      },
+      {
+        "name": "preset-lively",
+        "value": "spring { damping: 40, stiffness: 800 }",
+        "purpose": "Celebratory beats; track-pill fill travel."
+      },
+      {
+        "name": "preset-snap",
+        "value": "spring { damping: 40, stiffness: 500 }",
+        "purpose": "Instant feedback; fadeInUp exit."
+      },
+      {
+        "name": "preset-ui",
+        "value": "spring { damping: 42, stiffness: 600 }",
+        "purpose": "Default for reveals, cross-fades and chrome; track stack fan."
+      },
+      {
+        "name": "duration-quick",
+        "value": "0.15s (--motion-quick)",
+        "purpose": "Hover, focus, colour, label fades."
+      },
+      {
+        "name": "duration-base",
+        "value": "0.25s (--motion-base)",
+        "purpose": "Fades, small state changes; bar surface colour."
+      },
+      {
+        "name": "duration-editorial",
+        "value": "0.35s (--motion-editorial)",
+        "purpose": "Section reveals."
+      },
+      {
+        "name": "duration-slow",
+        "value": "0.4s",
+        "purpose": "Larger surfaces."
+      },
+      {
+        "name": "ease-enter",
+        "value": "cubic-bezier(0, 0, 0.58, 1) (--ease-enter)",
+        "purpose": "Element arriving."
+      },
+      {
+        "name": "ease-exit",
+        "value": "cubic-bezier(0.42, 0, 1, 1)",
+        "purpose": "Element leaving."
+      },
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.42, 0, 0.58, 1) (--ease-standard)",
+        "purpose": "Fades."
+      },
+      {
+        "name": "ease-linear",
+        "value": "cubic-bezier(0, 0, 1, 1)",
+        "purpose": "Constant-speed travel only (gallery strip)."
+      },
+      {
+        "name": "distance-enter",
+        "value": "16px (--reveal-distance)",
+        "purpose": "Enter/exit travel."
+      },
+      {
+        "name": "distance-hover",
+        "value": "4px",
+        "purpose": "Hover nudge, press recoil, caption rise."
+      },
+      {
+        "name": "distance-panel",
+        "value": "32px",
+        "purpose": "Panels and full-surface slides."
+      },
+      {
+        "name": "stagger-tight",
+        "value": "0.03s",
+        "purpose": "Long grids."
+      },
+      {
+        "name": "stagger-base",
+        "value": "0.06s",
+        "purpose": "Default list and grid reveal."
+      },
+      {
+        "name": "stagger-relaxed",
+        "value": "0.12s (--reveal-stagger)",
+        "purpose": "Short lists, hero content, section reveals."
+      },
+      {
+        "name": "cycle-track",
+        "value": "1400ms",
+        "purpose": "RAW → JPG → EDIT dwell; filter pass is 2× this."
+      },
+      {
+        "name": "cycle-hold",
+        "value": "2200ms",
+        "purpose": "Dwell on a two-state demo's settled state."
+      },
+      {
+        "name": "cycle-reset",
+        "value": "1100ms",
+        "purpose": "Dwell on a two-state demo's starting state."
+      },
+      {
+        "name": "speed-gallery",
+        "value": "144px/s",
+        "purpose": "Gallery strip travel; speed, not duration."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Floating Bar (selection)",
+      "kind": "nav",
+      "refersTo": "floating-bar-selection",
+      "description": "Sticky app bar; peach-light inside a feature, white over the hero; stars mark sections.",
+      "html": "<nav class=\"ds-bar\"><span class=\"ds-bar-title\">Photo tracks</span><span class=\"ds-bar-count\">3 photos</span><span class=\"ds-bar-stars\"><a href=\"#\" aria-label=\"Photo tracks\" class=\"ds-star on\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z\"/></svg></a><a href=\"#\" aria-label=\"Local-first\" class=\"ds-star\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z\"/></svg></a><a href=\"#\" aria-label=\"Fast performance\" class=\"ds-star\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z\"/></svg></a></span><button class=\"ds-bar-btn\" disabled>Get Qeepa</button></nav>",
+      "css": ".ds-bar{position:relative;display:flex;align-items:center;gap:10px;height:48px;padding:0 6px 0 20px;border-radius:9999px;background:var(--peach-light);box-shadow:0px 10px 30px rgba(43,38,33,0.14);transition:background-color .25s cubic-bezier(.42,0,.58,1)}.ds-bar-title{font-family:var(--font-serif);font-size:17px;line-height:22px;font-weight:500;letter-spacing:-0.01em;color:var(--text-primary)}.ds-bar-count{font-family:var(--font-sans);font-size:13px;line-height:16px;color:var(--text-secondary);font-variant-numeric:tabular-nums}.ds-bar-stars{position:absolute;left:50%;transform:translateX(-50%);display:flex}.ds-star{display:flex;width:24px;height:24px;align-items:center;justify-content:center;border-radius:9999px;color:#6F3B0F2E;transition:color .15s}.ds-star.on,.ds-star:hover{color:var(--raw)}.ds-star:focus-visible{outline:none;box-shadow:0 0 0 2px var(--peach-accent)}.ds-bar-btn{margin-left:auto;border:0;border-radius:9999px;background:rgba(43,38,33,0.06);padding:9px 20px;font-family:var(--font-sans);font-size:13px;line-height:16px;font-weight:500;color:var(--text-tertiary);cursor:not-allowed}"
+    },
+    {
+      "name": "Track Pill",
+      "kind": "chip",
+      "refersTo": "track-pill",
+      "description": "The app's RAW/JPG/EDIT switcher; the page's recurring component.",
+      "html": "<div class=\"ds-pill\"><button class=\"ds-seg on\"><span class=\"ds-dot\" style=\"background:var(--raw)\"></span>RAW</button><button class=\"ds-seg\"><span class=\"ds-dot\" style=\"background:var(--jpg)\"></span>JPG</button><button class=\"ds-seg\"><span class=\"ds-dot\" style=\"background:var(--af)\"></span>EDIT</button></div>",
+      "css": ".ds-pill{display:inline-flex;gap:2px;padding:4px;border-radius:9999px;border:1px solid rgba(43,38,33,0.10);background:rgba(255,255,255,0.96);box-shadow:0 1px 2px rgba(43,38,33,0.08),0 10px 28px -4px rgba(43,38,33,0.28)}.ds-seg{display:inline-flex;align-items:center;gap:6px;min-height:24px;padding:7px 18px;border:0;border-radius:9999px;background:transparent;font-family:var(--font-sans);font-size:13px;line-height:16px;color:var(--text-secondary);cursor:pointer;transition:color .15s,background-color .15s}.ds-seg:hover{color:var(--text-primary)}.ds-seg.on{background:var(--peach-accent);color:var(--peach-dark)}.ds-seg:focus-visible{outline:none;box-shadow:0 0 0 2px var(--peach-accent)}.ds-dot{width:7px;height:7px;border-radius:9999px;flex-shrink:0}"
+    },
+    {
+      "name": "Photo Frame",
+      "kind": "custom",
+      "refersTo": "photo-frame",
+      "description": "Flat warm tone with track dot, rating pips and frame number standing in for a photo.",
+      "html": "<div class=\"ds-frame\" style=\"background:#FCF5ED\"><span class=\"ds-fdot\"></span><span class=\"ds-pips\"><i class=\"f\"></i><i class=\"f\"></i><i class=\"f\"></i><i class=\"f\"></i><i></i></span><span class=\"ds-fnum\">4821</span></div>",
+      "css": ".ds-frame{position:relative;width:223px;aspect-ratio:3/2;border-radius:5px;border:1px solid #2B262114}.ds-fdot{position:absolute;top:10px;right:10px;width:5px;height:5px;border-radius:9999px;background:var(--raw)}.ds-pips{position:absolute;left:10px;bottom:9px;display:flex;gap:2px}.ds-pips i{width:5px;height:5px;border-radius:1px;background:#2B26211F}.ds-pips i.f{background:#EEA767}.ds-fnum{position:absolute;right:10px;bottom:8px;font-family:var(--font-sans);font-size:9px;line-height:12px;letter-spacing:.02em;color:var(--text-tertiary)}"
+    },
+    {
+      "name": "App Window",
+      "kind": "card",
+      "refersTo": "app-window",
+      "description": "Window strip with muted traffic lights over an 18px-inset frame grid; open-edged in the hero.",
+      "html": "<div class=\"ds-win\"><div class=\"ds-winbar\"><i></i><i></i><i></i></div><div class=\"ds-wingrid\"><div style=\"background:#FCF5ED\"></div><div style=\"background:#FEFAF6\"></div><div style=\"background:#F9EEE1\"></div></div></div>",
+      "css": ".ds-win{width:560px;overflow:hidden;border-radius:18px 18px 0 0;border:1px solid rgba(43,38,33,0.10);border-bottom:0;background:#fff;box-shadow:0 1px 3px rgba(43,38,33,0.05),0 28px 64px -24px rgba(43,38,33,0.20)}.ds-winbar{display:flex;gap:8px;align-items:center;height:46px;padding:0 18px;border-bottom:1px solid rgba(43,38,33,0.08)}.ds-winbar i{width:11px;height:11px;border-radius:9999px;background:rgba(43,38,33,0.15)}.ds-wingrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:18px}.ds-wingrid div{aspect-ratio:3/2;border-radius:5px;border:1px solid #2B262114}"
+    },
+    {
+      "name": "Panel with Proportion Bar",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "White panel; peach-on-peach bars always printed with their percentage.",
+      "html": "<div class=\"ds-panel\"><div class=\"ds-row\"><span class=\"ds-lbl\">Aperture · 62%</span><span class=\"ds-val\">f/2.8</span></div><div class=\"ds-track\"><div class=\"ds-fill\" style=\"width:62%\"></div></div><div class=\"ds-gear\"><span class=\"ds-gchip\">Canon EOS R6 <b>318</b></span></div></div>",
+      "css": ".ds-panel{width:420px;padding:20px;border-radius:14px;border:1px solid rgba(43,38,33,0.10);background:#fff;box-shadow:0 1px 3px rgba(43,38,33,0.05),0 24px 56px -24px rgba(43,38,33,0.20);font-family:var(--font-sans)}.ds-row{display:flex;justify-content:space-between;align-items:baseline}.ds-lbl{font-size:12px;color:var(--text-secondary)}.ds-val{font-size:14px;font-weight:500;color:var(--text-primary);font-variant-numeric:tabular-nums}.ds-track{margin-top:6px;height:6px;border-radius:9999px;background:#FDECD9;overflow:hidden}.ds-fill{height:100%;border-radius:9999px;background:#FCBA7F}.ds-gear{margin-top:16px;padding-top:16px;border-top:1px solid rgba(43,38,33,0.07)}.ds-gchip{display:inline-flex;gap:6px;padding:6px 12px;border-radius:9999px;background:var(--surface-2);font-size:12px;color:var(--text-secondary)}.ds-gchip b{font-weight:500}"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "filter-chip",
+      "description": "Surface-2 at rest; peach-light with peach-dark label when applied.",
+      "html": "<button class=\"ds-chip\">Unrated</button> <button class=\"ds-chip on\">Portfolio</button>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;min-height:24px;padding:6px 12px;border:0;border-radius:9999px;background:var(--surface-2);font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-secondary);cursor:pointer;transition:color .15s,background-color .15s}.ds-chip:hover{color:var(--text-primary)}.ds-chip.on{background:var(--peach-light);color:var(--peach-dark)}.ds-chip:focus-visible{outline:none;box-shadow:0 0 0 2px var(--peach-accent)}"
+    },
+    {
+      "name": "Get Qeepa (disabled)",
+      "kind": "button",
+      "refersTo": "button-get-disabled",
+      "description": "The bar's only button; disabled until there is something to get.",
+      "html": "<button class=\"ds-get\" disabled>Get Qeepa</button>",
+      "css": ".ds-get{display:inline-flex;align-items:center;padding:9px 20px;border:0;border-radius:9999px;background:rgba(43,38,33,0.06);font-family:var(--font-sans);font-size:13px;line-height:16px;font-weight:500;color:var(--text-tertiary);cursor:not-allowed}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Sunlit Gallery",
+    "overview": "The site shows the product demonstrating itself on a white page. Every visual is a piece of the app's own interface: a window with muted traffic lights, a grid of near-white photo frames, the track pill, a file listing, an insights panel, a filter toolbar. None of it is a framed screenshot on a plinth. Copy ranges left on a single 120px rail. Each feature gets a full row, never a card, and the rows alternate sides down the page. The page ends with a status line, not a call to action, because there is nothing to download yet.\n\nThe material is warm and light. Photographs are stood in for by flat, near-white warm tones. What makes a tone read as a photo rather than a swatch is its metadata chrome: a track dot, rating pips, a frame number. The only non-warm colours on the page are the functional JPG and EDIT track dots. Depth comes from soft, warm-tinted shadows under objects the app would float. Surfaces themselves stay flat.\n\nMotion shares one physics vocabulary with the app. Loops demonstrate a claim, pause on hover or focus, and stop under reduced motion. Server HTML always shows a settled, legible state, and nothing is hidden unless JavaScript is present and motion is welcome.",
+    "keyCharacteristics": [
+      "White ground, one warm family, three functional track colours.",
+      "Satoshi Bold display with tight negative tracking. Erode appears only in the wordmark and the floating bar's section names.",
+      "Flat light tones with metadata chrome stand in for photographs. No gradients, no imagery.",
+      "App chrome (window, pill, bar, chips) is the recurring material, taken from the product rather than invented.",
+      "One motion registry, enforced by a test."
+    ],
+    "rules": [
+      {
+        "name": "The Warm-Only Rule",
+        "body": "Everything is warm (hue 15 to 45) except the JPG and EDIT track dots, which earn their colour by carrying meaning. `tones.test.ts` enforces this for the tone family and the bar colours.",
+        "section": "colors"
+      },
+      {
+        "name": "The Light-Tone Rule",
+        "body": "A photo stand-in stays above 75% lightness. A tone dark enough to compete with the type has stopped being a photo and become a block of colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Printed-Number Rule",
+        "body": "The proportion bar's peach-on-peach pair is 1.46:1, below the 3:1 floor for graphics. That is acceptable only because every bar has its percentage printed beside it (\"Aperture · 62%\"). `InsightsPanel.test.tsx` fails if a bar ever loses its number, and at that point the fill has to darken.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Kicker Rule",
+        "body": "No small label sits above a heading anywhere. The subheading is always below the title. Stated in `copy.ts` and `FeatureRow.astro`.",
+        "section": "typography"
+      },
+      {
+        "name": "The Curly-Apostrophe Rule",
+        "body": "All copy lives in `src/lib/copy.ts`, uses curly apostrophes, and never states a price, a date or social proof. `copy.test.ts` enforces all three.",
+        "section": "typography"
+      },
+      {
+        "name": "The Warm-Shadow Rule",
+        "body": "A shadow is tinted with the ink colour, and every shadow on a page object has two layers. A neutral-grey shadow never appears.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** take every duration, easing, spring, delay and travel distance from `src/lib/motion.ts`. In CSS, read the variables from `motionCssVariables()`. `motion-discipline.test.ts` fails on inlined values in demo, site, page and layout code.",
+      "**Do** render photographs as `PhotoFrame` tones and windows through `WindowBar`, so the chrome has one owner.",
+      "**Do** derive any count the bar states from `src/lib/tiles.ts`, so it equals the frames actually drawn. The only exception is the performance strip, which names the shoot (1127). `tiles.test.ts` guards this.",
+      "**Do** keep new tones warm (hue 15 to 45), above 75% lightness, and inside the gallery's 8-point band (`tones.test.ts`).",
+      "**Do** give every control a 2px `:focus-visible` ring in peach-accent, a 24px minimum hit area, and 44px on coarse pointers via `extend-touch-target-y`.",
+      "**Do** pair every colour signal with text: track dots with labels, bars with printed percentages, stars with section names.",
+      "**Do** judge text contrast with APCA and record the reading when a pairing changes.",
+      "**Do** make every loop pausable (hover, focus and its own control) and still under reduced motion."
+    ],
+    "donts": [
+      "**Don't** put a kicker or eyebrow above a heading.",
+      "**Don't** use gradients as photo stand-ins. They read as swatches at any size.",
+      "**Don't** add a colour outside the warm family other than the track dots, and don't use grey hairlines or neutral shadows.",
+      "**Don't** lay feature content in a grid of equal cards, or present the product as a floating framed screenshot.",
+      "**Don't** split rows into two columns below xl.",
+      "**Don't** add a live download, buy or signup control, a price, a date, testimonials or a logomark. None exist, and Get Qeepa stays disabled until one does.",
+      "**Don't** hide server-rendered content that isn't gated behind `.js` and a motion preference, and don't start a Motion animation from opacity 0 on first render.",
+      "**Don't** add a sixth spring preset without asking first."
+    ]
+  }
+}

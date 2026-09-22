@@ -2,5 +2,5 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "qeepa-site",
   "main": "@astrojs/cloudflare/entrypoints/server",
-  "compatibility_date": "2026-08-16"
+  "compatibility_date": "2026-08-16",
 }

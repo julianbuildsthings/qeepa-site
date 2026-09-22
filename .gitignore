@@ -29,3 +29,7 @@ dev_server.log
 
 # agent workspace metadata
 .reasonix/
+# holds git worktrees and local launch config, never the repo's content
+.claude/
+# design-detector cache, regenerated on every scan
+.impeccable/hook.cache.json

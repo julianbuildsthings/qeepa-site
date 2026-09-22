@@ -1,0 +1,44 @@
+---
+import { closing } from "@/lib/copy";
+
+/**
+ * The closing section: availability stated as a status, never a call to
+ * action. There is nothing to download yet, so a button here would be a lie —
+ * the bar's Get Qeepa stays disabled for the same reason.
+ *
+ * Type only. The plan once placed a blank peach square here as a stand-in for
+ * the app icon, but no icon exists and PRODUCT.md forbids inventing one, and a
+ * soft-shadowed rectangle standing in for content is exactly the placeholder
+ * the craft floor bans. Calm comes from the space, not from an ornament.
+ *
+ * Deeper at the bottom than the top. Above the heading sits the last feature
+ * row's own bottom padding as well as this section's top padding; with equal
+ * padding here the space below the body came out about 130px short of the
+ * space above, and the section sat low, crowding the footer.
+ *
+ * `id` is also the floating bar's cue to return to its browse state here: the
+ * closing is not a feature, so the bar should not go on naming the last one.
+ */
+type Props = { id: string };
+
+const { id } = Astro.props;
+---
+
+<section
+  data-line-reveal
+  class="mx-auto max-w-[1440px] scroll-mt-24 px-6 pt-32 pb-56 text-center lg:px-[120px] lg:pt-44 lg:pb-76"
+  id={id}
+>
+  <h2
+    class="mx-auto max-w-[900px] font-sans text-[clamp(32px,3.6vw,48px)] leading-[1.1] font-bold tracking-[-0.032em] text-balance text-text-primary"
+    data-lines
+  >
+    {closing.heading}
+  </h2>
+  <p
+    class="mx-auto mt-6 max-w-[620px] font-sans text-[17px] leading-[1.65] text-pretty text-text-secondary"
+    data-lines
+  >
+    {closing.body}
+  </p>
+</section>

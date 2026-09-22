@@ -1,0 +1,61 @@
+---
+import { HeroGallery } from "@/components/demo/HeroGallery";
+import { hero } from "@/lib/copy";
+
+/**
+ * Approved comp `1A · Left rail (Satoshi)`.
+ *
+ * Everything ranges left on one rail at 120px. The lede is capped at 560px: the
+ * comp's 716px matched the headline's first line at 80px, and when the type was
+ * scaled down at the user's request ("too big and zoomed in") the measure came
+ * down with it. If the headline size changes, this number changes with it.
+ *
+ * The window is shown whole, ending open-edged (square bottom, no bottom
+ * border) so it reads as continuing rather than as a framed screenshot. It was
+ * once clipped by a viewport-relative height, but that clip cut into row two at
+ * wide widths and put the track pill below the row it sits on.
+ *
+ * The bottom padding matches a feature row's own, so the hero-to-tracks
+ * transition is the same 224px every row-to-row transition is. Without it the
+ * hero contributed nothing and the first feature sat at half the page's
+ * rhythm — the only cramped seam on the page.
+ *
+ * The copy enters as every other block of copy does, line by line (see the
+ * line reveal in the base layout). The headline's hard breaks are kept: lines
+ * are measured where they render, breaks included.
+ */
+const [first, second, third] = hero.headline;
+---
+
+<section
+  class="mx-auto max-w-[1440px] px-6 pb-20 lg:px-[120px] lg:pb-28"
+>
+  <div data-line-reveal>
+  <h1
+    data-lines
+    class="max-w-[660px] pt-8 font-sans text-[clamp(34px,4.7vw,62px)] leading-[1.07] font-bold tracking-[-0.036em] text-balance text-text-primary lg:max-w-none lg:pt-14 lg:text-pretty"
+  >
+    {/* Hard breaks only at the width the comp was approved at; below lg the
+    headline rewraps to its own measure. */}
+    {first}<br class="hidden lg:inline" />{" "}{second}<br class="hidden lg:inline" />{" "}{third}
+  </h1>
+
+  <p
+    data-lines
+    class="mt-7 max-w-[560px] font-sans text-[clamp(15px,1.15vw,16px)] leading-[1.7] text-text-secondary lg:mt-8"
+  >
+    {hero.lede}
+  </p>
+  </div>
+
+  {/*
+    No height clip. With ten tiles the window is exactly two rows, so there is
+    nothing left to crop — a viewport-relative clamp only ever cut into row two
+    at wide widths, which put the pill below the visible middle of the row it is
+    supposed to sit on. The window instead ends open-edged (square bottom, no
+    bottom border), which reads as continuing without hiding anything.
+  */}
+  <div class="mt-12 lg:mt-[72px]" data-enter="window" data-hero-window>
+    <HeroGallery client:load />
+  </div>
+</section>

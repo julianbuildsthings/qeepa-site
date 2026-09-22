@@ -1,0 +1,78 @@
+---
+/**
+ * One feature per row, never a card grid. Roughly two-thirds visual to
+ * one-third copy, alternating orientation down the page.
+ *
+ * `heading` and `subheading` form a two-tier heading — the feature name set
+ * large, with the sentence beneath it. The subheading is never rendered as a
+ * small label above the heading; a kicker is banned on this page.
+ *
+ * Below `lg` the row stacks to one column with the copy always first,
+ * regardless of `reversed`, as the hero does: the reader meets the feature's
+ * name before its demonstration. Alternation is a desktop rhythm, and on a
+ * phone it would just make some rows read copy-first and others visual-first
+ * at random.
+ *
+ * From `lg` the row is two columns, and it shrinks rather than stacking as the
+ * window narrows. The copy column never goes below 340px — a fixed ratio once
+ * left it at 287px at 1024, too narrow for a subheading — and the visual takes
+ * the difference. The gap narrows with the viewport. At the full 1440 width
+ * the columns are the same 1.45 : 1 as ever.
+ */
+type Props = {
+  body: string;
+  heading: string;
+  id: string;
+  reversed?: boolean;
+  subheading: string;
+};
+
+const { body, heading, id, reversed = false, subheading } = Astro.props;
+---
+
+{/*
+  The wide column follows the visual, not the position — so a reversed row
+  swaps the template rather than just reordering the children. Reordering alone
+  handed the visual the one-third column and the copy the two-thirds one.
+*/}
+<section
+  class:list={[
+    "mx-auto grid max-w-[1440px] scroll-mt-24 items-center gap-16 px-6 py-20 lg:gap-x-[clamp(48px,5.56vw,80px)] lg:px-[120px] lg:py-28",
+    reversed
+      ? "lg:grid-cols-[minmax(340px,1fr)_minmax(0,1.45fr)]"
+      : "lg:grid-cols-[minmax(0,1.45fr)_minmax(340px,1fr)]",
+  ]}
+  id={id}
+>
+  {/* Revealed once on entry: the visual fades up, and one stagger step behind
+  it the copy rises line by line — see the reveal rules in global.css. */}
+  <div
+    class:list={["order-2", reversed ? "lg:order-2" : "lg:order-1"]}
+    data-reveal
+    style="--reveal-index: 0"
+  >
+    <slot />
+  </div>
+
+  <div
+    class:list={["order-1 max-w-[560px] lg:max-w-none", reversed ? "lg:order-1" : "lg:order-2"]}
+    data-line-reveal
+    style="--line-lead: var(--reveal-stagger)"
+  >
+    <h2
+      data-lines
+      class="font-sans text-[clamp(26px,2.4vw,34px)] leading-[1.12] font-bold tracking-[-0.03em] text-text-primary"
+    >
+      {heading}
+    </h2>
+    <p
+      data-lines
+      class="mt-3 font-sans text-[clamp(17px,1.4vw,20px)] leading-[1.38] tracking-[-0.014em] text-balance text-text-primary"
+    >
+      {subheading}
+    </p>
+    <p data-lines class="mt-5 font-sans text-[15px] leading-[1.7] text-pretty text-text-secondary">
+      {body}
+    </p>
+  </div>
+</section>

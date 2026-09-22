@@ -1,0 +1,30 @@
+---
+import { footer } from "@/lib/copy";
+
+const here = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<footer class="border-t border-[rgba(43,38,33,0.09)]">
+  <div
+    class="mx-auto flex max-w-[1440px] flex-col gap-4 px-6 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-[120px]"
+  >
+    <nav aria-label="Legal">
+      <ul class="flex flex-wrap gap-x-6 gap-y-1">
+        {
+          footer.links.map((link) => (
+            <li>
+              <a
+                class="inline-flex min-h-11 items-center rounded-sm text-[14px] text-text-secondary underline-offset-4 hover:text-text-primary hover:underline aria-[current=page]:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:min-h-6"
+                aria-current={link.href === here ? "page" : undefined}
+                href={link.href}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <p class="text-[14px] text-text-tertiary" translate="no">{footer.copyright}</p>
+  </div>
+</footer>

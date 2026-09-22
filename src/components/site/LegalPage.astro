@@ -1,0 +1,54 @@
+---
+import { FloatingBar } from "@/components/site/FloatingBar";
+import SiteFooter from "@/components/site/SiteFooter.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/lib/config";
+
+/**
+ * Layout for the legal pages, which are Markdown files in `src/pages` naming
+ * this file as their `layout`. The documents are the user's own, published as
+ * supplied: this shell only sets them in a single reading column on the page's
+ * rail, with the `.legal` styles in `global.css` giving the rendered Markdown
+ * its hierarchy.
+ */
+type Props = {
+  frontmatter: {
+    description: string;
+    title: string;
+    /** The date line as the document words it, e.g. "Last updated …". */
+    updated: string;
+  };
+};
+
+const { description, title, updated } = Astro.props.frontmatter;
+---
+
+<BaseLayout title={`${title} — ${siteConfig.name}`} description={description}>
+  {/* A legal page has no photo frames, so the count is omitted rather than
+  claiming zero; no stars, as it is not a tour of the features; and no Get
+  Qeepa, as a policy page is not where anyone decides to get the app. The
+  Back button is the way home. */}
+  <FloatingBar
+    backHref="/"
+    brand={{ count: null, title }}
+    client:load
+    offer={false}
+    sections={[]}
+  />
+  <main class="mx-auto max-w-[1440px] px-6 pt-20 pb-32 lg:px-[120px] lg:pt-28 lg:pb-44" id="main">
+    <article class="max-w-[580px] font-sans text-[16px]">
+      <header>
+        <h1
+          class="text-[clamp(30px,3.2vw,44px)] leading-[1.08] font-bold tracking-[-0.035em] text-balance text-text-primary"
+        >
+          {title}
+        </h1>
+        <p class="mt-4 text-[14px] leading-5 text-text-tertiary">{updated}</p>
+      </header>
+      <div class="legal mt-12 lg:mt-16">
+        <slot />
+      </div>
+    </article>
+  </main>
+  <SiteFooter />
+</BaseLayout>

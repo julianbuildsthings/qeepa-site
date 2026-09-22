@@ -1,43 +1,193 @@
 ---
-import { cn } from "@/lib/utils";
-
 import HeadSEO from "@/components/HeadSEO.astro";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { Toaster } from "sonner";
+import { motionCssVariables } from "@/lib/motion";
 
 const { title, description, ogImage } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth motion-reduce:scroll-auto" style={motionCssVariables()}>
   <head>
     <HeadSEO title={title} description={description} ogImage={ogImage} />
+    <meta name="theme-color" content="#FFFFFF" />
+    {/*
+      Marks the page as able to run the reveal script, before first paint.
+      Section reveals hide their content only under this class, so with
+      JavaScript off nothing is ever hidden and nothing waits on a script.
+    */}
     <script is:inline>
-      (() => {
-        try {
-          const stored = localStorage.getItem("theme");
-          const prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)",
-          ).matches;
-          const dark = stored ? stored === "dark" : prefersDark;
-          document.documentElement.classList.toggle("dark", dark);
-        } catch {}
-      })();
+      document.documentElement.classList.add("js");
     </script>
   </head>
-  <body
-    class={cn(
-      "group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]",
-    )}
-  >
-    <div class="bg-background relative z-10 flex min-h-svh flex-col">
-      <Header client:load />
-      <main class="flex flex-1 flex-col">
-        <slot />
-      </main>
-      <Footer />
-    </div>
-    <Toaster client:load />
+  <body class="bg-background text-foreground antialiased">
+    <a
+      href="#main"
+      class="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-50 focus-visible:rounded-md focus-visible:bg-background focus-visible:px-4 focus-visible:py-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      >Skip to content</a
+    >
+    <slot />
+    {/*
+      Section reveals: each `[data-reveal]` element is revealed once, the first
+      time it enters the viewport. Plain script rather than a React island —
+      nothing here needs a component, and an island would hydrate visible
+      server HTML and then hide it, which is a flash rather than a reveal.
+      Without IntersectionObserver everything is revealed at once.
+    */}
+    <script is:inline>
+      (() => {
+        const reveal = (target) => target.setAttribute("data-revealed", "");
+        const observing = "IntersectionObserver" in window;
+        const observer =
+          observing &&
+          new IntersectionObserver(
+            (entries) => {
+              let revealed = false;
+              for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                reveal(entry.target);
+                observer.unobserve(entry.target);
+                revealed = true;
+              }
+              /*
+                Content the reader has already passed — skipped over by a fast
+                scroll or an anchor jump, which the observer never reports — is
+                revealed as well, so scrolling back up never finds it hidden.
+              */
+              if (!revealed) return;
+              for (const target of watched) {
+                if (target.hasAttribute("data-revealed")) continue;
+                if (target.getBoundingClientRect().bottom > 0) continue;
+                reveal(target);
+                observer.unobserve(target);
+              }
+            },
+            { rootMargin: "0px 0px -10% 0px" },
+          );
+        const watched = new Set();
+        const observe = (target) => {
+          if (!observing) return reveal(target);
+          watched.add(target);
+          observer.observe(target);
+        };
+
+        document.querySelectorAll("[data-reveal]").forEach(observe);
+
+        /*
+          The copy's line reveal. Each `[data-lines]` element is rebuilt as one
+          masked block per rendered line, numbered down its `[data-line-reveal]`
+          block. The words are measured where they sit, so the lines are the
+          ones the reader would see, after balance and pretty wrapping. The
+          full text stays in the element for assistive technology; the split
+          copy is hidden from it.
+
+          Only when motion is welcome and the observer exists; otherwise the
+          blocks are marked split and revealed, which the CSS treats as plain
+          text. Split after the fonts load, since the wrap depends on them, and
+          again whenever the width changes the wrap.
+        */
+        const blocks = [...document.querySelectorAll("[data-line-reveal]")];
+        const moving = matchMedia("(prefers-reduced-motion: no-preference)").matches;
+        const texts = new Map();
+
+        const splitLines = (element, index) => {
+          /*
+            Start from the element's original children every time, so a hard
+            break (the hero headline's `<br>`s, shown only from lg) is measured
+            where it renders at this width. Each text node's words are wrapped
+            in place; the breaks stay, and a word after a shown break simply
+            lands on a new line.
+          */
+          if (!texts.has(element)) {
+            texts.set(element, [...element.childNodes].map((node) => node.cloneNode(true)));
+          }
+          element.replaceChildren(...texts.get(element).map((node) => node.cloneNode(true)));
+          const spokenText = element.textContent.trim().replace(/\s+/g, " ");
+
+          const probes = [];
+          // A copy, not the live list: the loop replaces the nodes it visits.
+          for (const node of [...element.childNodes]) {
+            if (node.nodeType !== Node.TEXT_NODE) continue;
+            const pieces = document.createDocumentFragment();
+            for (const part of node.textContent.split(/(\s+)/)) {
+              if (!part) continue;
+              if (/^\s+$/.test(part)) {
+                pieces.append(document.createTextNode(" "));
+                continue;
+              }
+              const probe = document.createElement("span");
+              probe.textContent = part;
+              probes.push(probe);
+              pieces.append(probe);
+            }
+            node.replaceWith(pieces);
+          }
+
+          const lines = [];
+          let top = null;
+          for (const probe of probes) {
+            if (probe.offsetTop !== top) {
+              lines.push([]);
+              top = probe.offsetTop;
+            }
+            lines.at(-1).push(probe.textContent);
+          }
+
+          const spoken = document.createElement("span");
+          spoken.className = "sr-only";
+          spoken.textContent = spokenText;
+          const shown = document.createElement("span");
+          shown.setAttribute("aria-hidden", "true");
+          shown.className = "block";
+          for (const line of lines) {
+            const mask = document.createElement("span");
+            mask.className = "reveal-mask";
+            const text = document.createElement("span");
+            text.className = "reveal-line";
+            text.style.setProperty("--line-index", String(index++));
+            text.textContent = line.join(" ");
+            mask.append(text);
+            shown.append(mask);
+          }
+          element.replaceChildren(spoken, shown);
+          return index;
+        };
+
+        const split = () => {
+          for (const block of blocks) {
+            let index = 0;
+            for (const element of block.querySelectorAll("[data-lines]")) {
+              index = splitLines(element, index);
+            }
+            block.setAttribute("data-split", "");
+          }
+        };
+
+        if (!moving || !observing) {
+          blocks.forEach((block) => {
+            block.setAttribute("data-split", "");
+            reveal(block);
+          });
+          return;
+        }
+
+        document.fonts.ready.then(() => {
+          split();
+          blocks.forEach(observe);
+
+          // Once per burst of resize events, and only when the width — and so
+          // possibly the wrap — has changed.
+          let width = innerWidth;
+          let pending = 0;
+          addEventListener("resize", () => {
+            if (pending || innerWidth === width) return;
+            pending = setTimeout(() => {
+              pending = 0;
+              width = innerWidth;
+              split();
+            });
+          });
+        });
+      })();
+    </script>
   </body>
 </html>

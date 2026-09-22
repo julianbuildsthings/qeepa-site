@@ -1,12 +1,64 @@
 ---
-import { ComponentExample } from "@/components/ComponentExample";
+import { FilterReveal } from "@/components/demo/FilterReveal";
+import { GalleryScroll } from "@/components/demo/GalleryScroll";
+import { InsightsPanel } from "@/components/demo/InsightsPanel";
+import { SidecarDemo } from "@/components/demo/SidecarDemo";
+import { TrackStack } from "@/components/demo/TrackStack";
+import Closing from "@/components/site/Closing.astro";
+import FeatureRow from "@/components/site/FeatureRow.astro";
+import { FloatingBar } from "@/components/site/FloatingBar";
+import Hero from "@/components/site/Hero.astro";
+import SiteFooter from "@/components/site/SiteFooter.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { barSections } from "@/lib/bar";
 import { siteConfig } from "@/lib/config";
+import { features } from "@/lib/copy";
+import { pageTileCounts } from "@/lib/tiles";
+
+const [tracks, localFirst, performance, insights, management] = features;
+
+/** The closing section, and the point where the bar returns to the brand. */
+const CLOSING_ID = "availability";
+
+/*
+ * Orientation alternates down the page, starting with the visual on the left.
+ * `reversed` puts the visual on the right.
+ */
 ---
 
-<BaseLayout
-  title={siteConfig.name}
-  description={siteConfig.description}
->
-  <ComponentExample client:load />
+<BaseLayout title={siteConfig.name} description={siteConfig.description}>
+  <FloatingBar
+    brand={{ count: pageTileCounts.hero, title: siteConfig.name }}
+    client:load
+    endId={CLOSING_ID}
+    sections={barSections}
+  />
+
+  <main class="scroll-mt-24" id="main">
+    <Hero />
+
+    <FeatureRow {...tracks!}>
+      <TrackStack client:visible />
+    </FeatureRow>
+
+    <FeatureRow {...localFirst!} reversed>
+      <SidecarDemo client:visible />
+    </FeatureRow>
+
+    <FeatureRow {...performance!}>
+      <GalleryScroll client:visible />
+    </FeatureRow>
+
+    <FeatureRow {...insights!} reversed>
+      <InsightsPanel client:visible />
+    </FeatureRow>
+
+    <FeatureRow {...management!}>
+      <FilterReveal client:visible />
+    </FeatureRow>
+
+    <Closing id={CLOSING_ID} />
+  </main>
+
+  <SiteFooter />
 </BaseLayout>
