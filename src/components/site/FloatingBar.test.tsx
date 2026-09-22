@@ -187,6 +187,19 @@ describe("FloatingBar", () => {
     expect(screen.getByRole("link", { name: "Back to home" })).toHaveAttribute("href", "/");
   });
 
+  it("names the page it is on as plain text when it has a Back button", () => {
+    render(
+      <FloatingBar
+        backHref="/"
+        brand={{ count: null, title: "Acceptable Use Policy" }}
+        sections={SECTIONS}
+      />,
+    );
+    expect(screen.getByText("Acceptable Use Policy").tagName).toBe("SPAN");
+    // Back is the one way home, not the title as well.
+    expect(screen.getAllByRole("link", { name: /home|Acceptable/ })).toHaveLength(1);
+  });
+
   it("has no Back button on the home page", () => {
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
     expect(screen.queryByRole("link", { name: "Back to home" })).not.toBeInTheDocument();

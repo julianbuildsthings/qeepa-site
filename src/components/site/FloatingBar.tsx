@@ -305,6 +305,10 @@ export function FloatingBar({ backHref, brand, endId, sections }: FloatingBarPro
               >
                 {current ? (
                   <span className={titleClass}>{current.title}</span>
+                ) : backHref ? (
+                  // A page a step from home names itself, as the app's bar
+                  // names the shoot you are in; the Back button is the way home.
+                  <span className={titleClass}>{brand.title}</span>
                 ) : (
                   <a className={titleClass} href="/" translate="no">
                     {brand.title}

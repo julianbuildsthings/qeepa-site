@@ -29,7 +29,7 @@ const { description, title, updated } = Astro.props.frontmatter;
   claiming zero. The stars still lead back to the features. */}
   <FloatingBar
     backHref="/"
-    brand={{ count: null, title: siteConfig.name }}
+    brand={{ count: null, title }}
     client:load
     sections={barSections}
   />
