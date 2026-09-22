@@ -2,6 +2,7 @@
 import { FloatingBar } from "@/components/site/FloatingBar";
 import SiteFooter from "@/components/site/SiteFooter.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { barSections } from "@/lib/bar";
 import { siteConfig } from "@/lib/config";
 
 /**
@@ -16,10 +17,11 @@ const { heading, title } = Astro.props;
 
 <BaseLayout title={`${heading} — ${siteConfig.name}`} description={title}>
   {/* A legal page has no photo frames, so the count is omitted rather than
-  claiming zero. */}
+  claiming zero. The stars and menu still lead back to the features. */}
   <FloatingBar
+    brand={{ count: null, title: siteConfig.name }}
     client:load
-    initial={{ brand: true, count: null, title: siteConfig.name }}
+    sections={barSections}
   />
   <main class="mx-auto min-h-[60svh] max-w-[1440px] px-6 pt-20 pb-24 lg:px-[120px]" id="main">
     <h1

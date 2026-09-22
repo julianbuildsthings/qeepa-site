@@ -16,8 +16,6 @@
  * stacked and full width until there is room for two real columns.
  */
 type Props = {
-  /** Frames in this row's demonstration, for the floating bar's count. */
-  barCount: number;
   body: string;
   heading: string;
   id: string;
@@ -25,7 +23,7 @@ type Props = {
   subheading: string;
 };
 
-const { barCount, body, heading, id, reversed = false, subheading } = Astro.props;
+const { body, heading, id, reversed = false, subheading } = Astro.props;
 ---
 
 {/*
@@ -40,8 +38,6 @@ const { barCount, body, heading, id, reversed = false, subheading } = Astro.prop
       ? "xl:grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)]"
       : "xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]",
   ]}
-  data-bar-count={barCount}
-  data-bar-title={heading}
   id={id}
 >
   <div class:list={["order-1", reversed ? "xl:order-2" : "xl:order-1"]}>

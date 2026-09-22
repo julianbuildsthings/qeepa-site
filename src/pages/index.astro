@@ -9,6 +9,7 @@ import { FloatingBar } from "@/components/site/FloatingBar";
 import Hero from "@/components/site/Hero.astro";
 import SiteFooter from "@/components/site/SiteFooter.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { barSections } from "@/lib/bar";
 import { siteConfig } from "@/lib/config";
 import { features } from "@/lib/copy";
 import { pageTileCounts } from "@/lib/tiles";
@@ -23,30 +24,31 @@ const [tracks, localFirst, performance, insights, management] = features;
 
 <BaseLayout title={siteConfig.name} description={siteConfig.description}>
   <FloatingBar
+    brand={{ count: pageTileCounts.hero, title: siteConfig.name }}
     client:load
-    initial={{ brand: true, count: pageTileCounts.hero, title: siteConfig.name }}
+    sections={barSections}
   />
 
   <main class="scroll-mt-24" id="main">
     <Hero />
 
-    <FeatureRow {...tracks!} barCount={pageTileCounts.tracks}>
+    <FeatureRow {...tracks!}>
       <TrackStack client:visible />
     </FeatureRow>
 
-    <FeatureRow {...localFirst!} barCount={pageTileCounts["local-first"]} reversed>
+    <FeatureRow {...localFirst!} reversed>
       <SidecarDemo client:visible />
     </FeatureRow>
 
-    <FeatureRow {...performance!} barCount={pageTileCounts.performance}>
+    <FeatureRow {...performance!}>
       <GalleryScroll client:visible />
     </FeatureRow>
 
-    <FeatureRow {...insights!} barCount={pageTileCounts.insights} reversed>
+    <FeatureRow {...insights!} reversed>
       <InsightsPanel client:visible />
     </FeatureRow>
 
-    <FeatureRow {...management!} barCount={pageTileCounts.management}>
+    <FeatureRow {...management!}>
       <FilterReveal client:visible />
     </FeatureRow>
   </main>
