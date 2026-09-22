@@ -60,6 +60,11 @@ type FloatingBarProps = {
    */
   endId?: string;
   /**
+   * Whether the bar carries Get Qeepa. On by default; the legal pages turn it
+   * off, since a policy page is not where anyone decides to get the app.
+   */
+  offer?: boolean;
+  /**
    * The features, in page order. The nth is marked by n stars. Empty on the
    * legal pages, which show no stars: they are not a tour of the features.
    */
@@ -121,7 +126,7 @@ function scrollTargetFor(element: HTMLElement): number {
   return Math.min(Math.max(top, 0), Math.max(max, 0));
 }
 
-export function FloatingBar({ backHref, brand, endId, sections }: FloatingBarProps) {
+export function FloatingBar({ backHref, brand, endId, offer = true, sections }: FloatingBarProps) {
   const [currentId, setCurrentId] = useState<string | null>(null);
   const [previewed, setPreviewed] = useState<number | null>(null);
   /*
@@ -379,13 +384,15 @@ export function FloatingBar({ backHref, brand, endId, sections }: FloatingBarPro
 
             <div className="flex-1" />
 
-            <button
-              className="inline-flex shrink-0 cursor-not-allowed items-center rounded-full bg-[rgba(43,38,33,0.06)] px-4 py-[9px] text-[13px] leading-4 font-medium text-text-tertiary sm:px-5"
-              disabled
-              type="button"
-            >
-              Get Qeepa
-            </button>
+            {offer && (
+              <button
+                className="inline-flex shrink-0 cursor-not-allowed items-center rounded-full bg-[rgba(43,38,33,0.06)] px-4 py-[9px] text-[13px] leading-4 font-medium text-text-tertiary sm:px-5"
+                disabled
+                type="button"
+              >
+                Get Qeepa
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -25,12 +25,14 @@ const { description, title, updated } = Astro.props.frontmatter;
 
 <BaseLayout title={`${title} — ${siteConfig.name}`} description={description}>
   {/* A legal page has no photo frames, so the count is omitted rather than
-  claiming zero, and no stars: it is not a tour of the features. The Back
-  button is the way home. */}
+  claiming zero; no stars, as it is not a tour of the features; and no Get
+  Qeepa, as a policy page is not where anyone decides to get the app. The
+  Back button is the way home. */}
   <FloatingBar
     backHref="/"
     brand={{ count: null, title }}
     client:load
+    offer={false}
     sections={[]}
   />
   <main class="mx-auto max-w-[1440px] px-6 pt-20 pb-32 lg:px-[120px] lg:pt-28 lg:pb-44" id="main">

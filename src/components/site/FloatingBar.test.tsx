@@ -205,6 +205,11 @@ describe("FloatingBar", () => {
     expect(screen.queryByRole("navigation", { name: "Features" })).not.toBeInTheDocument();
   });
 
+  it("drops Get Qeepa when asked to, as on the legal pages", () => {
+    render(<FloatingBar backHref="/" brand={BRAND} offer={false} sections={[]} />);
+    expect(screen.queryByRole("button", { name: "Get Qeepa" })).not.toBeInTheDocument();
+  });
+
   it("has no Back button on the home page", () => {
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
     expect(screen.queryByRole("link", { name: "Back to home" })).not.toBeInTheDocument();
