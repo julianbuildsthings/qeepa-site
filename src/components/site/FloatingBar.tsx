@@ -244,7 +244,13 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="pointer-events-none sticky top-4 z-30 mt-8 px-6 lg:mt-14 lg:px-[120px]">
+      {/* `data-enter` slides the bar down into place on page load — see the
+      entrances in global.css. On the outer wrapper, so it never fights the
+      surface's own colour transition. */}
+      <div
+        className="pointer-events-none sticky top-4 z-30 mt-8 px-6 lg:mt-14 lg:px-[120px]"
+        data-enter="bar"
+      >
         <div className="mx-auto max-w-[1200px]">
           {/*
           The surface change is a CSS transition rather than a Motion animation:

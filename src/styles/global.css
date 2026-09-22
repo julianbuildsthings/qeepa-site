@@ -368,6 +368,44 @@
     transition: transform var(--line-duration) var(--ease-rise);
     transition-delay: calc(var(--line-lead, 0s) + var(--line-index, 0) * var(--line-stagger));
   }
+
+  /*
+   * Page-load entrances, on the line rise's timing and easing so the first
+   * screen arrives as one movement: the bar drops in from above as soon as
+   * the page loads, the hero's lines rise, and the hero window slides up from
+   * below a few lines behind them.
+   *
+   * The bar travels its own height plus the most it sits below the top of the
+   * page (56px from lg), so it starts fully out of view.
+   */
+  .js [data-enter="bar"] {
+    animation: enter-from-above var(--line-duration) var(--ease-rise) both;
+  }
+
+  /*
+   * The window waits on the hero copy's reveal — its sibling — so it follows
+   * the headline even when the fonts, which the split waits for, are slow.
+   */
+  .js [data-line-reveal] ~ [data-enter="window"] {
+    opacity: 0;
+    transform: translateY(var(--panel-distance));
+  }
+
+  .js [data-line-reveal][data-revealed] ~ [data-enter="window"] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--line-duration) var(--ease-rise),
+      transform var(--line-duration) var(--ease-rise);
+    transition-delay: calc(3 * var(--line-stagger));
+  }
+}
+
+@keyframes enter-from-above {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-100% - 4rem));
+  }
 }
 
 /*

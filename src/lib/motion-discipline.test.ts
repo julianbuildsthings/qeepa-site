@@ -2,7 +2,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { durations, easings, motionCssVariables, stagger } from "@/lib/motion";
+import { distance, durations, easings, motionCssVariables, stagger } from "@/lib/motion";
 
 /**
  * The rule from the app's MOTION.md, carried over unchanged: never inline a
@@ -140,5 +140,9 @@ describe("motionCssVariables", () => {
     expect(css).toContain(`--line-duration: ${durations.line}s`);
     expect(css).toContain(`--ease-rise: cubic-bezier(${easings.rise.join(", ")})`);
     expect(css).toContain(`--line-stagger: ${stagger.line}s`);
+  });
+
+  it("carries the panel travel the hero window enters over", () => {
+    expect(css).toContain(`--panel-distance: ${distance.panel}px`);
   });
 });

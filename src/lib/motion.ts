@@ -190,6 +190,7 @@ export function motionCssVariables(): string {
     `--ease-enter: ${bezier(easings.enter)}`,
     `--ease-standard: ${bezier(easings.standard)}`,
     `--reveal-distance: ${distance.enter}px`,
+    `--panel-distance: ${distance.panel}px`,
     `--reveal-stagger: ${stagger.relaxed}s`,
     `--line-duration: ${durations.line}s`,
     `--ease-rise: ${bezier(easings.rise)}`,
