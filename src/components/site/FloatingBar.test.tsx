@@ -200,6 +200,11 @@ describe("FloatingBar", () => {
     expect(screen.getAllByRole("link", { name: /home|Acceptable/ })).toHaveLength(1);
   });
 
+  it("shows no stars when given no sections, as on the legal pages", () => {
+    render(<FloatingBar backHref="/" brand={BRAND} sections={[]} />);
+    expect(screen.queryByRole("navigation", { name: "Features" })).not.toBeInTheDocument();
+  });
+
   it("has no Back button on the home page", () => {
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
     expect(screen.queryByRole("link", { name: "Back to home" })).not.toBeInTheDocument();

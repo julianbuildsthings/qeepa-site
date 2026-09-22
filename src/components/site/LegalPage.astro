@@ -2,7 +2,6 @@
 import { FloatingBar } from "@/components/site/FloatingBar";
 import SiteFooter from "@/components/site/SiteFooter.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { barSections } from "@/lib/bar";
 import { siteConfig } from "@/lib/config";
 
 /**
@@ -26,12 +25,13 @@ const { description, title, updated } = Astro.props.frontmatter;
 
 <BaseLayout title={`${title} — ${siteConfig.name}`} description={description}>
   {/* A legal page has no photo frames, so the count is omitted rather than
-  claiming zero. The stars still lead back to the features. */}
+  claiming zero, and no stars: it is not a tour of the features. The Back
+  button is the way home. */}
   <FloatingBar
     backHref="/"
     brand={{ count: null, title }}
     client:load
-    sections={barSections}
+    sections={[]}
   />
   <main class="mx-auto max-w-[1440px] px-6 pt-20 pb-32 lg:px-[120px] lg:pt-28 lg:pb-44" id="main">
     <article class="max-w-[580px] font-sans text-[16px]">

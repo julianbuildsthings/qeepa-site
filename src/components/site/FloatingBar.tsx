@@ -59,7 +59,10 @@ type FloatingBarProps = {
    * feature once you are past it. Omit on pages without one.
    */
   endId?: string;
-  /** The features, in page order. The nth is marked by n stars. */
+  /**
+   * The features, in page order. The nth is marked by n stars. Empty on the
+   * legal pages, which show no stars: they are not a tour of the features.
+   */
   sections: BarSection[];
 };
 
@@ -97,8 +100,8 @@ function currentSectionId(ids: string[]): string | null {
 }
 
 /**
- * Root-relative, so the same bar works on every page: on the home page it is
- * an in-page jump, and on a legal page it goes home to that section.
+ * Root-relative, so a star always names the home page's section — an in-page
+ * jump there, and still a working link if a star is ever shown elsewhere.
  */
 function sectionHref(id: string): string {
   return `/#${id}`;
@@ -169,8 +172,9 @@ export function FloatingBar({ backHref, brand, endId, sections }: FloatingBarPro
    *    way, so the bar flickered through each one — Shoot insights for a
    *    moment on the way from Photo management to Photo tracks.
    * 2. Passing the pointer over a graphic mid-scroll could stop the page
-   *    short. The demos pause their loops on hover; the browser's own smooth
-   *    scroll is fragile to what happens beneath it, and it gave up.
+   *    short. The demos then paused their loops on hover (they no longer do);
+   *    the browser's own smooth scroll is fragile to what happens beneath it,
+   *    and it gave up.
    *
    * A spring set frame by frame answers to nothing but this code. It stops only
    * when the reader takes the scroll back — a wheel, a touch, a key, a press —
@@ -328,48 +332,50 @@ export function FloatingBar({ backHref, brand, endId, sections }: FloatingBarPro
             Centred on the bar, not placed in the flow, so it holds still while
             the label beside it changes length — the app's centre slot does the
             same. Hidden below md, where the label and the button need the
-            width.
+            width, and absent where there are no sections (the legal pages).
           */}
-            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center md:flex">
-              <nav aria-label="Features" className="pointer-events-auto">
-                <ol className="flex">
-                  {sections.map((section, position) => {
-                    const lit = position < filled;
-                    return (
-                      <li key={section.id}>
-                        <a
-                          aria-current={section.id === currentId ? "location" : undefined}
-                          aria-label={section.title}
-                          className="flex size-6 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-                          href={sectionHref(section.id)}
-                          onBlur={() => setPreviewed(null)}
-                          onClick={(event) => travelTo(event, section.id)}
-                          onFocus={() => setPreviewed(position + 1)}
-                          onMouseEnter={() => setPreviewed(position + 1)}
-                          onMouseLeave={() => setPreviewed(null)}
-                          title={section.title}
-                        >
-                          <Star
-                            aria-hidden="true"
-                            className={cn(
-                              "transition-colors",
-                              lit
-                                ? "text-raw"
-                                : selecting
-                                  ? "text-[#6F3B0F2E]"
-                                  : "text-[#2B26211F]",
-                            )}
-                            fill="currentColor"
-                            size={16}
-                            strokeWidth={0}
-                          />
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ol>
-              </nav>
-            </div>
+            {sections.length > 0 && (
+              <div className="pointer-events-none absolute inset-0 hidden items-center justify-center md:flex">
+                <nav aria-label="Features" className="pointer-events-auto">
+                  <ol className="flex">
+                    {sections.map((section, position) => {
+                      const lit = position < filled;
+                      return (
+                        <li key={section.id}>
+                          <a
+                            aria-current={section.id === currentId ? "location" : undefined}
+                            aria-label={section.title}
+                            className="flex size-6 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                            href={sectionHref(section.id)}
+                            onBlur={() => setPreviewed(null)}
+                            onClick={(event) => travelTo(event, section.id)}
+                            onFocus={() => setPreviewed(position + 1)}
+                            onMouseEnter={() => setPreviewed(position + 1)}
+                            onMouseLeave={() => setPreviewed(null)}
+                            title={section.title}
+                          >
+                            <Star
+                              aria-hidden="true"
+                              className={cn(
+                                "transition-colors",
+                                lit
+                                  ? "text-raw"
+                                  : selecting
+                                    ? "text-[#6F3B0F2E]"
+                                    : "text-[#2B26211F]",
+                              )}
+                              fill="currentColor"
+                              size={16}
+                              strokeWidth={0}
+                            />
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </nav>
+              </div>
+            )}
 
             <div className="flex-1" />
 
