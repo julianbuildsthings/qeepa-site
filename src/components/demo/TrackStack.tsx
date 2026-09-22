@@ -20,8 +20,9 @@ import { trackExtension, type TrackName, trackOrder, trackTone } from "@/lib/ton
  *
  * The loop runs longer than five seconds, so it needs a pause control. The pill
  * is that control: clicking a segment pins that track and ends the loop for
- * good. It also pauses while hovered or focused, and never starts at all under
- * `prefers-reduced-motion`.
+ * good. It pauses while the pill has keyboard focus — but not on hover, which
+ * stopped it for anyone whose pointer happened to rest there — and never
+ * starts at all under `prefers-reduced-motion`.
  */
 
 /**
@@ -83,15 +84,14 @@ export function TrackStack() {
 
   return (
     <MotionConfig reducedMotion="user">
-      {/* Hover and focus pause the loop. The wrapper is not focusable itself —
-      focus lands on the pill's buttons, which bubble through focus-within. */}
-      {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
+      {/* Keyboard focus pauses the loop, so a control is never moving under
+      it: the wrapper is not focusable itself, but focus lands on the pill's
+      buttons and bubbles up. Never on hover: a visitor's pointer often rests
+      on a graphic early, and pausing there meant they never saw it move. */}
       <div
         className="relative aspect-716/496 w-full"
         onBlur={() => setPaused(false)}
         onFocus={() => setPaused(true)}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
       >
         {trackOrder.map((track, index) => {
           // 0 is the front frame; higher values sit further back in the fan.

@@ -77,13 +77,12 @@ export function FilterReveal() {
         above it swung between 48px and 158px. A filter toolbar does not move
         when its results change; the grid empties downward beneath it.
       */}
-      {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
+      {/* Keyboard focus on a chip pauses the loop; Never on hover: a visitor's pointer often rests
+      on a graphic early, and pausing there meant they never saw it move. */}
       <div
         className="flex aspect-716/496 w-full flex-col gap-4 rounded-xl border border-[rgba(43,38,33,0.10)] bg-white p-5 shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]"
         onBlur={() => setPaused(false)}
         onFocus={() => setPaused(true)}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
       >
         <div className="flex items-center gap-2">
           {CHIPS.map((chip) => (

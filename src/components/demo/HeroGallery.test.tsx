@@ -83,13 +83,16 @@ describe("HeroGallery", () => {
     expect(ratings(container)).toEqual(heroRatings[1]);
   });
 
-  it("stops for good when a track is picked, and pauses while hovered", () => {
+  it("keeps cycling while hovered", () => {
     const { container } = render(<HeroGallery />);
 
     fireEvent.mouseEnter(container.firstElementChild!);
-    advance(cycle.track * 2);
-    expect(labels(container)[0]).toBe("4821.raw");
-    fireEvent.mouseLeave(container.firstElementChild!);
+    advance(cycle.track);
+    expect(labels(container)[0]).toBe("4821.jpg");
+  });
+
+  it("stops for good when a track is picked", () => {
+    const { container } = render(<HeroGallery />);
 
     fireEvent.click(screen.getByRole("button", { name: /EDIT/ }));
     expect(labels(container)[0]).toBe("4821.psd");

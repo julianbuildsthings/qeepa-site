@@ -36,9 +36,9 @@ import { scatterTones, tones } from "@/lib/tones";
  * 2. Travel is measured, not assumed. The strip's height depends on the column
  *    width, which depends on the panel width, so a hard-coded percentage is
  *    only ever right at one viewport.
- * 3. Hovering pauses the playback where it stands. Swapping the `animate`
- *    target to `y: 0` — an earlier approach — snapped the strip back to the
- *    top the instant the pointer touched it.
+ * 3. It does not pause on hover. It once did, and a visitor whose pointer
+ *    rested on the window early never saw the one thing this row is for —
+ *    speed. Reduced motion is what stops it.
  *
  * Rows are cut at the top and bottom of the viewport rather than fitting a
  * whole number — a strip that ends flush looks like it stopped.
@@ -97,21 +97,9 @@ export function GalleryScroll() {
     };
   }, [reduceMotion, width, y]);
 
-  const hold = (paused: boolean) => {
-    if (paused) playback.current?.pause();
-    else playback.current?.play();
-  };
-
   return (
     <MotionConfig reducedMotion="user">
-      {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
-      <div
-        className="w-full overflow-hidden rounded-2xl border border-[rgba(43,38,33,0.10)] bg-white shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]"
-        onBlur={() => hold(false)}
-        onFocus={() => hold(true)}
-        onMouseEnter={() => hold(true)}
-        onMouseLeave={() => hold(false)}
-      >
+      <div className="w-full overflow-hidden rounded-2xl border border-[rgba(43,38,33,0.10)] bg-white shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]">
         <WindowBar />
 
         {/* The viewport the strip scrolls through. Horizontal padding matches

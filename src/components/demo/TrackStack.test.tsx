@@ -63,15 +63,15 @@ describe("TrackStack", () => {
     expect(frontTrack(container)).toBe("edit");
   });
 
-  it("pauses while hovered and resumes on leave", () => {
+  /*
+   * The regression this guards: hovering used to pause the loop, so a visitor
+   * whose pointer rested on the stack early never saw it cycle.
+   */
+  it("keeps cycling while hovered", () => {
     const { container } = render(<TrackStack />);
     const region = container.firstElementChild as HTMLElement;
 
     fireEvent.mouseEnter(region);
-    tick(cycle.track * 2);
-    expect(frontTrack(container)).toBe("raw");
-
-    fireEvent.mouseLeave(region);
     tick(cycle.track);
     expect(frontTrack(container)).toBe("jpg");
   });

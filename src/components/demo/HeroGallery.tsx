@@ -30,8 +30,8 @@ import {
  * never lands on the same beat as the colours. The squares fill one by one.
  *
  * As in the tracks row, the pill is the pause control: clicking a segment pins
- * that track and ends the loop for good. It also pauses while hovered or
- * focused, and never starts under `prefers-reduced-motion`. The first render
+ * that track and ends the loop for good. It pauses while the pill has keyboard
+ * focus, never on hover, and never starts under `prefers-reduced-motion`. The first render
  * is the approved still — RAW, the approved tones and ratings — so the
  * server's HTML is the settled state and hydration changes nothing.
  *
@@ -107,15 +107,14 @@ export function HeroGallery() {
 
   return (
     <MotionConfig reducedMotion="user">
-      {/* Hover and focus pause the loop. The wrapper is not focusable itself —
-      focus lands on the pill's buttons, which bubble through focus-within. */}
-      {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
+      {/* Keyboard focus pauses the loop, so a control is never moving under
+      it: the wrapper is not focusable itself, but focus lands on the pill's
+      buttons and bubbles up. Never on hover: a visitor's pointer often rests
+      on a graphic early, and pausing there meant they never saw it move. */}
       <div
         className="relative overflow-hidden rounded-t-2xl border border-b-0 border-[rgba(43,38,33,0.10)] bg-white shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]"
         onBlur={() => setPaused(false)}
         onFocus={() => setPaused(true)}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
       >
         <WindowBar />
 

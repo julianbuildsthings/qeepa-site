@@ -51,7 +51,6 @@ function Frame({ tone }: { tone: ToneName }) {
 
 export function SidecarDemo() {
   const [rated, setRated] = useState(false);
-  const [paused, setPaused] = useState(false);
   const reduceMotion = useReducedMotion();
 
   /*
@@ -63,7 +62,7 @@ export function SidecarDemo() {
    * state passes through in half that.
    */
   useEffect(() => {
-    if (paused || reduceMotion) return;
+    if (reduceMotion) return;
 
     const id = setTimeout(
       () => {
@@ -73,18 +72,14 @@ export function SidecarDemo() {
     );
 
     return () => clearTimeout(id);
-  }, [paused, rated, reduceMotion]);
+  }, [rated, reduceMotion]);
 
   return (
     <MotionConfig reducedMotion="user">
-      {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
-      <div
-        className="flex w-full items-center lg:aspect-716/496"
-        onBlur={() => setPaused(false)}
-        onFocus={() => setPaused(true)}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
+      {/* No hover pause: a visitor's pointer often rests on a graphic early,
+      and pausing there meant they never saw the sidecar appear. Reduced motion
+      is what stops it. */}
+      <div className="flex w-full items-center lg:aspect-716/496">
         <div className="w-full overflow-hidden rounded-xl border border-[rgba(43,38,33,0.10)] bg-white shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]">
           <p className="border-b border-[rgba(43,38,33,0.08)] bg-white px-5 py-3 text-[12px] text-text-tertiary">
             Pictures › Shoots › June
