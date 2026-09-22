@@ -202,7 +202,7 @@ A white page with warm neutral text, a single peach accent at three depths, a li
 - **Peach Dark** (peach-dark): text on peach-light surfaces — active chips and the sidecar row. The active track pill label, which sits on the stronger peach fill, is one step darker at `#5C300C`: peach-dark there measured APCA Lc 58.6 at 13px, and `#5C300C` measures 63.5.
 
 ### Secondary
-- **Track RAW / Burnt Apricot** (track-raw): the RAW track dot. It is also the colour of filled rating stars wherever the app's star glyph appears (floating bar, sidecar listing).
+- **Track RAW / Burnt Apricot** (track-raw): the RAW track dot. It is also the colour of the lit stars in the floating bar, the only place the star glyph appears. Ratings in page content — photo frames and the local-first listing alike — are the rating pips.
 - **Track JPG / Export Blue** (track-jpg) and **Track EDIT / Working-File Violet** (track-af): the JPG and EDIT track dots. These are the only non-warm colours on the page, and they appear only as dots beside a text label or on a frame.
 
 ### Tertiary: photo tones
@@ -284,8 +284,8 @@ Surfaces are flat. Depth belongs only to objects the app itself would float: the
 
 ### Floating Bar (navigation)
 Adapted from the app's floating bar. It is sticky 16px from the top on the 120px rail, 48px tall and fully round.
-- **Browse state** (over the hero and again from the closing section): near-white surface, the brand "Qeepa" in Erode linking home, and "10 photos" from md. At the closing it shows the name only.
-- **Selection state** (a feature holds the middle of the viewport): peach-light surface, with the feature's name in Erode and its count. The surface change is a CSS colour transition at `--motion-base` / `--ease-standard`. The label fades at `durations.quick`.
+- **Browse state** (over the hero): near-white surface, the brand "Qeepa" in Erode linking home, and "10 photos" from md.
+- **Selection state** (a feature holds the middle of the viewport): peach-light surface, with the feature's name in Erode and its count. At the closing the bar stays in this state with all five stars lit, names "Qeepa" (linking home) and shows no count; no star is marked current. The surface change is a CSS colour transition at `--motion-base` / `--ease-standard`. The label fades at `durations.quick`.
 - **Stars as sections:** five 16px stars centred on the bar, one per feature. The nth feature fills n stars. Each star is a 24px link to its section, labelled with the feature name and marked `aria-current="location"` when current. Hovering or focusing a star previews its fill. Lit stars are track-raw. Unlit stars are peach-dark at 18% in selection and ink at 12% in browse. Stars are hidden below md.
 - **Get Qeepa:** a real disabled button (ink at 6% fill, pebble label, not-allowed cursor). It stays disabled until there is something to get.
 - The label is not a live region. The bar adopts a section when that section's top passes 50% of the viewport height.

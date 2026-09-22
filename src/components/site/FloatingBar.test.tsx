@@ -117,7 +117,7 @@ describe("FloatingBar", () => {
     expect(screen.getByText("Photo tracks")).toBeInTheDocument();
   });
 
-  it("returns to the brand once the closing section is reached", () => {
+  it("at the closing, names Qeepa with every star lit, still selected", () => {
     placeSections({
       availability: 120,
       "local-first": -2000,
@@ -129,8 +129,12 @@ describe("FloatingBar", () => {
     );
 
     expect(screen.getByRole("link", { name: "Qeepa" })).toBeInTheDocument();
-    expect(container.querySelector("[data-state]")).toHaveAttribute("data-state", "browse");
-    for (const star of stars()) expect(star).not.toHaveAttribute("aria-current");
+    expect(container.querySelector("[data-state]")).toHaveAttribute("data-state", "selection");
+    for (const star of stars()) {
+      expect(star.querySelector("svg")).toHaveClass("text-raw");
+      // The closing is not a feature, so no star claims to be where you are.
+      expect(star).not.toHaveAttribute("aria-current");
+    }
     // No frames are on screen at the closing, so no count is claimed there.
     expect(screen.queryByText(/photos/)).not.toBeInTheDocument();
   });

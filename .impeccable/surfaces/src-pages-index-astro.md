@@ -88,8 +88,11 @@ against these, not flag them as drift.
   state over the hero ("Qeepa · 10 photos"); peach-light selection state inside
   a feature, naming it and its count. Five centred stars, the nth feature fills
   n, each a link to its section. A disabled "Get Qeepa". Feature names set in
-  Erode, matching the app's bar at the user's request. Returns to the brand
-  state at the closing. No Features menu.
+  Erode, matching the app's bar at the user's request. At the closing it stays
+  in the selection state with all five stars lit and names "Qeepa", with no
+  count. No Features menu.
+- **Ratings are squares everywhere on the page content.** The local-first
+  listing uses the frames' rating pips, not stars; stars appear only in the bar.
 - **Hero window is complete, not cropped by the fold.** Its height clamp was
   removed so the track pill sits on the true centre of row two at every width.
 - **Rows stack below xl (1280), not lg.** At 1024 the copy column measured

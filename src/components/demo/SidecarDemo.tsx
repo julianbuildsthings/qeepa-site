@@ -1,9 +1,8 @@
-import { Star } from "lucide-react";
 import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { cycle, distance, durations, easings, presets, stagger } from "@/lib/motion";
-import { frameBorder, type ToneName, tones } from "@/lib/tones";
+import { frameBorder, pipEmpty, pipFilled, type ToneName, tones } from "@/lib/tones";
 
 /**
  * Row two, local-first.
@@ -30,7 +29,7 @@ export const FILES: { name: string; size: string; tone: ToneName }[] = [
   { name: "IMG_4821.afphoto", size: "61.7 MB", tone: "bisque" },
 ];
 
-const STARS = 5;
+const PIPS = 5;
 const RATING = 4;
 
 /** At 48x32 there is no room for chrome, so this is a bare tone. */
@@ -91,20 +90,33 @@ export function SidecarDemo() {
                 <Frame tone={file.tone} />
                 <span className="flex-1 truncate text-[13px] text-text-primary">{file.name}</span>
 
+                {/*
+                  The rating as the page's rating squares, not stars — the same
+                  pips, colours and 8px size the photo frames carry, so a rating
+                  looks like one thing everywhere on the page. Each square is an
+                  empty pip with a filled one fading in over it: opacity only,
+                  so it stays on the compositor.
+                */}
                 {index === 0 && (
-                  <span aria-hidden="true" className="flex shrink-0 items-center gap-0.5">
-                    {Array.from({ length: STARS }, (_, starIndex) => (
-                      <motion.span
-                        animate={{ opacity: rated && starIndex < RATING ? 1 : 0.22 }}
-                        key={starIndex}
-                        transition={{
-                          delay: rated ? starIndex * stagger.base : 0,
-                          duration: durations.quick,
-                          ease: easings.standard,
-                        }}
+                  <span aria-hidden="true" className="flex shrink-0 items-center gap-1">
+                    {Array.from({ length: PIPS }, (_, pipIndex) => (
+                      <span
+                        className="relative size-2 rounded-[2px]"
+                        key={pipIndex}
+                        style={{ background: pipEmpty }}
                       >
-                        <Star className="text-raw" fill="currentColor" size={11} strokeWidth={0} />
-                      </motion.span>
+                        <motion.span
+                          animate={{ opacity: rated && pipIndex < RATING ? 1 : 0 }}
+                          className="absolute inset-0 rounded-[2px]"
+                          initial={false}
+                          style={{ background: pipFilled }}
+                          transition={{
+                            delay: rated ? pipIndex * stagger.base : 0,
+                            duration: durations.quick,
+                            ease: easings.standard,
+                          }}
+                        />
+                      </span>
                     ))}
                   </span>
                 )}

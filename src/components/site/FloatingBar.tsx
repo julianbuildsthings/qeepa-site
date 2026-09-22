@@ -48,9 +48,9 @@ type FloatingBarProps = {
    */
   brand: { count: number | null; title: string };
   /**
-   * A section after the features where the bar returns to the brand state —
-   * the closing, so the bar stops naming the last feature once you are past
-   * it. Omit on pages without one.
+   * A section after the features — the closing — where the bar names the
+   * product again, with every star lit, instead of going on naming the last
+   * feature once you are past it. Omit on pages without one.
    */
   endId?: string;
   /** The features, in page order. The nth is marked by n stars. */
@@ -104,7 +104,7 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
 
   useEffect(() => {
     // The end section is tracked like any other, but it is not a feature, so
-    // when it is current no star is marked and the bar reads as the brand.
+    // when it is current no star is marked as the current location.
     const ids = [...sections.map((section) => section.id), ...(endId ? [endId] : [])];
     let frame = 0;
 
@@ -131,18 +131,27 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
 
   const index = sections.findIndex((section) => section.id === currentId);
   const current = index === -1 ? null : sections[index]!;
-  const selecting = current !== null;
+  const atEnd = endId !== undefined && currentId === endId;
+
+  /*
+   * At the closing the bar stays in the selection state with every star lit —
+   * all five features seen, the rating complete — but names the product
+   * rather than a feature, since the closing belongs to none of them.
+   */
+  const selecting = current !== null || atEnd;
 
   /*
    * The count names frames the viewer can see. Over the hero that is the
    * hero's grid; at the closing there are none, so the bar shows the name
    * alone rather than repeating a count for a grid long since scrolled away.
    */
-  const atEnd = endId !== undefined && currentId === endId;
   const count = current ? current.count : atEnd ? null : brand.count;
 
-  /** How many stars read as filled: the current section, or the one hovered. */
-  const filled = previewed ?? index + 1;
+  /**
+   * How many stars read as filled: the one hovered, else every star at the
+   * closing, else the current section's position.
+   */
+  const filled = previewed ?? (atEnd ? sections.length : index + 1);
 
   const titleClass =
     // `py-px` takes the 22px line to the 24px minimum hit target; the touch
