@@ -145,7 +145,9 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
   const filled = previewed ?? index + 1;
 
   const titleClass =
-    "min-w-0 truncate rounded-sm font-serif text-[17px] leading-[22px] font-medium tracking-[-0.01em] text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none";
+    // `py-px` takes the 22px line to the 24px minimum hit target; the touch
+    // extension then takes the brand link to 44px on touch screens.
+    "extend-touch-target-y min-w-0 truncate rounded-sm py-px font-serif text-[17px] leading-[22px] font-medium tracking-[-0.01em] text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none";
 
   return (
     <MotionConfig reducedMotion="user">

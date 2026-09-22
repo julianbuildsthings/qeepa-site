@@ -118,7 +118,10 @@ export function InsightsPanel() {
                 whileInView={{ opacity: 1, y: 0 }}
               >
                 {item.label}
-                <span className="text-text-tertiary tabular-nums">{item.count}</span>
+                {/* Secondary, not tertiary: tertiary on surface-2 measured APCA
+                Lc 48 at 12px, the weakest text on the page. Medium weight keeps
+                it reading apart from the camera name beside it. */}
+                <span className="font-medium text-text-secondary tabular-nums">{item.count}</span>
               </motion.span>
             ))}
             <span className="ml-auto text-[12px] text-text-tertiary tabular-nums">

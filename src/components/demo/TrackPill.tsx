@@ -159,7 +159,7 @@ export function TrackPill({ active, interactive = false, onSelect }: TrackPillPr
                 <button
                   className={cn(
                     SEGMENT_BASE,
-                    "min-h-6 touch-manipulation focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+                    "extend-touch-target-y min-h-6 touch-manipulation focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
                     isActive
                       ? "text-accent-foreground"
                       : "text-text-secondary hover:text-text-primary",

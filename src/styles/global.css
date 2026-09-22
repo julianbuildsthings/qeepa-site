@@ -305,6 +305,18 @@
 }
 
 /*
+ * Grows a control's tappable area to at least 44px tall on touch screens
+ * without changing how it looks. Vertical only, so controls that sit side by
+ * side — the track pill's segments, the filter chips — do not take each
+ * other's taps. 10px each way: a 24px control becomes 44px, a 30px one 50px.
+ */
+@utility extend-touch-target-y {
+  @media (pointer: coarse) {
+    @apply relative touch-manipulation after:absolute after:inset-x-0 after:-inset-y-2.5;
+  }
+}
+
+/*
  * Section reveals. Content is hidden only under `.js`, which the base layout
  * sets before first paint, so without JavaScript nothing is hidden at all; and
  * only when motion is welcome, so under reduced motion nothing moves or waits.

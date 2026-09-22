@@ -88,7 +88,7 @@ export function FilterReveal() {
         <div className="flex items-center gap-2">
           {CHIPS.map((chip) => (
             <button
-              className={`inline-flex min-h-6 touch-manipulation items-center rounded-full px-3 py-1.5 text-[12px] font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+              className={`extend-touch-target-y inline-flex min-h-6 touch-manipulation items-center rounded-full px-3 py-1.5 text-[12px] font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
                 filtered
                   ? "bg-peach-light text-peach-dark"
                   : "bg-surface-2 text-text-secondary hover:text-text-primary"
@@ -103,22 +103,35 @@ export function FilterReveal() {
               {chip}
             </button>
           ))}
-          <motion.span
-            animate={{ opacity: 1 }}
-            className="ml-auto text-[12px] text-text-secondary tabular-nums"
-            initial={{ opacity: 0 }}
-            key={visible.length}
-            transition={{ duration: durations.quick, ease: easings.standard }}
-          >
-            {visible.length}&nbsp;shown
-          </motion.span>
+          {/* The count fades on change, not on first render, so the server
+          HTML shows it rather than an invisible label. */}
+          <AnimatePresence initial={false}>
+            <motion.span
+              animate={{ opacity: 1 }}
+              className="ml-auto text-[12px] text-text-secondary tabular-nums"
+              initial={{ opacity: 0 }}
+              key={visible.length}
+              transition={{ duration: durations.quick, ease: easings.standard }}
+            >
+              {visible.length}&nbsp;shown
+            </motion.span>
+          </AnimatePresence>
         </div>
 
         {/* `flex-1` plus `content-start` keeps the surviving frames exactly
         where they were when twelve were showing, rather than letting the grid
-        re-centre itself in the space the other eight left. */}
-        <div aria-hidden="true" className="grid flex-1 grid-cols-4 content-start gap-3">
-          <AnimatePresence mode="popLayout">
+        re-centre itself in the space the other eight left.
+
+        `relative` is load-bearing. `popLayout` takes each exiting frame out of
+        the flow with absolute positioning while it fades, measured against the
+        nearest positioned ancestor. Without one here that was the page itself,
+        and every filter pass flashed the leaving frames across the top of the
+        hero. */}
+        <div aria-hidden="true" className="relative grid flex-1 grid-cols-4 content-start gap-3">
+          {/* `initial={false}`: the twelve frames are the starting state, so
+          they are rendered visible in the server HTML rather than each fading
+          in from nothing once the island hydrates. */}
+          <AnimatePresence initial={false} mode="popLayout">
             {visible.map((index) => (
               <motion.div
                 animate={{ opacity: 1, scale: 1 }}

@@ -97,6 +97,11 @@ export function TrackStack() {
               className="absolute bottom-0 left-0 h-[89%] w-[92%] rounded-[10px] shadow-[0_2px_6px_rgba(43,38,33,0.07),0_30px_64px_-24px_rgba(43,38,33,0.28)]"
               data-depth={depth}
               data-track={track}
+              // Renders the fan into the server HTML. Without it the three frames
+              // arrived untransformed and stacked exactly on top of each other,
+              // with EDIT — last in the markup — in front of an active RAW, until
+              // the island hydrated; with JavaScript off, for good.
+              initial={false}
               key={track}
               transition={presets.ui}
             >
