@@ -7,10 +7,13 @@ import { cn } from "@/lib/utils";
  * rating.
  *
  * The chrome is what makes a flat rectangle read as a photo rather than a
- * swatch — but only where there is room for it. Below roughly 150px wide the
- * dot and number stop being information and become dirt, so the demonstrations
- * that render frames smaller than that pass no metadata at all and get a bare
- * tone. That is a deliberate choice, not an oversight.
+ * swatch — but only where there is room for it. The default size holds up down
+ * to about 110px wide, the width of the fast-performance strip's five columns;
+ * the rating pips and the number still clear each other there with room to
+ * spare. Below that the dot and number stop being information and become dirt,
+ * so the one demonstration that renders frames smaller — the 48px file-list
+ * thumbnails in local-first — passes no metadata and gets a bare tone. That is
+ * a deliberate choice, not an oversight.
  *
  * `size="large"` scales the chrome for frames several hundred pixels across,
  * where the default 5px dot would disappear.

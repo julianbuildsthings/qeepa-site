@@ -118,7 +118,7 @@ export const cycle = {
  * one; the thing that should stay constant is how fast it looks.
  */
 export const speeds = {
-  /** The gallery strip browsing itself — roughly two rows of thumbnails a second. */
+  /** The gallery strip browsing itself — about a row and a half of frames a second. */
   gallery: 144,
 };
 

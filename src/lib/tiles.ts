@@ -15,12 +15,11 @@ export const demoFrames = {
    * One strip of the scrolling gallery. Rendered twice, so the second copy is
    * already in place when the first scrolls away and the loop has no seam.
    *
-   * Longer than the panel needs, to keep the loop from coming round too often:
-   * at the strip's speed this is about seven seconds of travel. Only the five
-   * or so rows inside the window are ever painted, so the extra frames cost
-   * nothing to look at.
+   * Twelve rows of five — longer than the viewport needs, to keep the loop
+   * from coming round too often: at the strip's speed this is about seven
+   * seconds of travel. Only the rows inside the window are ever painted.
    */
-  performance: 144,
+  performance: 60,
   /** Twelve before filtering, four after. Matches FRAMES in FilterReveal. */
   management: 12,
 } satisfies Record<string, number>;

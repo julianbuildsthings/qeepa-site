@@ -1,6 +1,7 @@
 ---
 import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { TrackPill } from "@/components/demo/TrackPill";
+import { WindowBar } from "@/components/demo/WindowBar";
 import { type ToneName, tones, type TrackName } from "@/lib/tones";
 
 /**
@@ -51,13 +52,7 @@ const pillTop = `calc(${(pillRow - 0.5) / rows} * ${trackHeight} + ${(pillRow - 
 <div
   class="relative overflow-hidden rounded-t-2xl border border-b-0 border-[rgba(43,38,33,0.10)] bg-white shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]"
 >
-  <div class="flex h-[46px] items-center border-b border-[rgba(43,38,33,0.08)] bg-white px-[18px]">
-    <div aria-hidden="true" class="flex shrink-0 gap-2">
-      <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
-      <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
-      <span class="size-[11px] rounded-full bg-[rgba(43,38,33,0.15)]"></span>
-    </div>
-  </div>
+  <WindowBar />
 
   <div class="p-[18px]">
     <div class="relative">

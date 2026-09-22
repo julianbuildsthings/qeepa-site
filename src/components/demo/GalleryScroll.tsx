@@ -3,47 +3,54 @@ import type { AnimationPlaybackControls } from "motion/react";
 import { animate, motion, MotionConfig, useMotionValue, useReducedMotion } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { PhotoFrame } from "@/components/demo/PhotoFrame";
+import { WindowBar } from "@/components/demo/WindowBar";
 import { speeds } from "@/lib/motion";
 import { demoFrames } from "@/lib/tiles";
-import { frameBorder, scatterTones, tones } from "@/lib/tones";
+import { scatterFrames, tones } from "@/lib/tones";
 
 /**
  * Row three, fast performance.
  *
  * Speed is the one claim a page cannot argue its way into — "fast" beside a
- * static screenshot argues against itself. So the panel is filled edge to edge
- * with small frames and scrolls continuously, because density is what reads as
- * a large shoot.
+ * static screenshot argues against itself. So this is the hero's window,
+ * scrolling: the same title strip, the same padding, five columns of the same
+ * frames carrying the same chrome, moving continuously through a shoot.
  *
- * Small frames also sidestep the scale problem the larger demonstrations have:
- * a tone reads as a photograph at thumbnail size and as a colour wash when it
- * fills half a row.
+ * An earlier version was a bare rounded box of eight-wide unmarked swatches.
+ * Without the window around it and the metadata on the frames it read as a
+ * texture rather than as the app, which is the one thing a claim about the
+ * app's speed cannot afford. Five columns, not eight, because that is what the
+ * hero shows and because the frames need to be wide enough to carry a track
+ * dot, rating and number without the chrome turning to noise.
  *
- * The panel is shorter than the 716/496 the other demonstrations use. Eight
- * rows of eight put sixty-odd frames on screen at once, which stopped reading
- * as a large shoot and started reading as a wall; at roughly five rows it is
- * still plainly dense but the eye has somewhere to rest. Rows are deliberately
- * cut off at the top and bottom edge rather than fitting a whole number —
- * a strip that ends flush looks like it stopped.
+ * Unlike the hero, the window is closed at the bottom. The hero bleeds into
+ * the section beneath it; this sits inside a feature row and has to read as a
+ * whole object.
  *
  * Three things here are less obvious than they look:
  *
  * 1. The strip is rendered twice and travels exactly one strip, so the copy
- *    lands where the original started and the loop has no seam. The previous
- *    version travelled a fixed -46% and reversed, which meant it visibly ran
- *    backwards, and left the lower half of the panel empty throughout because
- *    forty frames never filled it in the first place.
+ *    lands where the original started and the loop has no seam. Frame numbers
+ *    repeat between the copies for the same reason — at the wrap point the
+ *    visible frames are identical, numbers included.
  * 2. Travel is measured, not assumed. The strip's height depends on the column
  *    width, which depends on the panel width, so a hard-coded percentage is
  *    only ever right at one viewport.
  * 3. Hovering pauses the playback where it stands. Swapping the `animate`
- *    target to `y: 0` — the old approach — snapped the strip back to the top
- *    the instant the pointer touched it.
+ *    target to `y: 0` — an earlier approach — snapped the strip back to the
+ *    top the instant the pointer touched it.
+ *
+ * Rows are cut at the top and bottom of the viewport rather than fitting a
+ * whole number — a strip that ends flush looks like it stopped.
  */
-const COLUMNS = 8;
+const COLUMNS = 5;
+
+/** Continues the hero's numbering, which runs 4821–4830. */
+const FIRST_NUMBER = 4831;
 
 /** One strip. Scattered, so no tone lines up down a column. */
-const STRIP = scatterTones(demoFrames.performance, COLUMNS);
+const STRIP = scatterFrames(demoFrames.performance, COLUMNS);
 
 export function GalleryScroll() {
   const reduceMotion = useReducedMotion();
@@ -103,27 +110,37 @@ export function GalleryScroll() {
     <MotionConfig reducedMotion="user">
       {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
       <div
-        className="aspect-716/296 w-full overflow-hidden rounded-xl border border-[rgba(43,38,33,0.10)] bg-white p-3 shadow-[0_1px_3px_rgba(43,38,33,0.05),0_24px_56px_-24px_rgba(43,38,33,0.20)]"
+        className="w-full overflow-hidden rounded-2xl border border-[rgba(43,38,33,0.10)] bg-white shadow-[0_1px_3px_rgba(43,38,33,0.05),0_28px_64px_-24px_rgba(43,38,33,0.20)]"
         onBlur={() => hold(false)}
         onFocus={() => hold(true)}
         onMouseEnter={() => hold(true)}
         onMouseLeave={() => hold(false)}
       >
-        <motion.div
-          aria-hidden="true"
-          className="grid gap-1.5"
-          ref={gridRef}
-          style={{ gridTemplateColumns: `repeat(${COLUMNS}, minmax(0, 1fr))`, y }}
-        >
-          {[...STRIP, ...STRIP].map((tone, index) => (
-            <div
-              className="aspect-3/2 rounded-[3px]"
-              // biome-ignore lint/suspicious/noArrayIndexKey: fixed-length decorative grid
-              key={index}
-              style={{ background: tones[tone], border: `1px solid ${frameBorder}` }}
-            />
-          ))}
-        </motion.div>
+        <WindowBar />
+
+        {/* The viewport the strip scrolls through. Horizontal padding matches
+        the hero's 18px; there is no vertical padding, because frames scroll up
+        under the title strip and out of the bottom edge. */}
+        <div className="aspect-716/280 overflow-hidden px-[18px]">
+          <motion.div
+            aria-hidden="true"
+            className="grid gap-3"
+            ref={gridRef}
+            style={{ gridTemplateColumns: `repeat(${COLUMNS}, minmax(0, 1fr))`, y }}
+          >
+            {[...STRIP, ...STRIP].map((frame, index) => (
+              <PhotoFrame
+                className="aspect-3/2"
+                frameNumber={FIRST_NUMBER + (index % STRIP.length)}
+                // biome-ignore lint/suspicious/noArrayIndexKey: fixed-length decorative grid
+                key={index}
+                rating={frame.rating}
+                tone={tones[frame.tone]}
+                track={frame.track}
+              />
+            ))}
+          </motion.div>
+        </div>
       </div>
     </MotionConfig>
   );
