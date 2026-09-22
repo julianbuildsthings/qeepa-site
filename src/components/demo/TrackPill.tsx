@@ -1,4 +1,4 @@
-import { animate, motion, useMotionValue } from "motion/react";
+import { animate, motion, useMotionValue, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 
 import type { TrackName } from "@/lib/tones";
@@ -59,6 +59,7 @@ export function TrackPill({ active, interactive = false, onSelect }: TrackPillPr
   const height = useMotionValue(0);
   const scaleX = useMotionValue(1);
   const hasMeasured = useRef(false);
+  const reduceMotion = useReducedMotion();
 
   const setSegmentRef = useCallback((element: HTMLButtonElement | null) => {
     const rawIndex = element?.dataset.index;
@@ -94,9 +95,17 @@ export function TrackPill({ active, interactive = false, onSelect }: TrackPillPr
       scaleX.set(width.get() / nextWidth);
     }
     width.set(nextWidth);
+    // Imperative `animate()` answers to no MotionConfig, so the reduced-motion
+    // preference is honoured here directly: the fill moves to its segment
+    // without travelling there.
+    if (reduceMotion) {
+      x.set(segment.offsetLeft);
+      scaleX.set(1);
+      return;
+    }
     animate(x, segment.offsetLeft, presets.lively);
     animate(scaleX, 1, presets.lively);
-  }, [activeIndex, height, interactive, scaleX, width, x, y]);
+  }, [activeIndex, height, interactive, reduceMotion, scaleX, width, x, y]);
 
   /*
    * Segment widths change at the sm breakpoint, where the padding tightens for

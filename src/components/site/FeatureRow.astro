@@ -40,11 +40,21 @@ const { body, heading, id, reversed = false, subheading } = Astro.props;
   ]}
   id={id}
 >
-  <div class:list={["order-1", reversed ? "xl:order-2" : "xl:order-1"]}>
+  {/* Revealed once on entry, the visual first and the copy one stagger step
+  behind it — see the reveal rules in global.css. */}
+  <div
+    class:list={["order-1", reversed ? "xl:order-2" : "xl:order-1"]}
+    data-reveal
+    style="--reveal-index: 0"
+  >
     <slot />
   </div>
 
-  <div class:list={["order-2", reversed ? "xl:order-1" : "xl:order-2"]}>
+  <div
+    class:list={["order-2", reversed ? "xl:order-1" : "xl:order-2"]}
+    data-reveal
+    style="--reveal-index: 1"
+  >
     <h2
       class="font-sans text-[clamp(26px,2.4vw,34px)] leading-[1.12] font-bold tracking-[-0.03em] text-text-primary"
     >

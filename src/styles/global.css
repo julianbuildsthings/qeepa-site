@@ -303,3 +303,31 @@
     @apply relative touch-manipulation after:absolute after:-inset-2;
   }
 }
+
+/*
+ * Section reveals. Content is hidden only under `.js`, which the base layout
+ * sets before first paint, so without JavaScript nothing is hidden at all; and
+ * only when motion is welcome, so under reduced motion nothing moves or waits.
+ *
+ * Every value is a variable from `motionCssVariables()` in `src/lib/motion.ts`:
+ * the editorial duration and enter easing of `staggerItem`, `distance.enter`
+ * of travel, and `stagger.relaxed` between siblings, which set
+ * `--reveal-index`. CSS rather than Motion's `fadeInUp` because this content is
+ * static HTML with nothing to hydrate; the tween is `staggerItem`'s, since a
+ * CSS transition cannot run the spring `fadeInUp` uses.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+    transition:
+      opacity var(--motion-editorial) var(--ease-enter),
+      transform var(--motion-editorial) var(--ease-enter);
+    transition-delay: calc(var(--reveal-index, 0) * var(--reveal-stagger));
+  }
+
+  .js [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
+}

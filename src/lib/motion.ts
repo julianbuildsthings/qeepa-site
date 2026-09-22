@@ -58,17 +58,24 @@ export const stagger = {
   tight: 0.03,
 };
 
-export type EasingName = "enter" | "exit" | "standard";
+export type EasingName = "enter" | "exit" | "linear" | "standard";
 
 /**
  * Cubic-bézier easing for tween work — opacity, colour, and anything else that
- * isn't physical. Anything positional should use a spring preset instead.
+ * isn't physical. Anything positional should use a spring preset instead,
+ * with one exception: continuous travel at a constant speed, which is what
+ * `linear` is for and nothing else.
  */
 export const easings: Record<EasingName, [number, number, number, number]> = {
   /** Element arriving. */
   enter: [0, 0, 0.58, 1],
   /** Element leaving. */
   exit: [0.42, 0, 1, 1],
+  /**
+   * Constant velocity. Site-only: for continuous travel measured in `speeds`,
+   * where any acceleration would make a loop visibly breathe at its seam.
+   */
+  linear: [0, 0, 1, 1],
   /** Symmetric in/out — the default for fades. */
   standard: [0.42, 0, 0.58, 1],
 };
@@ -150,3 +157,23 @@ export const staggerItem: Variants = {
     y: 0,
   },
 };
+
+/**
+ * The same registry, as CSS custom properties, for motion that CSS drives:
+ * colour transitions and the section reveals. Set once on `<html>` by the base
+ * layout, so a CSS transition and a Motion animation read the same numbers and
+ * re-timing either means editing this file, not a stylesheet.
+ */
+export function motionCssVariables(): string {
+  const bezier = (points: [number, number, number, number]) => `cubic-bezier(${points.join(", ")})`;
+
+  return [
+    `--motion-quick: ${durations.quick}s`,
+    `--motion-base: ${durations.base}s`,
+    `--motion-editorial: ${durations.editorial}s`,
+    `--ease-enter: ${bezier(easings.enter)}`,
+    `--ease-standard: ${bezier(easings.standard)}`,
+    `--reveal-distance: ${distance.enter}px`,
+    `--reveal-stagger: ${stagger.relaxed}s`,
+  ].join("; ");
+}

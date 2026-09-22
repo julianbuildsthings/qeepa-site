@@ -25,11 +25,15 @@ const { id } = Astro.props;
 >
   <h2
     class="mx-auto max-w-[900px] font-sans text-[clamp(32px,3.6vw,48px)] leading-[1.1] font-bold tracking-[-0.032em] text-balance text-text-primary"
+    data-reveal
+    style="--reveal-index: 0"
   >
     {closing.heading}
   </h2>
   <p
     class="mx-auto mt-6 max-w-[620px] font-sans text-[17px] leading-[1.65] text-pretty text-text-secondary"
+    data-reveal
+    style="--reveal-index: 1"
   >
     {closing.body}
   </p>

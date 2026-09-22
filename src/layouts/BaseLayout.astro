@@ -1,14 +1,23 @@
 ---
 import HeadSEO from "@/components/HeadSEO.astro";
+import { motionCssVariables } from "@/lib/motion";
 
 const { title, description, ogImage } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth motion-reduce:scroll-auto">
+<html lang="en" class="scroll-smooth motion-reduce:scroll-auto" style={motionCssVariables()}>
   <head>
     <HeadSEO title={title} description={description} ogImage={ogImage} />
     <meta name="theme-color" content="#FFFFFF" />
+    {/*
+      Marks the page as able to run the reveal script, before first paint.
+      Section reveals hide their content only under this class, so with
+      JavaScript off nothing is ever hidden and nothing waits on a script.
+    */}
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
   </head>
   <body class="bg-background text-foreground antialiased">
     <a
@@ -17,5 +26,33 @@ const { title, description, ogImage } = Astro.props;
       >Skip to content</a
     >
     <slot />
+    {/*
+      Section reveals: each `[data-reveal]` element is revealed once, the first
+      time it enters the viewport. Plain script rather than a React island —
+      nothing here needs a component, and an island would hydrate visible
+      server HTML and then hide it, which is a flash rather than a reveal.
+      Without IntersectionObserver everything is revealed at once.
+    */}
+    <script is:inline>
+      (() => {
+        const targets = document.querySelectorAll("[data-reveal]");
+        const reveal = (target) => target.setAttribute("data-revealed", "");
+        if (!("IntersectionObserver" in window)) {
+          targets.forEach(reveal);
+          return;
+        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              reveal(entry.target);
+              observer.unobserve(entry.target);
+            }
+          },
+          { rootMargin: "0px 0px -10% 0px" },
+        );
+        targets.forEach((target) => observer.observe(target));
+      })();
+    </script>
   </body>
 </html>

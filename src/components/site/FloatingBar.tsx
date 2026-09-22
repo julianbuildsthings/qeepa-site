@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { durations, easings } from "@/lib/motion";
@@ -148,103 +148,111 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
     "min-w-0 truncate rounded-sm font-serif text-[17px] leading-[22px] font-medium tracking-[-0.01em] text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none";
 
   return (
-    <div className="pointer-events-none sticky top-4 z-30 mt-8 px-6 lg:mt-14 lg:px-[120px]">
-      <div className="mx-auto max-w-[1200px]">
-        {/*
+    <MotionConfig reducedMotion="user">
+      <div className="pointer-events-none sticky top-4 z-30 mt-8 px-6 lg:mt-14 lg:px-[120px]">
+        <div className="mx-auto max-w-[1200px]">
+          {/*
           The surface change is a CSS transition rather than a Motion animation:
           a colour is a tween with nothing physical about it, and Motion hands
           colours to the Web Animations API, whose cancellations surface as
-          unhandled rejections in the test environment. 250ms is `durations.base`.
+          unhandled rejections in the test environment. Its timing is still the
+          registry's — `durations.base` and `easings.standard`, as the CSS
+          variables `motionCssVariables()` sets on the page.
         */}
-        <div
-          className={cn(
-            "pointer-events-auto relative flex h-12 items-center gap-2.5 rounded-full pr-1.5 pl-5 shadow-[0px_10px_30px_rgba(43,38,33,0.14)] transition-colors duration-[250ms] ease-in-out motion-reduce:transition-none",
-            selecting ? "bg-peach-light" : "bg-[#FFFFFFF5]",
-          )}
-          data-state={selecting ? "selection" : "browse"}
-        >
-          {/* `initial={false}` on the presence, not the label: the first render
+          <div
+            className={cn(
+              "pointer-events-auto relative flex h-12 items-center gap-2.5 rounded-full pr-1.5 pl-5 shadow-[0px_10px_30px_rgba(43,38,33,0.14)] transition-colors duration-(--motion-base) ease-(--ease-standard) motion-reduce:transition-none",
+              selecting ? "bg-peach-light" : "bg-[#FFFFFFF5]",
+            )}
+            data-state={selecting ? "selection" : "browse"}
+          >
+            {/* `initial={false}` on the presence, not the label: the first render
           is the server's HTML, and a label that starts at opacity 0 is an
           invisible brand name until the island hydrates. Only later changes of
           section fade in. */}
-          <AnimatePresence initial={false}>
-            <motion.div
-              animate={{ opacity: 1 }}
-              className="flex min-w-0 items-center gap-2.5"
-              initial={{ opacity: 0 }}
-              key={current?.id ?? (atEnd ? "end" : "brand")}
-              transition={{ duration: durations.quick, ease: easings.standard }}
-            >
-              {current ? (
-                <span className={titleClass}>{current.title}</span>
-              ) : (
-                <a className={titleClass} href="/" translate="no">
-                  {brand.title}
-                </a>
-              )}
-              {count !== null && (
-                // From md, not sm: between the two the hero window shows six of its
-                // ten frames, and the count has to describe what is on screen.
-                <p className="hidden truncate text-[13px] leading-4 text-text-secondary tabular-nums md:block">
-                  {count}&nbsp;photos
-                </p>
-              )}
-            </motion.div>
-          </AnimatePresence>
+            <AnimatePresence initial={false}>
+              <motion.div
+                animate={{ opacity: 1 }}
+                className="flex min-w-0 items-center gap-2.5"
+                initial={{ opacity: 0 }}
+                key={current?.id ?? (atEnd ? "end" : "brand")}
+                transition={{ duration: durations.quick, ease: easings.standard }}
+              >
+                {current ? (
+                  <span className={titleClass}>{current.title}</span>
+                ) : (
+                  <a className={titleClass} href="/" translate="no">
+                    {brand.title}
+                  </a>
+                )}
+                {count !== null && (
+                  // From md, not sm: between the two the hero window shows six of its
+                  // ten frames, and the count has to describe what is on screen.
+                  <p className="hidden truncate text-[13px] leading-4 text-text-secondary tabular-nums md:block">
+                    {count}&nbsp;photos
+                  </p>
+                )}
+              </motion.div>
+            </AnimatePresence>
 
-          {/*
+            {/*
             Centred on the bar, not placed in the flow, so it holds still while
             the label beside it changes length — the app's centre slot does the
             same. Hidden below md, where the label and the button need the
             width.
           */}
-          <div className="pointer-events-none absolute inset-0 hidden items-center justify-center md:flex">
-            <nav aria-label="Features" className="pointer-events-auto">
-              <ol className="flex">
-                {sections.map((section, position) => {
-                  const lit = position < filled;
-                  return (
-                    <li key={section.id}>
-                      <a
-                        aria-current={section.id === currentId ? "location" : undefined}
-                        aria-label={section.title}
-                        className="flex size-6 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-                        href={sectionHref(section.id)}
-                        onBlur={() => setPreviewed(null)}
-                        onFocus={() => setPreviewed(position + 1)}
-                        onMouseEnter={() => setPreviewed(position + 1)}
-                        onMouseLeave={() => setPreviewed(null)}
-                        title={section.title}
-                      >
-                        <Star
-                          aria-hidden="true"
-                          className={cn(
-                            "transition-colors",
-                            lit ? "text-raw" : selecting ? "text-[#6F3B0F2E]" : "text-[#2B26211F]",
-                          )}
-                          fill="currentColor"
-                          size={16}
-                          strokeWidth={0}
-                        />
-                      </a>
-                    </li>
-                  );
-                })}
-              </ol>
-            </nav>
+            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center md:flex">
+              <nav aria-label="Features" className="pointer-events-auto">
+                <ol className="flex">
+                  {sections.map((section, position) => {
+                    const lit = position < filled;
+                    return (
+                      <li key={section.id}>
+                        <a
+                          aria-current={section.id === currentId ? "location" : undefined}
+                          aria-label={section.title}
+                          className="flex size-6 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                          href={sectionHref(section.id)}
+                          onBlur={() => setPreviewed(null)}
+                          onFocus={() => setPreviewed(position + 1)}
+                          onMouseEnter={() => setPreviewed(position + 1)}
+                          onMouseLeave={() => setPreviewed(null)}
+                          title={section.title}
+                        >
+                          <Star
+                            aria-hidden="true"
+                            className={cn(
+                              "transition-colors",
+                              lit
+                                ? "text-raw"
+                                : selecting
+                                  ? "text-[#6F3B0F2E]"
+                                  : "text-[#2B26211F]",
+                            )}
+                            fill="currentColor"
+                            size={16}
+                            strokeWidth={0}
+                          />
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </nav>
+            </div>
+
+            <div className="flex-1" />
+
+            <button
+              className="inline-flex shrink-0 cursor-not-allowed items-center rounded-full bg-[rgba(43,38,33,0.06)] px-4 py-[9px] text-[13px] leading-4 font-medium text-text-tertiary sm:px-5"
+              disabled
+              type="button"
+            >
+              Get Qeepa
+            </button>
           </div>
-
-          <div className="flex-1" />
-
-          <button
-            className="inline-flex shrink-0 cursor-not-allowed items-center rounded-full bg-[rgba(43,38,33,0.06)] px-4 py-[9px] text-[13px] leading-4 font-medium text-text-tertiary sm:px-5"
-            disabled
-            type="button"
-          >
-            Get Qeepa
-          </button>
         </div>
       </div>
-    </div>
+    </MotionConfig>
   );
 }

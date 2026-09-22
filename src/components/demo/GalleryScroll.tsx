@@ -5,7 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { WindowBar } from "@/components/demo/WindowBar";
-import { speeds } from "@/lib/motion";
+import { easings, speeds } from "@/lib/motion";
 import { demoFrames } from "@/lib/tiles";
 import { scatterTones, tones } from "@/lib/tones";
 
@@ -86,7 +86,7 @@ export function GalleryScroll() {
     y.set(0);
     playback.current = animate(y, -travel, {
       duration: travel / speeds.gallery,
-      ease: "linear",
+      ease: easings.linear,
       repeat: Number.POSITIVE_INFINITY,
       repeatType: "loop",
     });
