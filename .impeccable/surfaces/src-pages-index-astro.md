@@ -95,8 +95,11 @@ against these, not flag them as drift.
   listing uses the frames' rating pips, not stars; stars appear only in the bar.
 - **Hero window is complete, not cropped by the fold.** Its height clamp was
   removed so the track pill sits on the true centre of row two at every width.
-- **Rows stack below xl (1280), not lg.** At 1024 the copy column measured
-  287px.
+- **Rows split from lg (1024) and shrink rather than stack.** Superseding an
+  earlier split at xl, which stacked the rows as soon as a 1440 window lost a
+  sidebar's width. The copy column holds a 340px floor and the visual takes
+  the difference; the gap narrows with the viewport. Stacked, the copy comes
+  first, as in the hero, capped at 560px.
 - **Fast performance** is the hero's window, scrolling continuously; its bar
   count is the shoot (1127), deliberately larger than the frames drawn.
 - **Closing** is type only and centred, per the approved plan; no stand-in

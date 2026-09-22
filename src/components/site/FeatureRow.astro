@@ -7,13 +7,17 @@
  * large, with the sentence beneath it. The subheading is never rendered as a
  * small label above the heading; a kicker is banned on this page.
  *
- * Below `xl` the row stacks to one column with the visual always first,
- * regardless of `reversed`: alternation is a desktop rhythm, and on a phone it
- * would just make some rows read copy-first and others visual-first at random.
+ * Below `lg` the row stacks to one column with the copy always first,
+ * regardless of `reversed`, as the hero does: the reader meets the feature's
+ * name before its demonstration. Alternation is a desktop rhythm, and on a
+ * phone it would just make some rows read copy-first and others visual-first
+ * at random.
  *
- * The split engages at `xl`, not `lg`. At 1024 the copy column came out 287px
- * — about 34 characters — which no subheading survives; the row is better
- * stacked and full width until there is room for two real columns.
+ * From `lg` the row is two columns, and it shrinks rather than stacking as the
+ * window narrows. The copy column never goes below 340px — a fixed ratio once
+ * left it at 287px at 1024, too narrow for a subheading — and the visual takes
+ * the difference. The gap narrows with the viewport. At the full 1440 width
+ * the columns are the same 1.45 : 1 as ever.
  */
 type Props = {
   body: string;
@@ -33,17 +37,17 @@ const { body, heading, id, reversed = false, subheading } = Astro.props;
 */}
 <section
   class:list={[
-    "mx-auto grid max-w-[1440px] scroll-mt-24 items-center gap-12 px-6 py-20 lg:gap-20 lg:px-[120px] lg:py-28",
+    "mx-auto grid max-w-[1440px] scroll-mt-24 items-center gap-12 px-6 py-20 lg:gap-x-[clamp(48px,5.56vw,80px)] lg:px-[120px] lg:py-28",
     reversed
-      ? "xl:grid-cols-[minmax(0,1fr)_minmax(0,1.45fr)]"
-      : "xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]",
+      ? "lg:grid-cols-[minmax(340px,1fr)_minmax(0,1.45fr)]"
+      : "lg:grid-cols-[minmax(0,1.45fr)_minmax(340px,1fr)]",
   ]}
   id={id}
 >
   {/* Revealed once on entry: the visual fades up, and one stagger step behind
   it the copy rises line by line — see the reveal rules in global.css. */}
   <div
-    class:list={["order-1", reversed ? "xl:order-2" : "xl:order-1"]}
+    class:list={["order-2", reversed ? "lg:order-2" : "lg:order-1"]}
     data-reveal
     style="--reveal-index: 0"
   >
@@ -51,7 +55,7 @@ const { body, heading, id, reversed = false, subheading } = Astro.props;
   </div>
 
   <div
-    class:list={["order-2", reversed ? "xl:order-1" : "xl:order-2"]}
+    class:list={["order-1 max-w-[560px] lg:max-w-none", reversed ? "lg:order-1" : "lg:order-2"]}
     data-line-reveal
     style="--line-lead: var(--reveal-stagger)"
   >

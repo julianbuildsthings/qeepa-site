@@ -252,7 +252,7 @@ A white page with warm neutral text, a single peach accent at three depths, a li
 
 - **Rail.** Content is capped at 1440px, with 24px side padding that becomes a 120px rail from lg. The hero, feature rows, closing, footer, legal pages and floating bar all share that left edge. The bar's inner width caps at 1200px.
 - **Rows.** Each feature row is one section. Padding is 80px vertical, 112px from lg, so row-to-row rhythm is 224px on desktop. The hero carries the same bottom padding, so the hero-to-first-row seam matches. Gap is 48px, 80px from lg.
-- **Split at xl, not lg.** From xl (1280px) a row is two columns in a 1.45 : 1 ratio, with the wide column always following the visual. Rows alternate starting with the visual on the left. Below xl every row stacks to one column with the visual first, regardless of orientation. At 1024 the copy column measured 287px, which is too narrow for a subheading.
+- **Split at lg, shrink before stacking.** From lg (1024px) a row is two columns, 1.45 : 1 with the wide column always following the visual, and the copy column never narrower than 340px: as the window narrows the visual gives up the width, and the gap eases from 80px at 1440 to 57px at 1024 (`clamp(48px, 5.56vw, 80px)`). Rows alternate starting with the visual on the left. Below lg every row stacks to one column with the copy first, as in the hero, capped at 560px, regardless of orientation.
 - **Hero window by columns, never rows.** The hero grid is 2 columns, 3 from sm and 5 from md. Frames that no longer fit are hidden, not wrapped, so the row count and the track pill's position hold at every width. The pill sits on the exact centre line of row two, computed with the fixed 12px gaps taken out.
 - **Demo canvas.** Row visuals share a 716 : 496 aspect box. The fast-performance viewport is 716 : 280. Frames are 3 : 2.
 - **Breakpoints** (Tailwind defaults): sm 640, md 768, lg 1024, xl 1280. Things that change at each: the bar's stars and photo count appear from md. Large-frame chrome scales up from sm. Pill segment padding goes from 12px to 18px at sm. Footer links drop from 44px to 24px tall at sm.
@@ -349,7 +349,7 @@ Markdown in `src/pages`, laid out by `LegalPage.astro` and styled by `.legal` in
 - **Don't** use gradients as photo stand-ins. They read as swatches at any size.
 - **Don't** add a colour outside the warm family other than the track dots, and don't use grey hairlines or neutral shadows.
 - **Don't** lay feature content in a grid of equal cards, or present the product as a floating framed screenshot.
-- **Don't** split rows into two columns below xl.
+- **Don't** split rows into two columns below lg, or let the copy column fall under 340px.
 - **Don't** add a live download, buy or signup control, a price, a date, testimonials or a logomark. None exist, and Get Qeepa stays disabled until one does.
 - **Don't** hide server-rendered content that isn't gated behind `.js` and a motion preference, and don't start a Motion animation from opacity 0 on first render.
 - **Don't** add a sixth spring preset without asking first.
