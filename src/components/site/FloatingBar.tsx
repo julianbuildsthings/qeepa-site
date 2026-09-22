@@ -18,8 +18,9 @@ import { cn } from "@/lib/utils";
  * the joke, and it only works because the stars are exactly the app's.
  *
  * The features come in as a prop from `copy.ts` rather than being discovered,
- * so the stars and the section labels cannot disagree about order or names. Which one is *current* is still read from the DOM on scroll,
- * because that is a question about layout.
+ * so the stars and the section labels cannot disagree about order or names.
+ * Which one is *current* is still read from the DOM on scroll, because that is
+ * a question about layout.
  *
  * Get Qeepa is a real disabled button until there is something to get. It is
  * greyed out rather than hidden so the bar's shape is settled now.
@@ -182,7 +183,9 @@ export function FloatingBar({ brand, endId, sections }: FloatingBarProps) {
                 </a>
               )}
               {count !== null && (
-                <p className="hidden truncate text-[13px] leading-4 text-text-secondary tabular-nums sm:block">
+                // From md, not sm: between the two the hero window shows six of its
+                // ten frames, and the count has to describe what is on screen.
+                <p className="hidden truncate text-[13px] leading-4 text-text-secondary tabular-nums md:block">
                   {count}&nbsp;photos
                 </p>
               )}

@@ -1,5 +1,5 @@
 import { animate, motion, useMotionValue } from "motion/react";
-import { useCallback, useLayoutEffect, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 
 import type { TrackName } from "@/lib/tones";
 
@@ -40,7 +40,7 @@ type TrackPillProps = {
  * underneath the fill — the pill appeared to lurch rather than slide.
  */
 const SEGMENT_BASE =
-  "relative inline-flex items-center gap-1.5 rounded-full px-[18px] py-[7px] text-[13px] leading-4 transition-colors";
+  "relative inline-flex items-center gap-1.5 rounded-full px-3 py-[7px] text-[13px] leading-4 transition-colors sm:px-[18px]";
 
 export function TrackPill({ active, interactive = false, onSelect }: TrackPillProps) {
   const activeIndex = TRACKS.findIndex((track) => track.key === active);
@@ -96,6 +96,28 @@ export function TrackPill({ active, interactive = false, onSelect }: TrackPillPr
     width.set(nextWidth);
     animate(x, segment.offsetLeft, presets.lively);
     animate(scaleX, 1, presets.lively);
+  }, [activeIndex, height, interactive, scaleX, width, x, y]);
+
+  /*
+   * Segment widths change at the sm breakpoint, where the padding tightens for
+   * phones. Snap the fill to the active segment's new box on resize — snap,
+   * not animate, because nothing moved from the viewer's point of view.
+   */
+  useEffect(() => {
+    if (!interactive) return;
+
+    const snap = () => {
+      const segment = segmentRefs.current[activeIndex];
+      if (!segment) return;
+      x.set(segment.offsetLeft);
+      y.set(segment.offsetTop);
+      width.set(segment.offsetWidth);
+      height.set(segment.offsetHeight);
+      scaleX.set(1);
+    };
+
+    window.addEventListener("resize", snap, { passive: true });
+    return () => window.removeEventListener("resize", snap);
   }, [activeIndex, height, interactive, scaleX, width, x, y]);
 
   return (

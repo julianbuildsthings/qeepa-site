@@ -39,12 +39,17 @@ const SIZES = {
    * the right, so the frames behind hide their bottom-left under the frame in
    * front. That is what a stack of prints does, and it reads as the rating of
    * the photo you are actually looking at.
+   *
+   * Large only from sm up. On a phone a "large" frame is about 300px wide, and
+   * at full scale its rating ran underneath the track pill; below sm it takes
+   * the default chrome, which clears the pill.
    */
   large: {
-    dot: "size-2 top-4 right-4",
-    number: "right-4 bottom-3.5 text-[12px] leading-4",
-    pip: "size-2 rounded-[2px]",
-    pips: "bottom-4 left-4 gap-1",
+    dot: "size-[5px] top-2.5 right-2.5 sm:size-2 sm:top-4 sm:right-4",
+    number:
+      "right-2.5 bottom-2 text-[9px] leading-3 sm:right-4 sm:bottom-3.5 sm:text-[12px] sm:leading-4",
+    pip: "size-[5px] rounded-[1px] sm:size-2 sm:rounded-[2px]",
+    pips: "bottom-[9px] left-2.5 gap-0.5 sm:bottom-4 sm:left-4 sm:gap-1",
   },
 } as const;
 

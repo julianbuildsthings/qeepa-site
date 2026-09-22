@@ -19,6 +19,14 @@ import { type ToneName, tones, type TrackName } from "@/lib/tones";
  *
  * `pillRow` is 1-indexed and positions the pill on the centre line of that row
  * rather than at a fixed offset, so it stays put as the tiles resize.
+ *
+ * Responsive by column count, never by row count. `columns` is the desktop
+ * width, from md up; below that the window narrows to three columns, then two,
+ * and hides the frames that no longer fit rather than wrapping them into more
+ * rows. The row count is what `pillTop` is computed from, so holding it fixed
+ * keeps the pill on its row at every width — and at five columns on a phone
+ * the frames were 50px wide, too small for their chrome, with numbers printed
+ * over rating squares.
  */
 type Frame = { rating: number | null; tone: ToneName; track: TrackName };
 
@@ -37,6 +45,10 @@ const { activeTrack, columns, frames, pillRow = 1, startNumber = 4821 } = Astro.
 const GAP = 12;
 
 const rows = Math.ceil(frames.length / columns);
+
+/** Frames beyond these indices are hidden below sm, and below md. */
+const visibleBelowSm = rows * 2;
+const visibleBelowMd = rows * 3;
 
 /*
  * The exact centre line of the target row.
@@ -58,13 +70,19 @@ const pillTop = `calc(${(pillRow - 0.5) / rows} * ${trackHeight} + ${(pillRow - 
     <div class="relative">
       <div
         aria-hidden="true"
-        class="grid gap-3"
-        style={`grid-template-columns: repeat(${columns}, minmax(0, 1fr));`}
+        class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-[repeat(var(--columns),minmax(0,1fr))]"
+        style={`--columns: ${columns};`}
       >
         {
           frames.map((frame, index) => (
             <PhotoFrame
-              className="aspect-3/2"
+              className={
+                index >= visibleBelowMd
+                  ? "hidden aspect-3/2 md:block"
+                  : index >= visibleBelowSm
+                    ? "hidden aspect-3/2 sm:block"
+                    : "aspect-3/2"
+              }
               frameNumber={startNumber + index}
               rating={frame.rating}
               tone={tones[frame.tone]}

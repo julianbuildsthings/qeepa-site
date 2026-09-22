@@ -25,11 +25,16 @@ import { type TrackName, trackOrder, trackTone } from "@/lib/tones";
  */
 
 /**
- * Per-step depth offset, in px. Wider than the comp's 28px: with flat tones on
- * a white page the frames behind need more of themselves showing to read as a
- * stack rather than a shadow.
+ * Per-step depth offset, as a percentage of the frame's own size. Wider than
+ * the comp's 28px: with flat tones on a white page the frames behind need more
+ * of themselves showing to read as a stack rather than a shadow.
+ *
+ * Proportional rather than the 38px it was tuned at, which was right on a
+ * 716px column and ran two frames' worth of fan out of a phone's column and
+ * into the page margin. These are 38px expressed against a 659×441 frame, the
+ * frame size at that 716px reference, so desktop is unchanged.
  */
-const OFFSET = { x: 38, y: -38 };
+const OFFSET = { x: 5.8, y: -8.6 };
 
 /** Frame number and rating per track. */
 const TRACK_META: Record<TrackName, { number: number; rating: number }> = {
@@ -84,8 +89,8 @@ export function TrackStack() {
           return (
             <motion.div
               animate={{
-                x: depth * OFFSET.x,
-                y: depth * OFFSET.y,
+                x: `${depth * OFFSET.x}%`,
+                y: `${depth * OFFSET.y}%`,
                 zIndex: trackOrder.length - depth,
               }}
               aria-hidden="true"
