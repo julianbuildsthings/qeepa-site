@@ -1,5 +1,7 @@
 ---
 import { footer } from "@/lib/copy";
+
+const here = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <footer class="border-t border-[rgba(43,38,33,0.09)]">
@@ -12,7 +14,8 @@ import { footer } from "@/lib/copy";
           footer.links.map((link) => (
             <li>
               <a
-                class="inline-flex min-h-11 items-center rounded-sm text-[14px] text-text-secondary underline-offset-4 hover:text-text-primary hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:min-h-6"
+                class="inline-flex min-h-11 items-center rounded-sm text-[14px] text-text-secondary underline-offset-4 hover:text-text-primary hover:underline aria-[current=page]:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:min-h-6"
+                aria-current={link.href === here ? "page" : undefined}
                 href={link.href}
               >
                 {link.label}

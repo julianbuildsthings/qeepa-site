@@ -6,32 +6,46 @@ import { barSections } from "@/lib/bar";
 import { siteConfig } from "@/lib/config";
 
 /**
- * Shell for the legal routes the footer links to. These exist so the footer has
- * no dead ends; the bodies are deliberately honest placeholders rather than
- * invented legal text, which would be worse than an obviously unfinished page.
+ * Layout for the legal pages, which are Markdown files in `src/pages` naming
+ * this file as their `layout`. The documents are the user's own, published as
+ * supplied: this shell only sets them in a single reading column on the page's
+ * rail, with the `.legal` styles in `global.css` giving the rendered Markdown
+ * its hierarchy.
  */
-type Props = { heading: string; title: string };
+type Props = {
+  frontmatter: {
+    description: string;
+    title: string;
+    /** The date line as the document words it, e.g. "Last updated …". */
+    updated: string;
+  };
+};
 
-const { heading, title } = Astro.props;
+const { description, title, updated } = Astro.props.frontmatter;
 ---
 
-<BaseLayout title={`${heading} — ${siteConfig.name}`} description={title}>
+<BaseLayout title={`${title} — ${siteConfig.name}`} description={description}>
   {/* A legal page has no photo frames, so the count is omitted rather than
-  claiming zero. The stars and menu still lead back to the features. */}
+  claiming zero. The stars still lead back to the features. */}
   <FloatingBar
     brand={{ count: null, title: siteConfig.name }}
     client:load
     sections={barSections}
   />
-  <main class="mx-auto min-h-[60svh] max-w-[1440px] px-6 pt-20 pb-24 lg:px-[120px]" id="main">
-    <h1
-      class="font-sans text-[clamp(26px,2.6vw,36px)] leading-[1.12] font-bold tracking-[-0.03em] text-text-primary"
-    >
-      {heading}
-    </h1>
-    <p class="mt-5 max-w-[560px] font-sans text-[15px] leading-[1.7] text-text-secondary">
-      <slot />
-    </p>
+  <main class="mx-auto max-w-[1440px] px-6 pt-20 pb-32 lg:px-[120px] lg:pt-28 lg:pb-44" id="main">
+    <article class="max-w-[580px] font-sans text-[16px]">
+      <header>
+        <h1
+          class="text-[clamp(30px,3.2vw,44px)] leading-[1.08] font-bold tracking-[-0.035em] text-balance text-text-primary"
+        >
+          {title}
+        </h1>
+        <p class="mt-4 text-[14px] leading-5 text-text-tertiary">{updated}</p>
+      </header>
+      <div class="legal mt-12 lg:mt-16">
+        <slot />
+      </div>
+    </article>
   </main>
   <SiteFooter />
 </BaseLayout>

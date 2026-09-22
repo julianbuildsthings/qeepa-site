@@ -66,6 +66,6 @@ export const footer = {
   links: [
     { href: "/privacy", label: "Privacy Policy" },
     { href: "/terms", label: "Terms and Conditions" },
-    { href: "/contact", label: "Contact" },
+    { href: "/acceptable-use", label: "Acceptable Use Policy" },
   ],
 };

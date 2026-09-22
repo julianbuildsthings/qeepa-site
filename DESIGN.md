@@ -319,7 +319,10 @@ The file listing, the insights panel and the filter panel: white, 14px radius, a
 6px tall and fully round, because at 4px it reads as a divider. The track is peach-light and the fill peach-accent. It fills once on entry with `presets.gentle`, staggered by `stagger.relaxed`, and never loops. The in-view observer goes on the track, not on the zero-width fill.
 
 ### Footer and links
-The footer has a 9% ink top rule. Links are 14px umber grey and turn ink and underline (4px offset) on hover. They are 44px tall below sm and 24px from sm. The skip link appears on focus, fixed at the top left.
+The footer has a 9% ink top rule. Links are 14px umber grey and turn ink and underline (4px offset) on hover. They are 44px tall below sm and 24px from sm. The skip link appears on focus, fixed at the top left. The footer links the three legal pages (Privacy Policy, Terms and Conditions, Acceptable Use Policy), and the current page's link reads in ink.
+
+### Legal pages
+Markdown in `src/pages`, laid out by `LegalPage.astro` and styled by `.legal` in `global.css`. A single 580px column on the rail holds the 16px body to about 73 characters. The title is Satoshi Bold `clamp(30px, 3.2vw, 44px)`, with the document's own date line under it in 14px umber grey. Section headings are 21px bold with 56px above and 10px below; subheadings are 16px bold. Body text is umber at line-height 1.7, list markers are umber grey, and links are ink with a 28% ink underline that turns full ink on hover. There are no rules, cards or numbering beyond what the documents themselves carry. The text is published as supplied.
 
 ### Motion
 - **One registry:** `src/lib/motion.ts` (presets ambient, gentle, lively, snap and ui; distance; stagger; easings; durations; cycle; speeds). CSS-driven motion reads the same numbers through `motionCssVariables()`, set on `<html>`.
