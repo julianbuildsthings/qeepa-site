@@ -17,17 +17,20 @@ import { frameBorder, pipEmpty, pipFilled, type ToneName, tones } from "@/lib/to
  * the app's real Lightroom-style convention.
  */
 /*
- * Four files, one shot: the RAW, two exports and the working file. The second
- * export is a web-sized `.webp`, which the app's format registry files under
- * the same deliverable role as the JPEG — so this is still a single shot, just
- * one with an extra rendition, and every name here is one the app groups.
+ * Four photos from one card: consecutive frames, all Olympus RAW (`.ORF`),
+ * numbered as the hero's frames are. The first is the one rated, so the
+ * sidecar that appears is its `.xmp`. Sizes sit in the range a 20MP ORF comes
+ * out at, and differ as real frames do.
  */
 export const FILES: { name: string; size: string; tone: ToneName }[] = [
-  { name: "IMG_4821.CR3", size: "28.4 MB", tone: "shell" },
-  { name: "IMG_4821.JPG", size: "4.1 MB", tone: "chalk" },
-  { name: "IMG_4821.webp", size: "860 KB", tone: "linen" },
-  { name: "IMG_4821.afphoto", size: "61.7 MB", tone: "bisque" },
+  { name: "IMG_4821.ORF", size: "18.9 MB", tone: "shell" },
+  { name: "IMG_4822.ORF", size: "19.4 MB", tone: "chalk" },
+  { name: "IMG_4823.ORF", size: "18.6 MB", tone: "linen" },
+  { name: "IMG_4824.ORF", size: "20.1 MB", tone: "bisque" },
 ];
+
+/** The sidecar the rating writes: the rated photo's name, as `.xmp`. */
+export const SIDECAR = FILES[0]!.name.replace(/\.[^.]+$/, ".xmp");
 
 const PIPS = 5;
 const RATING = 4;
@@ -140,7 +143,7 @@ export function SidecarDemo() {
                     XMP
                   </span>
                   <span className="flex-1 truncate py-2.5 text-[13px] font-medium text-peach-dark">
-                    IMG_4821.xmp
+                    {SIDECAR}
                   </span>
                   <span className="w-16 shrink-0 text-right text-[12px] text-peach-dark tabular-nums">
                     2 KB
@@ -159,7 +162,7 @@ export function SidecarDemo() {
           >
             {rated
               ? "Rating written to a sidecar. Your originals are untouched."
-              : "Four files, one shot. Nothing has been copied or moved."}
+              : "Four photos. Nothing has been copied or moved."}
           </motion.p>
         </div>
       </div>

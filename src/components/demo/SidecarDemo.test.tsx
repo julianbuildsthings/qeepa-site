@@ -2,7 +2,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { FILES, SidecarDemo } from "@/components/demo/SidecarDemo";
+import { FILES, SIDECAR, SidecarDemo } from "@/components/demo/SidecarDemo";
 import { pageTileCounts } from "@/lib/tiles";
 
 describe("SidecarDemo", () => {
@@ -20,8 +20,18 @@ describe("SidecarDemo", () => {
     expect(screen.getAllByRole("listitem")).toHaveLength(FILES.length);
   });
 
-  it("keeps every file in one shot, so the caption stays true", () => {
-    const stems = new Set(FILES.map((file) => file.name.split(".")[0]));
-    expect(stems.size).toBe(1);
+  it("lists four different photos in one RAW format", () => {
+    const names = FILES.map((file) => file.name);
+    expect(new Set(names).size).toBe(FILES.length);
+    expect(new Set(names.map((name) => name.split(".")[1]))).toEqual(new Set(["ORF"]));
+  });
+
+  it("names the sidecar after the photo that carries the rating", () => {
+    expect(SIDECAR).toBe("IMG_4821.xmp");
+  });
+
+  it("captions the listing as four photos, untouched", () => {
+    render(<SidecarDemo />);
+    expect(screen.getByText("Four photos. Nothing has been copied or moved.")).toBeInTheDocument();
   });
 });
