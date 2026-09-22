@@ -7,8 +7,8 @@ import { heroTileOrder, trackOrder } from "@/lib/tones";
  * a length, so a component and the census cannot drift apart.
  */
 export const demoFrames = {
-  /** One row per file in a shot's set: RAW, JPEG, working file. */
-  localFirst: 3,
+  /** One row per file in a shot's set: RAW, JPEG, web export, working file. */
+  localFirst: 4,
   /** The shots the settings panel is summarising. */
   insights: 3,
   /**

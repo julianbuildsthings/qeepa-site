@@ -17,9 +17,16 @@ import { frameBorder, type ToneName, tones } from "@/lib/tones";
  * Filenames and sizes are plausible placeholders. The sidecar naming follows
  * the app's real Lightroom-style convention.
  */
-const FILES: { name: string; size: string; tone: ToneName }[] = [
+/*
+ * Four files, one shot: the RAW, two exports and the working file. The second
+ * export is a web-sized `.webp`, which the app's format registry files under
+ * the same deliverable role as the JPEG — so this is still a single shot, just
+ * one with an extra rendition, and every name here is one the app groups.
+ */
+export const FILES: { name: string; size: string; tone: ToneName }[] = [
   { name: "IMG_4821.CR3", size: "28.4 MB", tone: "shell" },
   { name: "IMG_4821.JPG", size: "4.1 MB", tone: "chalk" },
+  { name: "IMG_4821.webp", size: "860 KB", tone: "linen" },
   { name: "IMG_4821.afphoto", size: "61.7 MB", tone: "bisque" },
 ];
 
@@ -140,7 +147,7 @@ export function SidecarDemo() {
           >
             {rated
               ? "Rating written to a sidecar. Your originals are untouched."
-              : "Three files, one shot. Nothing has been copied or moved."}
+              : "Four files, one shot. Nothing has been copied or moved."}
           </motion.p>
         </div>
       </div>
