@@ -66,10 +66,50 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the
 finish review, the verdict, DESIGN.md, and every shipping raster carrying its
 provenance.
 
+## Amendments (2026-09-22)
+
+The contract above is the direction as first committed. The user then
+reviewed the build over several rounds and approved the following, which
+supersede the contract wherever they conflict. A finish review should judge
+against these, not flag them as drift.
+
+- **Type scale, down.** The user found the copy "too big and zoomed in".
+  Headline `clamp(34px, 4.7vw, 62px)`, feature heading `clamp(26px, 2.4vw,
+  34px)`, subheading `clamp(17px, 1.4vw, 20px)`, body 15px, lede 16px capped at
+  560px. The 80/84 and 44/48 figures above no longer apply.
+- **Material: flat, light tones with metadata chrome, not gradients.** The
+  gradient tiles were rejected as immature and jarring; the user then asked
+  explicitly for lighter tones and called the darker oranges heavy-handed. The
+  family in use is the light end only (`src/lib/tones.ts`, lightness ~93–98%),
+  carrying a track dot, rating pips and frame number (approved Paper artboard
+  `G-B · Preview chrome`). The fast-performance strip and local-first
+  thumbnails are bare tones by request.
+- **Header: the app's floating bar, not a wordmark over a rule.** White browse
+  state over the hero ("Qeepa · 10 photos"); peach-light selection state inside
+  a feature, naming it and its count. Five centred stars, the nth feature fills
+  n, each a link to its section. A disabled "Get Qeepa". Feature names set in
+  Erode, matching the app's bar at the user's request. Returns to the brand
+  state at the closing. No Features menu.
+- **Hero window is complete, not cropped by the fold.** Its height clamp was
+  removed so the track pill sits on the true centre of row two at every width.
+- **Rows stack below xl (1280), not lg.** At 1024 the copy column measured
+  287px.
+- **Fast performance** is the hero's window, scrolling continuously; its bar
+  count is the shoot (1127), deliberately larger than the frames drawn.
+- **Closing** is type only and centred, per the approved plan; no stand-in
+  icon.
+- **The track pill** appears in the hero and the Photo tracks row. Adding it to
+  further rows is open, not required.
+
 ## Unresolved
 
-- "Shoot Insights" (feature row 4) is not evidenced in the app's feature audit,
-  and filtering by export status in row 5 is likewise unverified. Both are
-  recorded as unconfirmed in PRODUCT.md and must not be demonstrated as
-  shipping features until checked.
-- No logomark exists; the header is the wordmark alone.
+- ~~"Shoot Insights" is not evidenced~~ — confirmed shipped (`summarise()` in
+  the app's `src/utils/photo-metadata.ts`). Filtering by export status is
+  confirmed not shipped; the copy no longer claims it.
+- No logomark exists.
+- Open with the user after the finish review: whether "Clear out clutter …
+  clear out files you no longer need" reads as deleting, against "Qeepa never
+  deletes a file"; whether "what you kept" is supported by `summarise()`; the
+  track frames' 522/523/524 numbering against "every version of a photo"; the
+  active track pill label at APCA Lc 58.6; the filtered Photo management
+  panel's empty lower half.

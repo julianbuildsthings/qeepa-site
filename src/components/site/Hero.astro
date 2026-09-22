@@ -6,13 +6,15 @@ import { heroTileMeta, heroTileOrder } from "@/lib/tones";
 /**
  * Approved comp `1A · Left rail (Satoshi)`.
  *
- * Everything ranges left on one rail at 120px. The lede is capped at 716px so
- * its right edge matches the headline's first line at the 1440px reference
- * width — if the headline size changes, that number changes with it.
+ * Everything ranges left on one rail at 120px. The lede is capped at 560px: the
+ * comp's 716px matched the headline's first line at 80px, and when the type was
+ * scaled down at the user's request ("too big and zoomed in") the measure came
+ * down with it. If the headline size changes, this number changes with it.
  *
- * The window is clipped rather than complete: the product continues past the
- * frame, it is not a framed screenshot. The clip is a height on the wrapper,
- * not a negative margin, so the section that follows flows normally.
+ * The window is shown whole, ending open-edged (square bottom, no bottom
+ * border) so it reads as continuing rather than as a framed screenshot. It was
+ * once clipped by a viewport-relative height, but that clip cut into row two at
+ * wide widths and put the track pill below the row it sits on.
  *
  * The bottom padding matches a feature row's own, so the hero-to-tracks
  * transition is the same 224px every row-to-row transition is. Without it the

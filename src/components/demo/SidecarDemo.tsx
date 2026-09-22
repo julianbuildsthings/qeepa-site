@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
-import { cycle, distance, durations, easings, presets } from "@/lib/motion";
+import { cycle, distance, durations, easings, presets, stagger } from "@/lib/motion";
 import { frameBorder, type ToneName, tones } from "@/lib/tones";
 
 /**
@@ -98,7 +98,7 @@ export function SidecarDemo() {
                         animate={{ opacity: rated && starIndex < RATING ? 1 : 0.22 }}
                         key={starIndex}
                         transition={{
-                          delay: rated ? starIndex * 0.05 : 0,
+                          delay: rated ? starIndex * stagger.base : 0,
                           duration: durations.quick,
                           ease: easings.standard,
                         }}

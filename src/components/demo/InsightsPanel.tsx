@@ -1,7 +1,7 @@
 import { motion, MotionConfig } from "motion/react";
 
 import { PhotoFrame } from "@/components/demo/PhotoFrame";
-import { durations, easings, presets, stagger } from "@/lib/motion";
+import { distance, durations, easings, presets, stagger } from "@/lib/motion";
 import { barFill, barTrack, type ToneName, tones, type TrackName } from "@/lib/tones";
 
 /**
@@ -107,7 +107,7 @@ export function InsightsPanel() {
             {GEAR.map((item, index) => (
               <motion.span
                 className="inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-3 py-1.5 text-[12px] text-text-secondary"
-                initial={{ opacity: 0, y: 4 }}
+                initial={{ opacity: 0, y: distance.hover }}
                 key={item.label}
                 transition={{
                   delay: index * stagger.base,

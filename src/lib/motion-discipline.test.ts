@@ -19,6 +19,24 @@ const ROOTS = ["src/components/demo", "src/components/site", "src/pages", "src/l
 const RULES: { name: string; pattern: RegExp }[] = [
   { name: "a numeric duration", pattern: /\bduration\s*:\s*[\d.]/ },
   { name: "a numeric delay", pattern: /\bdelay\s*:\s*[\d.]/ },
+  /*
+   * A decimal anywhere in a timing expression, not only straight after the
+   * colon: `delay: rated ? starIndex * 0.05 : 0` got past the two rules above.
+   */
+  {
+    name: "a decimal literal in a timing expression",
+    pattern: /\b(delay|duration)\s*:[^,}\n]*\d*\.\d/,
+  },
+  /*
+   * Travel written as a number in an animation target. Zero is a resting
+   * position, not a distance, so it is allowed; named layout geometry outside
+   * an animation prop (the track stack's OFFSET) is not in scope.
+   */
+  {
+    name: "a numeric travel distance",
+    pattern:
+      /\b(initial|animate|exit|whileInView|whileHover|whileTap)=\{\{[^}]*\b[xy]\s*:\s*-?[1-9]/,
+  },
   { name: "a literal easing", pattern: /\bease\s*:\s*["'`[]/ },
   { name: "a spring constant", pattern: /\b(stiffness|damping|mass|bounce)\s*:/ },
   { name: "`transition: all`", pattern: /transition\s*:\s*all\b|\btransition-all\b/ },
@@ -58,6 +76,9 @@ describe("motion discipline", () => {
       'className="transition-all"',
       'className="transition-colors duration-150"',
       'className="duration-[250ms] ease-in-out"',
+      // Both got past earlier versions of this guard.
+      "delay: rated ? starIndex * 0.05 : 0,",
+      "initial={{ opacity: 0, y: 4 }}",
     ]) {
       expect(violations(sample), sample).not.toEqual([]);
     }
@@ -70,6 +91,9 @@ describe("motion discipline", () => {
       "ease: easings.linear,",
       "transition={{ ...presets.gentle, delay: index * stagger.relaxed }}",
       'className="transition-colors duration-(--motion-base) ease-(--ease-standard)"',
+      "delay: rated ? starIndex * stagger.base : 0,",
+      "initial={{ opacity: 0, y: distance.hover }}",
+      "whileInView={{ opacity: 1, y: 0 }}",
     ]) {
       expect(violations(sample), sample).toEqual([]);
     }
