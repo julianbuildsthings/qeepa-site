@@ -73,7 +73,7 @@ export function SidecarDemo() {
     <MotionConfig reducedMotion="user">
       {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: pause affordance, not a control */}
       <div
-        className="flex aspect-716/496 w-full items-center"
+        className="flex w-full items-center lg:aspect-716/496"
         onBlur={() => setPaused(false)}
         onFocus={() => setPaused(true)}
         onMouseEnter={() => setPaused(true)}

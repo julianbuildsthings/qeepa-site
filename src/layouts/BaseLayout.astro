@@ -118,6 +118,7 @@ const { title, description, ogImage } = Astro.props;
           spoken.textContent = texts.get(element);
           const shown = document.createElement("span");
           shown.setAttribute("aria-hidden", "true");
+          shown.className = "block";
           for (const line of lines) {
             const mask = document.createElement("span");
             mask.className = "reveal-mask";

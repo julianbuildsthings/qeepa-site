@@ -41,7 +41,7 @@ const FRAMES: { rating: number | null; tone: ToneName; track: TrackName }[] = [
 export function InsightsPanel() {
   return (
     <MotionConfig reducedMotion="user">
-      <div className="flex aspect-716/496 w-full flex-col justify-center gap-3">
+      <div className="flex w-full flex-col justify-center gap-3 lg:aspect-716/496">
         <div aria-hidden="true" className="grid grid-cols-3 gap-3">
           {FRAMES.map((frame, index) => (
             <PhotoFrame
