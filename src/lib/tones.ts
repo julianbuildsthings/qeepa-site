@@ -201,27 +201,6 @@ export function scatterTones(count: number, columns: number): ToneName[] {
   return scattered;
 }
 
-export type FrameMeta = { rating: number | null; tone: ToneName; track: TrackName };
-
-/** Roughly three frames in ten carry a rating — most of a live shoot is unrated. */
-const RATED_IN_TEN = 3;
-
-/**
- * `scatterTones`, plus the metadata a frame's chrome shows: which track it is
- * on and what it is rated.
- *
- * Each field draws from its own offset into the same mixer, so track and
- * rating are not correlated with tone or with each other. Deterministic for the
- * same reason `scatterTones` is.
- */
-export function scatterFrames(count: number, columns: number): FrameMeta[] {
-  return scatterTones(count, columns).map((tone, index) => ({
-    rating: mix(index + 7919) % 10 < RATED_IN_TEN ? (mix(index + 104_729) % 5) + 1 : null,
-    tone,
-    track: trackOrder[mix(index + 1_299_709) % trackOrder.length]!,
-  }));
-}
-
 export function hexToHsl(hex: string): { h: number; l: number; s: number } {
   const r = Number.parseInt(hex.slice(1, 3), 16) / 255;
   const g = Number.parseInt(hex.slice(3, 5), 16) / 255;

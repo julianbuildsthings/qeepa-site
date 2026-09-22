@@ -7,7 +7,6 @@ import {
   heroTileMeta,
   heroTileOrder,
   hexToHsl,
-  scatterFrames,
   scatterTones,
   tones,
   trackOrder,
@@ -110,36 +109,6 @@ describe("scatterTones", () => {
 
   it("uses the whole palette rather than favouring a few tones", () => {
     expect(new Set(grid).size).toBe(Object.keys(tones).length);
-  });
-});
-
-describe("scatterFrames", () => {
-  const frames = scatterFrames(60, 5);
-
-  it("is deterministic, so the server and the client agree", () => {
-    expect(scatterFrames(60, 5)).toEqual(frames);
-  });
-
-  it("keeps the tone scatter it is built on", () => {
-    expect(frames.map((frame) => frame.tone)).toEqual(scatterTones(60, 5));
-  });
-
-  it("leaves most frames unrated, the way a shoot in progress looks", () => {
-    const rated = frames.filter((frame) => frame.rating !== null);
-    expect(rated.length).toBeGreaterThan(0);
-    expect(rated.length).toBeLessThan(frames.length / 2);
-  });
-
-  it("only ever rates a frame between 1 and 5", () => {
-    const ratings = frames.flatMap((frame) => (frame.rating === null ? [] : [frame.rating]));
-    for (const rating of ratings) {
-      expect(rating).toBeGreaterThanOrEqual(1);
-      expect(rating).toBeLessThanOrEqual(5);
-    }
-  });
-
-  it("puts frames on every track", () => {
-    expect(new Set(frames.map((frame) => frame.track))).toEqual(new Set(trackOrder));
   });
 });
 

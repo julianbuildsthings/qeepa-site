@@ -7,22 +7,23 @@ import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { WindowBar } from "@/components/demo/WindowBar";
 import { speeds } from "@/lib/motion";
 import { demoFrames } from "@/lib/tiles";
-import { scatterFrames, tones } from "@/lib/tones";
+import { scatterTones, tones } from "@/lib/tones";
 
 /**
  * Row three, fast performance.
  *
  * Speed is the one claim a page cannot argue its way into — "fast" beside a
  * static screenshot argues against itself. So this is the hero's window,
- * scrolling: the same title strip, the same padding, five columns of the same
- * frames carrying the same chrome, moving continuously through a shoot.
+ * scrolling: the same title strip, the same padding, five columns of frames,
+ * moving continuously through a shoot.
  *
- * An earlier version was a bare rounded box of eight-wide unmarked swatches.
- * Without the window around it and the metadata on the frames it read as a
- * texture rather than as the app, which is the one thing a claim about the
- * app's speed cannot afford. Five columns, not eight, because that is what the
- * hero shows and because the frames need to be wide enough to carry a track
- * dot, rating and number without the chrome turning to noise.
+ * The window is what makes it read as the app. An earlier version was a bare
+ * rounded box of eight-wide swatches and read as a texture instead.
+ *
+ * The frames themselves are bare tones, without the track dot, rating and
+ * number the hero's carry. With sixty-odd frames passing at speed, that chrome
+ * repeated on every one was too heavy — the strip's job is to convey volume
+ * and pace, and the hero has already shown what a single frame carries.
  *
  * Unlike the hero, the window is closed at the bottom. The hero bleeds into
  * the section beneath it; this sits inside a feature row and has to read as a
@@ -31,9 +32,7 @@ import { scatterFrames, tones } from "@/lib/tones";
  * Three things here are less obvious than they look:
  *
  * 1. The strip is rendered twice and travels exactly one strip, so the copy
- *    lands where the original started and the loop has no seam. Frame numbers
- *    repeat between the copies for the same reason — at the wrap point the
- *    visible frames are identical, numbers included.
+ *    lands where the original started and the loop has no seam.
  * 2. Travel is measured, not assumed. The strip's height depends on the column
  *    width, which depends on the panel width, so a hard-coded percentage is
  *    only ever right at one viewport.
@@ -46,11 +45,8 @@ import { scatterFrames, tones } from "@/lib/tones";
  */
 const COLUMNS = 5;
 
-/** Continues the hero's numbering, which runs 4821–4830. */
-const FIRST_NUMBER = 4831;
-
 /** One strip. Scattered, so no tone lines up down a column. */
-const STRIP = scatterFrames(demoFrames.performance, COLUMNS);
+const STRIP = scatterTones(demoFrames.performance, COLUMNS);
 
 export function GalleryScroll() {
   const reduceMotion = useReducedMotion();
@@ -128,15 +124,12 @@ export function GalleryScroll() {
             ref={gridRef}
             style={{ gridTemplateColumns: `repeat(${COLUMNS}, minmax(0, 1fr))`, y }}
           >
-            {[...STRIP, ...STRIP].map((frame, index) => (
+            {[...STRIP, ...STRIP].map((tone, index) => (
               <PhotoFrame
                 className="aspect-3/2"
-                frameNumber={FIRST_NUMBER + (index % STRIP.length)}
                 // biome-ignore lint/suspicious/noArrayIndexKey: fixed-length decorative grid
                 key={index}
-                rating={frame.rating}
-                tone={tones[frame.tone]}
-                track={frame.track}
+                tone={tones[tone]}
               />
             ))}
           </motion.div>
