@@ -11,6 +11,11 @@ import { closing } from "@/lib/copy";
  * soft-shadowed rectangle standing in for content is exactly the placeholder
  * the craft floor bans. Calm comes from the space, not from an ornament.
  *
+ * Deeper at the bottom than the top. Above the heading sits the last feature
+ * row's own bottom padding as well as this section's top padding; with equal
+ * padding here the space below the body came out about 130px short of the
+ * space above, and the section sat low, crowding the footer.
+ *
  * `id` is also the floating bar's cue to return to its browse state here: the
  * closing is not a feature, so the bar should not go on naming the last one.
  */
@@ -20,7 +25,7 @@ const { id } = Astro.props;
 ---
 
 <section
-  class="mx-auto max-w-[1440px] scroll-mt-24 px-6 py-32 text-center lg:px-[120px] lg:py-44"
+  class="mx-auto max-w-[1440px] scroll-mt-24 px-6 pt-32 pb-56 text-center lg:px-[120px] lg:pt-44 lg:pb-76"
   id={id}
 >
   <h2

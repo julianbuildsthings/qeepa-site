@@ -42,6 +42,13 @@ type TrackPillProps = {
 const SEGMENT_BASE =
   "relative inline-flex items-center gap-1.5 rounded-full px-3 py-[7px] text-[13px] leading-4 transition-colors sm:px-[18px]";
 
+/*
+ * The active label, one step darker than the app's `--peach-dark`. The app's
+ * value on the peach fill measured APCA Lc 58.6 at 13px, just under the 60 a
+ * label that size needs; this measures Lc 63.5 and reads as the same brown.
+ */
+const ACTIVE_LABEL = "text-[#5C300C]";
+
 export function TrackPill({ active, interactive = false, onSelect }: TrackPillProps) {
   const activeIndex = TRACKS.findIndex((track) => track.key === active);
 
@@ -160,9 +167,7 @@ export function TrackPill({ active, interactive = false, onSelect }: TrackPillPr
                   className={cn(
                     SEGMENT_BASE,
                     "extend-touch-target-y min-h-6 touch-manipulation focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-                    isActive
-                      ? "text-accent-foreground"
-                      : "text-text-secondary hover:text-text-primary",
+                    isActive ? ACTIVE_LABEL : "text-text-secondary hover:text-text-primary",
                   )}
                   data-index={index}
                   onClick={() => onSelect?.(key)}
@@ -175,7 +180,7 @@ export function TrackPill({ active, interactive = false, onSelect }: TrackPillPr
                 <span
                   className={cn(
                     SEGMENT_BASE,
-                    isActive ? "bg-primary text-accent-foreground" : "text-text-secondary",
+                    isActive ? cn("bg-primary", ACTIVE_LABEL) : "text-text-secondary",
                   )}
                 >
                   {inner}

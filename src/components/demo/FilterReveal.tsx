@@ -9,10 +9,10 @@ import { type ToneName, tones, type TrackName } from "@/lib/tones";
  * Row five, photo management.
  *
  * Twelve frames narrow to four as two filters apply. The surviving frames
- * reflow rather than the others being struck out, because the sentence
- * directly above this reads "Qeepa helps you find the files; it never deletes
- * them for you" — so the demonstration has to read as narrowing a view. A
- * frame that looks destroyed contradicts the copy beside it.
+ * reflow rather than the others being struck out, because filtering narrows a
+ * view: the copy beside this is about showing the photos you care about, and
+ * PRODUCT.md is plain that Qeepa never deletes a file. A frame that looks
+ * destroyed would contradict both.
  *
  * The filters are Unrated and a tag, which are the filters the app actually
  * has. An earlier draft of the copy claimed filtering by export status; no

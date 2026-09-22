@@ -55,8 +55,12 @@ const SIZES = {
 
 type PhotoFrameProps = {
   className?: string;
-  /** Shown bottom-right. Omit on frames too small to read it. */
-  frameNumber?: number;
+  /**
+   * Shown bottom-right: a frame number, or a number with its extension where
+   * the format is the point (the three renderings of one shot on the tracks
+   * row). Omit on frames too small to read it.
+   */
+  frameNumber?: number | string;
   /** 1–5, or null for unrated. Most of a real shoot is unrated. */
   rating?: number | null;
   size?: keyof typeof SIZES;

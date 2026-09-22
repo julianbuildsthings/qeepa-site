@@ -49,7 +49,7 @@ export const features: FeatureCopy[] = [
     subheading: "Understand how you shoot and what you kept.",
   },
   {
-    body: "Filter your shoots by ratings and tags to manage your best shoots and clear out files you no longer need.",
+    body: "Filter your shoots by ratings and tags to manage your shoots and show the pics you care about.",
     heading: "Photo management",
     id: "management",
     subheading: "Clear out clutter and find the photos you need.",

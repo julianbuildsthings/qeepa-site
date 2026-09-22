@@ -36,11 +36,17 @@ import { type TrackName, trackOrder, trackTone } from "@/lib/tones";
  */
 const OFFSET = { x: 5.8, y: -8.6 };
 
-/** Frame number and rating per track. */
-const TRACK_META: Record<TrackName, { number: number; rating: number }> = {
-  edit: { number: 524, rating: 5 },
-  jpg: { number: 523, rating: 3 },
-  raw: { number: 522, rating: 4 },
+/**
+ * Label and rating per track. One frame number, three extensions: a track is
+ * every version of the same shot — files sharing a filename stem, in the app's
+ * own terms — so three different numbers would show three different photos
+ * and contradict the sentence beside the stack. Ratings are per file, as they
+ * are in the app, so the versions may differ.
+ */
+export const TRACK_META: Record<TrackName, { label: string; rating: number }> = {
+  edit: { label: "522.afphoto", rating: 5 },
+  jpg: { label: "522.JPG", rating: 3 },
+  raw: { label: "522.CR3", rating: 4 },
 };
 
 export function TrackStack() {
@@ -107,7 +113,7 @@ export function TrackStack() {
             >
               <PhotoFrame
                 className="h-full w-full rounded-[10px]"
-                frameNumber={TRACK_META[track].number}
+                frameNumber={TRACK_META[track].label}
                 rating={TRACK_META[track].rating}
                 size="large"
                 tone={trackTone[track]}

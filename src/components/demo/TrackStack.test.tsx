@@ -3,8 +3,9 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { act } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { TrackStack } from "@/components/demo/TrackStack";
+import { TRACK_META, TrackStack } from "@/components/demo/TrackStack";
 import { cycle } from "@/lib/motion";
+import { trackOrder } from "@/lib/tones";
 
 const frontTrack = (container: HTMLElement) =>
   container.querySelector('[data-track][data-depth="0"]')?.getAttribute("data-track");
@@ -79,5 +80,19 @@ describe("TrackStack", () => {
     const { container } = render(<TrackStack />);
     tick(cycle.track * 3);
     expect(container.querySelectorAll("[data-track]")).toHaveLength(3);
+  });
+
+  /*
+   * The row's claim is "every version of a photo, together". A track is the
+   * files that share a filename stem, so the stack must show one stem in
+   * several formats — 522/523/524 read as three different shots.
+   */
+  it("labels every version with the same shot and a different format", () => {
+    const labels = trackOrder.map((track) => TRACK_META[track].label);
+    const stems = new Set(labels.map((label) => label.split(".")[0]));
+    const extensions = new Set(labels.map((label) => label.split(".")[1]));
+
+    expect(stems.size).toBe(1);
+    expect(extensions.size).toBe(trackOrder.length);
   });
 });

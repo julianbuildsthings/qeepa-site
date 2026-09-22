@@ -107,9 +107,14 @@ against these, not flag them as drift.
   the app's `src/utils/photo-metadata.ts`). Filtering by export status is
   confirmed not shipped; the copy no longer claims it.
 - No logomark exists.
-- Open with the user after the finish review: whether "Clear out clutter …
-  clear out files you no longer need" reads as deleting, against "Qeepa never
-  deletes a file"; whether "what you kept" is supported by `summarise()`; the
-  track frames' 522/523/524 numbering against "every version of a photo"; the
-  active track pill label at APCA Lc 58.6; the filtered Photo management
-  panel's empty lower half.
+- Resolved with the user after the finish review:
+  - Photo management body now reads "…to manage your shoots and show the pics
+    you care about." (was "…clear out files you no longer need").
+  - Track frames are one shot in three formats: 522.CR3 / 522.JPG /
+    522.afphoto. Guarded in `TrackStack.test.tsx`.
+  - Active track pill label darkened to `#5C300C` (APCA Lc 63.5; was 58.6).
+  - The filtered Photo management panel's empty lower half: kept as is.
+  - The track pill stays in the hero and Photo tracks only: kept as is.
+- Still open: the Photo management subheading "Clear out clutter …" and the
+  Shoot insights "what you kept" were not revisited; the body copy was the
+  change asked for.

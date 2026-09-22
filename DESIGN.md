@@ -199,7 +199,7 @@ A white page with warm neutral text, a single peach accent at three depths, a li
 ### Primary
 - **Peach Accent** (peach-accent): the one accent. It fills the active track-pill segment and the proportion bars, and it is the focus ring colour (`--ring`). Never used for text.
 - **Peach Light** (peach-light): the selection surface. It is the floating bar in selection state, the active filter chips, the proportion-bar track (the same peach at a paler depth, so a bar reads as one channel partly filled), and at 50% it tints the newly written `.xmp` row.
-- **Peach Dark** (peach-dark): text on peach surfaces, including the active pill label, active chips and the sidecar row.
+- **Peach Dark** (peach-dark): text on peach-light surfaces — active chips and the sidecar row. The active track pill label, which sits on the stronger peach fill, is one step darker at `#5C300C`: peach-dark there measured APCA Lc 58.6 at 13px, and `#5C300C` measures 63.5.
 
 ### Secondary
 - **Track RAW / Burnt Apricot** (track-raw): the RAW track dot. It is also the colour of filled rating stars wherever the app's star glyph appears (floating bar, sidecar listing).
