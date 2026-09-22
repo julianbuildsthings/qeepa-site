@@ -17,20 +17,23 @@ import { frameBorder, pipEmpty, pipFilled, type ToneName, tones } from "@/lib/to
  * the app's real Lightroom-style convention.
  */
 /*
- * Four photos from one card: consecutive frames, all Olympus RAW (`.ORF`),
- * numbered as the hero's frames are. The first is the one rated, so the
- * sidecar that appears is its `.xmp`. Sizes sit in the range a 20MP ORF comes
- * out at, and differ as real frames do.
+ * Four photos from one card: consecutive frames, all RAW (`.raw`), numbered as
+ * the hero's frames are. The last is the one rated, so the sidecar appears
+ * directly beneath it, named after it. Sizes are plausible for a RAW frame and
+ * differ as real frames do.
  */
 export const FILES: { name: string; size: string; tone: ToneName }[] = [
-  { name: "IMG_4821.ORF", size: "18.9 MB", tone: "shell" },
-  { name: "IMG_4822.ORF", size: "19.4 MB", tone: "chalk" },
-  { name: "IMG_4823.ORF", size: "18.6 MB", tone: "linen" },
-  { name: "IMG_4824.ORF", size: "20.1 MB", tone: "bisque" },
+  { name: "IMG_4821.raw", size: "18.9 MB", tone: "shell" },
+  { name: "IMG_4822.raw", size: "19.4 MB", tone: "chalk" },
+  { name: "IMG_4823.raw", size: "18.6 MB", tone: "linen" },
+  { name: "IMG_4824.raw", size: "20.1 MB", tone: "bisque" },
 ];
 
+/** The photo the demo rates: the last, so its sidecar lands right below it. */
+const RATED_INDEX = FILES.length - 1;
+
 /** The sidecar the rating writes: the rated photo's name, as `.xmp`. */
-export const SIDECAR = FILES[0]!.name.replace(/\.[^.]+$/, ".xmp");
+export const SIDECAR = FILES[RATED_INDEX]!.name.replace(/\.[^.]+$/, ".xmp");
 
 const PIPS = 5;
 const RATING = 4;
@@ -100,7 +103,7 @@ export function SidecarDemo() {
                   empty pip with a filled one fading in over it: opacity only,
                   so it stays on the compositor.
                 */}
-                {index === 0 && (
+                {index === RATED_INDEX && (
                   <span aria-hidden="true" className="flex shrink-0 items-center gap-1">
                     {Array.from({ length: PIPS }, (_, pipIndex) => (
                       <span

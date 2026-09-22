@@ -23,11 +23,19 @@ describe("SidecarDemo", () => {
   it("lists four different photos in one RAW format", () => {
     const names = FILES.map((file) => file.name);
     expect(new Set(names).size).toBe(FILES.length);
-    expect(new Set(names.map((name) => name.split(".")[1]))).toEqual(new Set(["ORF"]));
+    expect(new Set(names.map((name) => name.split(".")[1]))).toEqual(new Set(["raw"]));
   });
 
-  it("names the sidecar after the photo that carries the rating", () => {
-    expect(SIDECAR).toBe("IMG_4821.xmp");
+  it("names the sidecar after the photo that carries the rating, the last", () => {
+    expect(SIDECAR).toBe("IMG_4824.xmp");
+    render(<SidecarDemo />);
+    const rows = screen.getAllByRole("listitem");
+    // The rating squares sit on the last photo's row, above where the sidecar
+    // appears, and on no other.
+    expect(rows.at(-1)!.querySelector("[aria-hidden=true].gap-1")).not.toBeNull();
+    for (const row of rows.slice(0, -1)) {
+      expect(row.querySelector("[aria-hidden=true].gap-1")).toBeNull();
+    }
   });
 
   it("captions the listing as four photos, untouched", () => {
