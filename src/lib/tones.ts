@@ -89,6 +89,18 @@ export type TrackName = "edit" | "jpg" | "raw";
 export const trackOrder: TrackName[] = ["raw", "jpg", "edit"];
 
 /**
+ * The file extension each track's frames carry, written lower-case as the
+ * frames print it. One set for the whole page, so the hero and the tracks row
+ * name the same kinds of file. `.psd` for the edit: short enough for the
+ * smallest frame's chrome, and the working file most photographers know.
+ */
+export const trackExtension: Record<TrackName, string> = {
+  edit: "psd",
+  jpg: "jpg",
+  raw: "raw",
+};
+
+/**
  * Tones for the three renderings of one shot — drawn from the same scheme as
  * every other frame on the page, so the tracks row does not read as a
  * different material.
@@ -129,22 +141,61 @@ export const heroTileOrder: ToneName[] = [
 ];
 
 /**
- * Which track each hero frame belongs to, and what it is rated. `null` means
- * unrated — most of a real shoot is, and a grid where every frame carries a
- * rating reads as a product screenshot rather than work in progress.
+ * The hero's ratings, as a loop of four states. The first is what the page
+ * renders before anything moves; the hero steps to the next after each full
+ * pass through the tracks, and the last steps back to the first.
+ *
+ * Each step changes exactly two frames — enough to be seen, few enough to read
+ * as someone culling rather than as the grid reshuffling — and every state
+ * leaves most frames unrated, because most of a real shoot is. `null` is
+ * unrated. Frames 1 and 2 change, so the moment still happens on a phone,
+ * where only the first four frames show.
  */
-export const heroTileMeta: { rating: number | null; track: TrackName }[] = [
-  { rating: 4, track: "raw" },
-  { rating: null, track: "jpg" },
-  { rating: 2, track: "raw" },
-  { rating: null, track: "edit" },
-  { rating: null, track: "raw" },
-  { rating: 5, track: "jpg" },
-  { rating: null, track: "raw" },
-  { rating: null, track: "edit" },
-  { rating: 2, track: "raw" },
-  { rating: null, track: "jpg" },
+export const heroRatings: (number | null)[][] = [
+  [4, null, 2, null, null, 5, null, null, 2, null],
+  [4, 3, 2, null, null, 5, null, null, null, null],
+  [4, 3, 5, null, null, 3, null, null, null, null],
+  [4, null, 5, null, null, 3, null, null, 2, null],
 ];
+
+/**
+ * How many track switches before the hero's tones come back to the approved
+ * order. Long enough that no one watching sees the repeat; short enough that
+ * working out any step's arrangement stays trivial however long the page has
+ * been open.
+ */
+const SHUFFLE_PERIOD = 12;
+
+/**
+ * The hero's tones after `step` track switches: the approved order at step 0,
+ * then a fresh arrangement of the same tones at every switch, so the frames
+ * read as a different set of photos in each track rather than one grid
+ * relabelled.
+ *
+ * A seeded shuffle, not randomness, so the server's HTML and the hydrated
+ * island agree. Each arrangement moves at least half the frames to a new tone
+ * — a shuffle that happened to leave most in place read as nothing happening —
+ * and never puts a tone beside itself.
+ */
+export function shuffledTones(order: ToneName[], step: number): ToneName[] {
+  const target = step % SHUFFLE_PERIOD;
+  let current = order;
+  for (let seed = 1; seed <= target; seed++) current = rearranged(order, current, seed);
+  return current;
+}
+
+function rearranged(order: ToneName[], previous: ToneName[], seed: number): ToneName[] {
+  for (let attempt = 0; ; attempt++) {
+    const shuffled = [...order];
+    for (let index = shuffled.length - 1; index > 0; index--) {
+      const pick = mix(seed * 97 + attempt * 13 + index) % (index + 1);
+      [shuffled[index], shuffled[pick]] = [shuffled[pick]!, shuffled[index]!];
+    }
+    const apart = shuffled.every((tone, index) => index === 0 || tone !== shuffled[index - 1]);
+    const moved = shuffled.filter((tone, index) => tone !== previous[index]).length;
+    if (apart && moved >= order.length / 2) return shuffled;
+  }
+}
 
 /** Relative luminance, per WCAG 2.1. Opaque `#rrggbb` only. */
 export function luminance(hex: string): number {

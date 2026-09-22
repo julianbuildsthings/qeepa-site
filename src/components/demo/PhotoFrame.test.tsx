@@ -25,7 +25,7 @@ describe("PhotoFrame", () => {
     const { container } = render(<PhotoFrame rating={3} tone={tones.shell} />);
     const all = pips(container);
     expect(all).toHaveLength(5);
-    const filled = all.filter((node) => node.style.background === pipFilled);
+    const filled = all.filter((node) => node.style.backgroundColor === pipFilled);
     expect(filled).toHaveLength(3);
   });
 

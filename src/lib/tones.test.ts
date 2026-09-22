@@ -4,10 +4,11 @@ import {
   barFill,
   barTrack,
   contrastRatio,
-  heroTileMeta,
+  heroRatings,
   heroTileOrder,
   hexToHsl,
   scatterTones,
+  shuffledTones,
   tones,
   trackOrder,
   trackTone,
@@ -162,7 +163,7 @@ describe("track tones", () => {
 describe("hero grid", () => {
   it("fills the approved 5x2 grid", () => {
     expect(heroTileOrder).toHaveLength(10);
-    expect(heroTileMeta).toHaveLength(heroTileOrder.length);
+    for (const ratings of heroRatings) expect(ratings).toHaveLength(heroTileOrder.length);
   });
 
   it("never repeats a tone in adjacent cells", () => {
@@ -171,17 +172,64 @@ describe("hero grid", () => {
     }
   });
 
-  it("leaves most frames unrated, the way a shoot in progress looks", () => {
-    const rated = heroTileMeta.filter((meta) => meta.rating !== null);
-    expect(rated.length).toBeGreaterThan(0);
-    expect(rated.length).toBeLessThan(heroTileMeta.length / 2);
+  it("leaves most frames unrated in every state, the way a shoot in progress looks", () => {
+    for (const ratings of heroRatings) {
+      const rated = ratings.filter((rating) => rating !== null);
+      expect(rated.length).toBeGreaterThan(0);
+      expect(rated.length).toBeLessThan(ratings.length / 2);
+    }
   });
 
   it("only ever rates a frame between 1 and 5", () => {
-    for (const { rating } of heroTileMeta) {
+    for (const rating of heroRatings.flat()) {
       if (rating === null) continue;
       expect(rating).toBeGreaterThanOrEqual(1);
       expect(rating).toBeLessThanOrEqual(5);
     }
+  });
+
+  it("changes exactly two frames per step, around a closed loop", () => {
+    for (let step = 0; step < heroRatings.length; step++) {
+      const from = heroRatings[step]!;
+      const to = heroRatings[(step + 1) % heroRatings.length]!;
+      expect(from.filter((rating, index) => rating !== to[index])).toHaveLength(2);
+    }
+  });
+
+  it("changes a frame a phone can see at every step", () => {
+    const phoneFrames = 4;
+    for (let step = 0; step < heroRatings.length; step++) {
+      const from = heroRatings[step]!;
+      const to = heroRatings[(step + 1) % heroRatings.length]!;
+      const changed = from.flatMap((rating, index) => (rating !== to[index] ? [index] : []));
+      expect(changed.some((index) => index < phoneFrames)).toBe(true);
+    }
+  });
+});
+
+describe("shuffledTones", () => {
+  it("keeps the approved order before anything moves", () => {
+    expect(shuffledTones(heroTileOrder, 0)).toBe(heroTileOrder);
+  });
+
+  it("rearranges the same tones at every switch, never side by side", () => {
+    for (let step = 1; step < 30; step++) {
+      const tones = shuffledTones(heroTileOrder, step);
+      expect(tones.toSorted()).toEqual(heroTileOrder.toSorted());
+      for (let i = 1; i < tones.length; i++) expect(tones[i]).not.toBe(tones[i - 1]);
+    }
+  });
+
+  it("moves most frames to a new tone at each switch", () => {
+    for (let step = 1; step < 30; step++) {
+      const before = shuffledTones(heroTileOrder, step - 1);
+      const after = shuffledTones(heroTileOrder, step);
+      const changed = after.filter((tone, index) => tone !== before[index]).length;
+      expect(changed).toBeGreaterThanOrEqual(heroTileOrder.length / 2);
+    }
+  });
+
+  it("is deterministic, so the server and the island agree", () => {
+    expect(shuffledTones(heroTileOrder, 7)).toEqual(shuffledTones(heroTileOrder, 7));
   });
 });

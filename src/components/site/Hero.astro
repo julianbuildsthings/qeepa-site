@@ -1,7 +1,6 @@
 ---
-import GalleryWindow from "@/components/demo/GalleryWindow.astro";
+import { HeroGallery } from "@/components/demo/HeroGallery";
 import { hero } from "@/lib/copy";
-import { heroTileMeta, heroTileOrder } from "@/lib/tones";
 
 /**
  * Approved comp `1A · Left rail (Satoshi)`.
@@ -20,20 +19,20 @@ import { heroTileMeta, heroTileOrder } from "@/lib/tones";
  * transition is the same 224px every row-to-row transition is. Without it the
  * hero contributed nothing and the first feature sat at half the page's
  * rhythm — the only cramped seam on the page.
+ *
+ * The copy enters as every other block of copy does, line by line (see the
+ * line reveal in the base layout). The headline's hard breaks are kept: lines
+ * are measured where they render, breaks included.
  */
 const [first, second, third] = hero.headline;
-
-const heroFrames = heroTileOrder.map((tone, index) => ({
-  rating: heroTileMeta[index]!.rating,
-  tone,
-  track: heroTileMeta[index]!.track,
-}));
 ---
 
 <section
   class="mx-auto max-w-[1440px] px-6 pb-20 lg:px-[120px] lg:pb-28"
 >
+  <div data-line-reveal>
   <h1
+    data-lines
     class="max-w-[660px] pt-8 font-sans text-[clamp(34px,4.7vw,62px)] leading-[1.07] font-bold tracking-[-0.036em] text-balance text-text-primary lg:max-w-none lg:pt-14 lg:text-pretty"
   >
     {/* Hard breaks only at the width the comp was approved at; below lg the
@@ -42,10 +41,12 @@ const heroFrames = heroTileOrder.map((tone, index) => ({
   </h1>
 
   <p
+    data-lines
     class="mt-7 max-w-[560px] font-sans text-[clamp(15px,1.15vw,16px)] leading-[1.7] text-text-secondary lg:mt-8"
   >
     {hero.lede}
   </p>
+  </div>
 
   {/*
     No height clip. With ten tiles the window is exactly two rows, so there is
@@ -55,11 +56,6 @@ const heroFrames = heroTileOrder.map((tone, index) => ({
     bottom border), which reads as continuing without hiding anything.
   */}
   <div class="mt-12 lg:mt-[72px]" data-hero-window>
-    <GalleryWindow
-      activeTrack="raw"
-      columns={5}
-      frames={heroFrames}
-      pillRow={2}
-    />
+    <HeroGallery client:load />
   </div>
 </section>

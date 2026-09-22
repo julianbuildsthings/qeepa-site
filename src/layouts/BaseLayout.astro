@@ -90,18 +90,37 @@ const { title, description, ogImage } = Astro.props;
         const texts = new Map();
 
         const splitLines = (element, index) => {
+          /*
+            Start from the element's original children every time, so a hard
+            break (the hero headline's `<br>`s, shown only from lg) is measured
+            where it renders at this width. Each text node's words are wrapped
+            in place; the breaks stay, and a word after a shown break simply
+            lands on a new line.
+          */
           if (!texts.has(element)) {
-            texts.set(element, element.textContent.trim().replace(/\s+/g, " "));
+            texts.set(element, [...element.childNodes].map((node) => node.cloneNode(true)));
           }
-          const words = texts.get(element).split(" ");
-          const probes = words.map((word) => {
-            const probe = document.createElement("span");
-            probe.textContent = word;
-            return probe;
-          });
-          element.replaceChildren(
-            ...probes.flatMap((probe, i) => (i ? [document.createTextNode(" "), probe] : [probe])),
-          );
+          element.replaceChildren(...texts.get(element).map((node) => node.cloneNode(true)));
+          const spokenText = element.textContent.trim().replace(/\s+/g, " ");
+
+          const probes = [];
+          // A copy, not the live list: the loop replaces the nodes it visits.
+          for (const node of [...element.childNodes]) {
+            if (node.nodeType !== Node.TEXT_NODE) continue;
+            const pieces = document.createDocumentFragment();
+            for (const part of node.textContent.split(/(\s+)/)) {
+              if (!part) continue;
+              if (/^\s+$/.test(part)) {
+                pieces.append(document.createTextNode(" "));
+                continue;
+              }
+              const probe = document.createElement("span");
+              probe.textContent = part;
+              probes.push(probe);
+              pieces.append(probe);
+            }
+            node.replaceWith(pieces);
+          }
 
           const lines = [];
           let top = null;
@@ -115,7 +134,7 @@ const { title, description, ogImage } = Astro.props;
 
           const spoken = document.createElement("span");
           spoken.className = "sr-only";
-          spoken.textContent = texts.get(element);
+          spoken.textContent = spokenText;
           const shown = document.createElement("span");
           shown.setAttribute("aria-hidden", "true");
           shown.className = "block";

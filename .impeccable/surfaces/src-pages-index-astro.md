@@ -106,6 +106,10 @@ against these, not flag them as drift.
   icon.
 - **The track pill** appears in the hero and the Photo tracks row. Adding it to
   further rows is open, not required.
+- **The hero window is live.** At the user's request it runs on the tracks
+  row's cadence: every frame follows the pill (dot and extension: .raw, .jpg,
+  .psd), the tones rearrange at each switch, and two ratings change after
+  each full pass. The hero copy takes the same line rise as the rest.
 - **Copy enters line by line.** Chosen by the user from four directions (slide,
   handoff, editorial rise, developing wipe), with every line rather than the
   heading alone: the feature copy and the closing rise out of per-line masks,

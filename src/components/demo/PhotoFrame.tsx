@@ -1,3 +1,4 @@
+import { stagger } from "@/lib/motion";
 import { frameBorder, pipEmpty, pipFilled, type TrackName } from "@/lib/tones";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +17,11 @@ import { cn } from "@/lib/utils";
  * `size="large"` scales the chrome for frames several hundred pixels across,
  * where the default 5px dot would disappear.
  *
+ * Changes animate, for the frames that change in place (the hero, as it steps
+ * through tracks and ratings): the tone and the track dot cross-fade over the
+ * editorial duration, and a rating fills square by square, one `stagger.base`
+ * apart. Colour only, so nothing reflows; and not at all under reduced motion.
+ *
  * Always decorative: the surrounding copy carries the meaning.
  */
 const TRACK_DOT: Record<TrackName, string> = {
@@ -25,6 +31,10 @@ const TRACK_DOT: Record<TrackName, string> = {
 };
 
 const RATING_MAX = 5;
+
+/** A colour change in place: the tone, or the track dot. */
+const CHANGE =
+  "transition-colors duration-(--motion-editorial) ease-(--ease-standard) motion-reduce:transition-none";
 
 const SIZES = {
   default: {
@@ -63,6 +73,12 @@ type PhotoFrameProps = {
   frameNumber?: number | string;
   /** 1–5, or null for unrated. Most of a real shoot is unrated. */
   rating?: number | null;
+  /**
+   * Keep the rating's squares in place while unrated, invisible, so a rating
+   * can arrive by fading in and filling rather than popping into existence.
+   * For frames whose rating changes as you watch.
+   */
+  ratingSlot?: boolean;
   size?: keyof typeof SIZES;
   tone: string;
   /** Coloured dot, top-right. Omit on frames too small to read it. */
@@ -73,6 +89,7 @@ export function PhotoFrame({
   className,
   frameNumber,
   rating = null,
+  ratingSlot = false,
   size = "default",
   tone,
   track,
@@ -82,18 +99,32 @@ export function PhotoFrame({
   return (
     <div
       aria-hidden="true"
-      className={cn("relative rounded-[5px]", className)}
-      style={{ background: tone, border: `1px solid ${frameBorder}` }}
+      className={cn("relative rounded-[5px]", CHANGE, className)}
+      style={{ backgroundColor: tone, border: `1px solid ${frameBorder}` }}
     >
-      {track && <span className={cn("absolute rounded-full", scale.dot, TRACK_DOT[track])} />}
+      {track && (
+        <span className={cn("absolute rounded-full", CHANGE, scale.dot, TRACK_DOT[track])} />
+      )}
 
-      {rating !== null && (
-        <span className={cn("absolute flex", scale.pips)}>
+      {(rating !== null || ratingSlot) && (
+        <span
+          className={cn(
+            "absolute flex transition-opacity duration-(--motion-editorial) ease-(--ease-standard) motion-reduce:transition-none",
+            scale.pips,
+            rating === null && "opacity-0",
+          )}
+        >
           {Array.from({ length: RATING_MAX }, (_, index) => (
             <span
-              className={cn("shrink-0", scale.pip)}
+              className={cn(
+                "shrink-0 transition-colors duration-(--motion-base) ease-(--ease-standard) motion-reduce:transition-none",
+                scale.pip,
+              )}
               key={index}
-              style={{ background: index < rating ? pipFilled : pipEmpty }}
+              style={{
+                backgroundColor: rating !== null && index < rating ? pipFilled : pipEmpty,
+                transitionDelay: `${index * stagger.base}s`,
+              }}
             />
           ))}
         </span>
