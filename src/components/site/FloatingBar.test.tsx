@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
-import { fireEvent, render, screen, within } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { type BarSection, FloatingBar } from "@/components/site/FloatingBar";
 import { barSections } from "@/lib/bar";
@@ -44,59 +44,21 @@ afterEach(() => {
   for (const section of document.querySelectorAll("section")) section.remove();
 });
 
-function stars() {
-  return within(screen.getByRole("navigation", { name: "Features" })).getAllByRole("link");
-}
-
 describe("FloatingBar", () => {
-  it("reads as the page over the hero, with no star marked", () => {
+  it("reads as the page over the hero", () => {
     placeSections({ "local-first": 1600, performance: 2600, tracks: 900 });
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
 
     expect(screen.getByRole("link", { name: "Qeepa" })).toHaveAttribute("href", "/");
     expect(screen.getByText("10 photos")).toBeInTheDocument();
-    for (const star of stars()) expect(star).not.toHaveAttribute("aria-current");
   });
 
-  it("names the section it is in, and marks the star at that section's position", () => {
+  it("names the section it is in", () => {
     placeSections({ "local-first": 80, performance: 1100, tracks: -700 });
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
 
     expect(screen.getByText("Local-first")).toBeInTheDocument();
     expect(screen.getByText("4 photos")).toBeInTheDocument();
-
-    const current = stars().filter((star) => star.getAttribute("aria-current") === "location");
-    expect(current).toHaveLength(1);
-    expect(current[0]).toHaveAccessibleName("Local-first");
-    expect(stars().indexOf(current[0]!)).toBe(1);
-  });
-
-  it("switches to the selection surface only inside a section", () => {
-    placeSections({ "local-first": 1600, performance: 2600, tracks: 900 });
-    const { container, unmount } = render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
-    expect(container.querySelector("[data-state]")).toHaveAttribute("data-state", "browse");
-    unmount();
-
-    for (const section of document.querySelectorAll("section")) section.remove();
-    placeSections({ "local-first": 1600, performance: 2600, tracks: 20 });
-    const again = render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
-    expect(again.container.querySelector("[data-state]")).toHaveAttribute(
-      "data-state",
-      "selection",
-    );
-  });
-
-  it("makes every star a link to its section, in page order", () => {
-    render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
-
-    expect(stars().map((star) => star.getAttribute("href"))).toEqual([
-      "/#tracks",
-      "/#local-first",
-      "/#performance",
-    ]);
-    expect(stars().map((star) => star.getAttribute("aria-label"))).toEqual(
-      SECTIONS.map((section) => section.title),
-    );
   });
 
   it("offers Get Qeepa as a genuinely disabled button, not a styled one", () => {
@@ -122,64 +84,18 @@ describe("FloatingBar", () => {
     expect(screen.getByText("Photo tracks")).toBeInTheDocument();
   });
 
-  it("at the closing, names Qeepa with every star lit, still selected", () => {
+  it("at the closing, names Qeepa again rather than the last feature", () => {
     placeSections({
       availability: 120,
       "local-first": -2000,
       performance: -1000,
       tracks: -3000,
     });
-    const { container } = render(
-      <FloatingBar brand={BRAND} endId="availability" sections={SECTIONS} />,
-    );
+    render(<FloatingBar brand={BRAND} endId="availability" sections={SECTIONS} />);
 
     expect(screen.getByRole("link", { name: "Qeepa" })).toBeInTheDocument();
-    expect(container.querySelector("[data-state]")).toHaveAttribute("data-state", "selection");
-    for (const star of stars()) {
-      expect(star.querySelector("svg")).toHaveClass("text-raw");
-      // The closing is not a feature, so no star claims to be where you are.
-      expect(star).not.toHaveAttribute("aria-current");
-    }
     // No frames are on screen at the closing, so no count is claimed there.
     expect(screen.queryByText(/photos/)).not.toBeInTheDocument();
-  });
-
-  /*
-   * The regressions these guard: clicking a far star left the page to the
-   * browser's smooth scroll, whose scroll events named every section on the
-   * way, and which could stop short when the pointer crossed a graphic.
-   */
-  it("names the clicked section at once, and holds it through the travel", async () => {
-    placeSections({ "local-first": 1600, performance: 2600, tracks: 900 });
-    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
-    render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
-
-    fireEvent.click(stars()[2]!);
-    expect(screen.getByText("Fast performance")).toBeInTheDocument();
-    expect(window.location.hash).toBe("#performance");
-
-    // Mid-travel the page passes Local-first; the bar does not name it.
-    for (const section of document.querySelectorAll("section")) section.remove();
-    placeSections({ "local-first": 100, performance: 1100, tracks: -900 });
-    fireEvent.scroll(window);
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    expect(screen.queryByText("Local-first")).not.toBeInTheDocument();
-    expect(scrollTo).toHaveBeenCalled();
-    scrollTo.mockRestore();
-  });
-
-  it("hands the scroll back the moment the reader scrolls", async () => {
-    placeSections({ "local-first": 1600, performance: 2600, tracks: 900 });
-    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
-    render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
-
-    fireEvent.click(stars()[2]!);
-    for (const section of document.querySelectorAll("section")) section.remove();
-    placeSections({ "local-first": 100, performance: 1100, tracks: -900 });
-    fireEvent.wheel(window);
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    expect(screen.getByText("Local-first")).toBeInTheDocument();
-    scrollTo.mockRestore();
   });
 
   it("offers a Back button home on a page a step away from it", () => {
@@ -200,11 +116,6 @@ describe("FloatingBar", () => {
     expect(screen.getAllByRole("link", { name: /home|Acceptable/ })).toHaveLength(1);
   });
 
-  it("shows no stars when given no sections, as on the legal pages", () => {
-    render(<FloatingBar backHref="/" brand={BRAND} sections={[]} />);
-    expect(screen.queryByRole("navigation", { name: "Features" })).not.toBeInTheDocument();
-  });
-
   it("drops Get Qeepa when asked to, as on the legal pages", () => {
     render(<FloatingBar backHref="/" brand={BRAND} offer={false} sections={[]} />);
     expect(screen.queryByRole("button", { name: "Get Qeepa" })).not.toBeInTheDocument();
@@ -215,7 +126,7 @@ describe("FloatingBar", () => {
     expect(screen.queryByRole("link", { name: "Back to home" })).not.toBeInTheDocument();
   });
 
-  it("offers nothing but the stars and the button on the right", () => {
+  it("offers nothing but the brand name and the button on the right", () => {
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
     expect(screen.getAllByRole("button").map((button) => button.textContent)).toEqual([
       "Get Qeepa",
@@ -240,9 +151,5 @@ describe("barSections", () => {
         pageTileCounts[section.id as keyof typeof pageTileCounts],
       );
     }
-  });
-
-  it("has five sections, so five stars", () => {
-    expect(barSections).toHaveLength(5);
   });
 });
