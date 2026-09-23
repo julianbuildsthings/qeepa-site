@@ -103,7 +103,7 @@ export function InsightsPanel() {
             ))}
           </ul>
 
-          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[rgba(43,38,33,0.07)] pt-4">
+          <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1.5 border-t border-[rgba(43,38,33,0.07)] pt-4">
             {GEAR.map((item, index) => (
               <motion.span
                 className="inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-3 py-1.5 text-[12px] text-text-secondary"
@@ -124,7 +124,12 @@ export function InsightsPanel() {
                 <span className="font-medium text-text-secondary tabular-nums">{item.count}</span>
               </motion.span>
             ))}
-            <span className="ml-auto text-[12px] text-text-tertiary tabular-nums">
+            {/* `ml-auto` only from `sm`: at the narrowest phone widths the two
+            gear chips already fill the row, and pushing this to the far right
+            forced it onto its own line, stranded on the right edge below
+            them. Left with the chips there, it reads as part of the same row
+            wrapping, not a shifted extra one. */}
+            <span className="text-[12px] text-text-tertiary tabular-nums sm:ml-auto">
               35–85&nbsp;mm
             </span>
           </div>

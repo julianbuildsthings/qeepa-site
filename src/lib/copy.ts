@@ -37,7 +37,7 @@ export const features: FeatureCopy[] = [
     subheading: "No accounts or cloud subscriptions.",
   },
   {
-    body: "Large shoots stay quick to browse, scroll, and revisit, without staring at a loading icon for your RAWs to render.",
+    body: "Large shoots stay quick to browse, scroll, and revisit, without staring at a loading icon all day.",
     heading: "Fast performance",
     id: "performance",
     subheading: "Handles thousands of photos seamlessly.",
