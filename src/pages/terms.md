@@ -2,10 +2,12 @@
 layout: ../components/site/LegalPage.astro
 title: Terms and Conditions
 description: The terms Qeepa and its website are offered under.
-updated: Last updated 20 September 2026
+updated: Last updated 25 September 2026
 ---
 
-We're Qeepa ("we", "us", or "our"), trading as Qeepa, a company registered in Sydney, under ABN 87196498634, and these Terms and conditions (our "Terms") form a legally binding agreement between you and us.
+We're Qeepa ("we", "us", or "our"), the trading name of Julian Stephens, a sole trader based in Sydney, under ABN 87196498634, and these Terms and conditions (our "Terms") form a legally binding agreement between you and us.
+
+Qeepa is sold through our reseller, Lemon Squeezy ([qeepa.lemonsqueezy.com](https://qeepa.lemonsqueezy.com)), which acts as the merchant of record for your purchase and handles payment processing, invoicing, and sales tax on our behalf. Your transaction with Lemon Squeezy is also subject to [Lemon Squeezy's buyer terms](https://www.lemonsqueezy.com/terms). We remain the licensor of the App under our [Software Licence](/licence).
 
 ## About Our Services
 
@@ -23,12 +25,9 @@ Qeepa is a photo management tool that allows you to rate and sort through your p
 
 By using our Services, you agree to be bound by these Terms, our [Privacy Policy](/privacy), and any other policies referenced and expressly incorporated within, and you consent to electronic communications and contracting as permitted under applicable laws. If you do not agree, you may not use our Services.
 
-Our Services are intended for users aged 18 or older, or above the age of majority in their jurisdiction, whichever is higher. Persons below this age may not use our Services. If we become aware that a user is below the required age, we may suspend or terminate their access to our Services immediately and without liability.
-
 By using our Services, you acknowledge and agree that:
 
-- you are at least 18 years old (or the age of majority in your location, whichever is higher);
-- you have the legal capacity to enter into these Terms, and if you are representing an organisation or other legal entity, you have the authority to bind that entity;
+- you have the legal capacity to enter into these Terms or, if you are under the age of majority where you live, a parent or guardian has agreed to them on your behalf; and if you are representing an organisation or other legal entity, you have the authority to bind that entity;
 - the information you provide to us is, and will remain, accurate, complete, and current;
 - and you are not located in, ordinarily resident in, or organised under the laws of any jurisdiction subject to comprehensive sanctions or embargoes, and you are not a blocked, denied, or otherwise restricted party under applicable sanctions or export control lists.
 
@@ -114,11 +113,11 @@ If you are a consumer in Australia, nothing in these Terms excludes, restricts, 
 
 ## One-Time Purchases
 
-Some of our Services are offered as a one-time purchase rather than a recurring subscription. Where you make a one-time purchase, the full price is payable at the time of purchase, and your access to the Service begins once payment has been successfully processed. A one-time purchase grants you a personal, non-exclusive, non-transferable, and revocable licence to access and use the Service in accordance with these Terms. It does not transfer ownership of the Service, or any intellectual property in it, to you, and all rights not expressly granted to you are reserved by us.
+Some of our Services are offered as a one-time purchase rather than a recurring subscription. Where you make a one-time purchase, the full price is payable at the time of purchase, and your access to the Service begins once payment has been successfully processed. A one-time purchase grants you a personal, non-exclusive, and non-transferable licence to access and use the Service in accordance with these Terms. It does not transfer ownership of the Service, or any intellectual property in it, to you, and all rights not expressly granted to you are reserved by us.
 
-Your purchase grants access to the Service for as long as we continue to make it available. We are under no obligation to release, maintain, or continue any particular feature, update, or version. Where we release a new version, we may offer it separately, and it may be subject to new or additional terms.
+Where the Service is the App, your purchase is a one-time purchase you own forever, with no subscription required, as detailed in our [Software Licence](/licence). The App keeps working even if you are offline, if our servers are unreachable, or if we stop operating — your access only ends in the limited circumstances described in the Licence, such as a refunded or disabled licence key. We are under no obligation to release, maintain, or continue any particular future feature or version, and where we release a new version, we may offer some or all of it separately, subject to the Licence's "What updates are included" section.
 
-We will not intentionally remove your access to the features available to you at the time of your purchase, except where required by these Terms or applicable law. Beyond this, your purchase is not conditional on the release of any future feature, functionality, or version, and we make no commitment and accept no obligation in relation to any public statement we may have made about future development. We may modify, suspend, or discontinue the Service, in whole or in part, in accordance with our Service Updates and Changes and Discontinuation sections. Except where applicable law provides otherwise, or under our Money-Back Guarantee, payments for one-time purchases are non-refundable once access to the Service has been provided.
+We will not intentionally remove your access to the features available to you at the time of your purchase, except where required by these Terms, the Licence, or applicable law. Beyond this, your purchase is not conditional on the release of any future feature, functionality, or version, and we make no commitment and accept no obligation in relation to any public statement we may have made about future development. Except where applicable law provides otherwise, or under our Money-Back Guarantee, payments for one-time purchases are non-refundable once access to the Service has been provided.
 
 ## Money-Back Guarantee
 
@@ -126,7 +125,7 @@ We offer a one month money-back guarantee on your first purchase with us (the "G
 
 The Guarantee applies once per customer and to your first purchase only. Subsequent purchases, upgrades, add-ons, third-party charges, and any non-refundable taxes or transaction fees are not eligible.
 
-We reserve the right, in our sole discretion, to refuse a refund where we reasonably suspect fraud, abuse of the Guarantee, or breach of these Terms.
+We may refuse a refund where we reasonably suspect fraud, abuse of the Guarantee, or breach of these Terms.
 
 Refunds will be processed to the original payment method within a reasonable time. Once a refund is issued, your access to paid features will end and any associated licence rights will terminate immediately.
 
@@ -146,15 +145,13 @@ We aim to keep the Services available and reliable. However, the Services may oc
 
 ### Automatic App Updates
 
-If you install our App on your device, you agree that the App may receive automatic updates where this function is enabled in your device settings. These updates may be required to ensure security, performance, or continued compatibility.
+The App checks for updates automatically; this cannot be turned off in the App's own settings. When a check happens, the App shares its version number, your macOS version and processor architecture, and your IP address with our update service, and downloads any available update from our GitHub Releases. These updates may be required to ensure security, performance, or continued compatibility.
 
 ## Beta Versions and Experimental Features
 
-We may, at our discretion, grant you access to experimental features, pre-release functionality, or developmental tools that have not been released to our general customer base ("Experimental Features"). Such Experimental Features are provided on a provisional basis for evaluation and internal assessment purposes only, and must be limited to non-commercial evaluation and testing within your internal operations.
+We may, at our discretion, give you access to experimental features, pre-release functionality, or developmental tools that have not been released to our general customer base ("Experimental Features"). Experimental Features are provided on an "as is" basis for evaluation purposes and may be incomplete, unstable, or changed or removed without notice.
 
-By accessing Experimental Features, you acknowledge that Experimental Features constitute our proprietary and confidential information, and you agree to maintain strict confidentiality regarding any aspects of these features, including their existence, capabilities, performance characteristics, and any related documentation. You must not disclose, demonstrate, or discuss Experimental Features with any external parties or use them for any purpose beyond internal testing within your organisation.
-
-We reserve the right to withdraw, modify, suspend, or discontinue your access to any Experimental Features without prior notice or obligation. You further acknowledge that we make no commitment to incorporate any Experimental Features into our commercially available Services and provide no assurances, express or implied, regarding their reliability, availability, performance, or future availability.
+We make no commitment to incorporate any Experimental Feature into our commercially available Services and provide no assurances, express or implied, regarding its reliability, availability, or performance.
 
 ## Intellectual Property
 
@@ -162,13 +159,13 @@ We retain sole ownership of all intellectual property ("IP") rights in and to ou
 
 Nothing in these Terms shall be interpreted as transferring to you any rights, interest, or title in our company or Services, except as explicitly stated in these Terms.
 
-Subject to your compliance with these Terms, we grant you a limited, non-exclusive, non-transferable, non-sublicensable, revocable licence to access and use our Services solely for your personal or internal business purposes.
+Subject to your compliance with these Terms, we grant you a limited, non-exclusive, non-transferable, non-sublicensable licence to access and use our Services solely for your personal or internal business purposes.
 
 All rights not expressly granted to you are reserved by Qeepa and its licensors.
 
 ### Use of Our Brand and Materials
 
-If you publicly publish or distribute materials generated by or exported from our Services, you must include reasonable attribution to us, such as a visible credit or link to our website, unless we provide specific attribution guidelines, in which case those guidelines apply.
+Photos and other files you export from the App are yours, and you are free to publish, share, or distribute them without any attribution to us.
 
 You may refer to our company name and brand in a factual and truthful manner. You must not use our name, logo, trademarks, or other brand assets in any way that implies endorsement, sponsorship, or affiliation with us without our prior written consent.
 
@@ -182,9 +179,11 @@ For more information about Australia's copyright law, please visit [https://www.
 
 ## User-Generated Content
 
-"User-Generated Content" refers to any content, materials, information, feedback, ideas, suggestions, feature requests, reviews, or communications that you submit, post, upload, share, or otherwise provide to us or through our Services, whether publicly or privately.
+Your photos, files, and any other content you manage within the App stay on your device. We never receive, access, or store them, and we claim no rights of any kind over them.
 
-By submitting User-Generated Content to us or through our Services, you grant us a non-exclusive, royalty-free, transferable, sub-licensable, worldwide license to use, distribute, modify, run, copy, publicly display, translate, or otherwise create derivative works of your content in a manner that is consistent with your privacy preferences and our Privacy Policy. This includes, without limitation, the right to use feedback, ideas, suggestions, and feature requests to develop, improve, and promote our Services without any obligation or compensation to you.
+"User-Generated Content" in this section refers only to feedback, ideas, suggestions, feature requests, support messages, or reviews that you actively submit to us, such as through the App's feedback form or by emailing us — not to your photos or files.
+
+By submitting User-Generated Content to us, you grant us a non-exclusive, royalty-free, transferable, sub-licensable, worldwide license to use, distribute, modify, run, copy, publicly display, translate, or otherwise create derivative works of it, in a manner that is consistent with your privacy preferences and our Privacy Policy. This includes, without limitation, the right to use feedback, ideas, suggestions, and feature requests to develop, improve, and promote our Services without any obligation or compensation to you.
 
 You retain your intellectual property ownership rights over your User-Generated Content. By submitting User-Generated Content, you represent and warrant that you own or have the necessary rights, licenses, and permissions to grant the license above, and that your content does not infringe, misappropriate, or violate the rights of any third party.
 
@@ -266,21 +265,11 @@ Some jurisdictions do not allow the exclusion or limitation of certain warrantie
 
 ## Indemnification
 
-You agree to indemnify, defend, and hold harmless our company, our affiliates, and our respective officers, directors, employees, agents, licensors, suppliers, successors, and assigns ("Indemnified Parties") from all claims, losses, damages, penalties, fines, costs, and expenses (including reasonable legal fees and costs) arising out of or related to:
+This section does not apply to you if you use our Services as a consumer, for purposes outside your trade, business, or profession.
 
-- Your access to or use of our Services in a manner that breaches these Terms, violates applicable law, or infringes the rights of any third party;
-- your breach or alleged breach of these Terms or any applicable laws, regulations, or regulatory requirements;
-- your violation or alleged violation of any third-party rights, including without limitation intellectual property rights, privacy rights, publicity rights, or contractual rights;
-- your negligence, gross negligence, wilful misconduct, fraud, or fraudulent misrepresentation;
-- any disputes, issues, or claims between you and any third party arising from your use of our Services;
-- any transactions or relationships between you and any third parties in connection with our Services;
-- and any security breaches, unauthorised access, or data incidents resulting from your actions or omissions.
+If you use our Services for business purposes, you agree to indemnify us against third-party claims, and the reasonable losses and costs arising from them, to the extent they are caused by your breach of these Terms, your violation of applicable law, or your infringement of a third party's rights. Your liability under this section is reduced to the extent a claim was caused or contributed to by our own act or omission.
 
-This indemnification obligation includes, without limitation, claims related to: (a) allegations of non-compliance with data protection, privacy, or consumer protection laws; (b) infringement or misappropriation arising from customised content, configurations, or implementations; and (c) any representations, warranties, or guarantees you make regarding our Services to third parties.
-
-You will cooperate promptly and fully in the defence of any such claim at your own expense. We reserve the right, at our sole discretion, to assume the exclusive defence and control of any matter subject to indemnification by you, in which case you agree to assist and cooperate with us in asserting any available defences and to promptly reimburse us for all reasonable costs and expenses incurred in connection with such defence. You may not settle, compromise, or make any admission of liability in connection with any claim subject to this indemnification without our prior written consent.
-
-To the extent permitted by applicable law, this indemnification obligation (a) survives the termination or expiration of these Terms or your use of our Services, and (b) is independent of any other rights or remedies available to the Indemnified Parties. In jurisdictions where such indemnification provisions are limited or unenforceable, this section applies only to the maximum extent permitted by law and does not affect any non-excludable statutory rights you may have. The Indemnified Parties reserve all rights and remedies available at law or in equity and may seek injunctive relief or specific performance in addition to monetary damages.
+We will notify you promptly of any claim covered by this section and let you take part in its defence. This section does not affect any non-excludable statutory rights you may have.
 
 ## Dispute Resolution
 

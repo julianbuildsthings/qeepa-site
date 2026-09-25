@@ -66,6 +66,7 @@ export const footer = {
   links: [
     { href: "/privacy", label: "Privacy Policy" },
     { href: "/terms", label: "Terms and Conditions" },
-    { href: "/acceptable-use", label: "Acceptable Use Policy" },
+    { href: "/licence", label: "Software Licence" },
+    { href: "/refunds", label: "Refunds" },
   ],
 };

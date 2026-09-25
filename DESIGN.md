@@ -298,7 +298,7 @@ Adapted from the app's floating bar. It is sticky 16px from the top on the 120px
 
 - **Surface:** a single near-white surface at all times — no separate browse/selection state.
 - **Title:** the brand "Qeepa" in Erode, linking home, and "10 photos" from md over the hero. Scrolling into a feature swaps the label to that feature's name and count; the closing swaps it back to "Qeepa" (linking home) with no count. The label fades at `durations.quick`. The bar adopts a section when that section's top passes 50% of the viewport height.
-- **Back** (legal pages only): the app's Back button as its bar draws it — 36px round, surface-2 fill, 15px chevron, 6px in from the bar's left edge (the bar's left padding tightens from 20px to match) — a link home rather than `history.back()`, so it lands on the home page however the visitor arrived. Beside it the bar names the page (e.g. "Acceptable Use Policy") in Erode, as plain text: Back is the one way home. The legal pages show no Get Qeepa: a policy page is not where anyone decides to get the app. The home page has no Back button.
+- **Back** (legal pages only): the app's Back button as its bar draws it — 36px round, surface-2 fill, 15px chevron, 6px in from the bar's left edge (the bar's left padding tightens from 20px to match) — a link home rather than `history.back()`, so it lands on the home page however the visitor arrived. Beside it the bar names the page (e.g. "Software Licence") in Erode, as plain text: Back is the one way home. The legal pages show no Get Qeepa: a policy page is not where anyone decides to get the app. The home page has no Back button.
 - **Get Qeepa:** a real disabled button (ink at 6% fill, pebble label, not-allowed cursor). It stays disabled until there is something to get.
 - The label is not a live region.
 
@@ -342,7 +342,7 @@ The file listing, the insights panel and the filter panel: white, 14px radius, a
 
 ### Footer and links
 
-The footer has a 9% ink top rule. Links are 14px umber grey and turn ink and underline (4px offset) on hover. They are 44px tall below sm and 24px from sm. The skip link appears on focus, fixed at the top left. The footer links the three legal pages (Privacy Policy, Terms and Conditions, Acceptable Use Policy), and the current page's link reads in ink.
+The footer has a 9% ink top rule. Links are 14px umber grey and turn ink and underline (4px offset) on hover. They are 44px tall below sm and 24px from sm. The skip link appears on focus, fixed at the top left. The footer links the four legal pages (Privacy Policy, Terms and Conditions, Software Licence, Refunds), and the current page's link reads in ink.
 
 ### Legal pages
 
