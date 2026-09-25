@@ -25,12 +25,9 @@ Qeepa is a photo management tool that allows you to rate and sort through your p
 
 By using our Services, you agree to be bound by these Terms, our [Privacy Policy](/privacy), and any other policies referenced and expressly incorporated within, and you consent to electronic communications and contracting as permitted under applicable laws. If you do not agree, you may not use our Services.
 
-Our Services are intended for users aged 18 or older, or above the age of majority in their jurisdiction, whichever is higher. Persons below this age may not use our Services. If we become aware that a user is below the required age, we may suspend or terminate their access to our Services immediately and without liability.
-
 By using our Services, you acknowledge and agree that:
 
-- you are at least 18 years old (or the age of majority in your location, whichever is higher);
-- you have the legal capacity to enter into these Terms, and if you are representing an organisation or other legal entity, you have the authority to bind that entity;
+- you have the legal capacity to enter into these Terms or, if you are under the age of majority where you live, a parent or guardian has agreed to them on your behalf; and if you are representing an organisation or other legal entity, you have the authority to bind that entity;
 - the information you provide to us is, and will remain, accurate, complete, and current;
 - and you are not located in, ordinarily resident in, or organised under the laws of any jurisdiction subject to comprehensive sanctions or embargoes, and you are not a blocked, denied, or otherwise restricted party under applicable sanctions or export control lists.
 
@@ -116,7 +113,7 @@ If you are a consumer in Australia, nothing in these Terms excludes, restricts, 
 
 ## One-Time Purchases
 
-Some of our Services are offered as a one-time purchase rather than a recurring subscription. Where you make a one-time purchase, the full price is payable at the time of purchase, and your access to the Service begins once payment has been successfully processed. A one-time purchase grants you a personal, non-exclusive, non-transferable, and revocable licence to access and use the Service in accordance with these Terms. It does not transfer ownership of the Service, or any intellectual property in it, to you, and all rights not expressly granted to you are reserved by us.
+Some of our Services are offered as a one-time purchase rather than a recurring subscription. Where you make a one-time purchase, the full price is payable at the time of purchase, and your access to the Service begins once payment has been successfully processed. A one-time purchase grants you a personal, non-exclusive, and non-transferable licence to access and use the Service in accordance with these Terms. It does not transfer ownership of the Service, or any intellectual property in it, to you, and all rights not expressly granted to you are reserved by us.
 
 Where the Service is the App, your purchase is a one-time purchase you own forever, with no subscription required, as detailed in our [Software Licence](/licence). The App keeps working even if you are offline, if our servers are unreachable, or if we stop operating — your access only ends in the limited circumstances described in the Licence, such as a refunded or disabled licence key. We are under no obligation to release, maintain, or continue any particular future feature or version, and where we release a new version, we may offer some or all of it separately, subject to the Licence's "What updates are included" section.
 
@@ -128,7 +125,7 @@ We offer a one month money-back guarantee on your first purchase with us (the "G
 
 The Guarantee applies once per customer and to your first purchase only. Subsequent purchases, upgrades, add-ons, third-party charges, and any non-refundable taxes or transaction fees are not eligible.
 
-We reserve the right, in our sole discretion, to refuse a refund where we reasonably suspect fraud, abuse of the Guarantee, or breach of these Terms.
+We may refuse a refund where we reasonably suspect fraud, abuse of the Guarantee, or breach of these Terms.
 
 Refunds will be processed to the original payment method within a reasonable time. Once a refund is issued, your access to paid features will end and any associated licence rights will terminate immediately.
 
@@ -162,7 +159,7 @@ We retain sole ownership of all intellectual property ("IP") rights in and to ou
 
 Nothing in these Terms shall be interpreted as transferring to you any rights, interest, or title in our company or Services, except as explicitly stated in these Terms.
 
-Subject to your compliance with these Terms, we grant you a limited, non-exclusive, non-transferable, non-sublicensable, revocable licence to access and use our Services solely for your personal or internal business purposes.
+Subject to your compliance with these Terms, we grant you a limited, non-exclusive, non-transferable, non-sublicensable licence to access and use our Services solely for your personal or internal business purposes.
 
 All rights not expressly granted to you are reserved by Qeepa and its licensors.
 
@@ -268,21 +265,11 @@ Some jurisdictions do not allow the exclusion or limitation of certain warrantie
 
 ## Indemnification
 
-You agree to indemnify, defend, and hold harmless our company, our affiliates, and our respective officers, directors, employees, agents, licensors, suppliers, successors, and assigns ("Indemnified Parties") from all claims, losses, damages, penalties, fines, costs, and expenses (including reasonable legal fees and costs) arising out of or related to:
+This section does not apply to you if you use our Services as a consumer, for purposes outside your trade, business, or profession.
 
-- Your access to or use of our Services in a manner that breaches these Terms, violates applicable law, or infringes the rights of any third party;
-- your breach or alleged breach of these Terms or any applicable laws, regulations, or regulatory requirements;
-- your violation or alleged violation of any third-party rights, including without limitation intellectual property rights, privacy rights, publicity rights, or contractual rights;
-- your negligence, gross negligence, wilful misconduct, fraud, or fraudulent misrepresentation;
-- any disputes, issues, or claims between you and any third party arising from your use of our Services;
-- any transactions or relationships between you and any third parties in connection with our Services;
-- and any security breaches, unauthorised access, or data incidents resulting from your actions or omissions.
+If you use our Services for business purposes, you agree to indemnify us against third-party claims, and the reasonable losses and costs arising from them, to the extent they are caused by your breach of these Terms, your violation of applicable law, or your infringement of a third party's rights. Your liability under this section is reduced to the extent a claim was caused or contributed to by our own act or omission.
 
-This indemnification obligation includes, without limitation, claims related to: (a) allegations of non-compliance with data protection, privacy, or consumer protection laws; (b) infringement or misappropriation arising from customised content, configurations, or implementations; and (c) any representations, warranties, or guarantees you make regarding our Services to third parties.
-
-You will cooperate promptly and fully in the defence of any such claim at your own expense. We reserve the right, at our sole discretion, to assume the exclusive defence and control of any matter subject to indemnification by you, in which case you agree to assist and cooperate with us in asserting any available defences and to promptly reimburse us for all reasonable costs and expenses incurred in connection with such defence. You may not settle, compromise, or make any admission of liability in connection with any claim subject to this indemnification without our prior written consent.
-
-To the extent permitted by applicable law, this indemnification obligation (a) survives the termination or expiration of these Terms or your use of our Services, and (b) is independent of any other rights or remedies available to the Indemnified Parties. In jurisdictions where such indemnification provisions are limited or unenforceable, this section applies only to the maximum extent permitted by law and does not affect any non-excludable statutory rights you may have. The Indemnified Parties reserve all rights and remedies available at law or in equity and may seek injunctive relief or specific performance in addition to monetary damages.
+We will notify you promptly of any claim covered by this section and let you take part in its defence. This section does not affect any non-excludable statutory rights you may have.
 
 ## Dispute Resolution
 
