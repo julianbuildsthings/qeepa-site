@@ -37,11 +37,15 @@ If you receive a refund under our [Money-Back Guarantee](/terms#money-back-guara
 
 Your purchase includes all core photo-related updates to the version of Qeepa you bought. Additional, supplementary features released after your purchase — such as video support, integrations, or in-depth insights — may be offered under a different plan and are not guaranteed to be included at no extra cost.
 
+## Open-source components
+
+Qeepa includes open-source components that are licensed under their own terms. Their licences and notices are included with the App (Settings → Open-source licences) and take precedence over this Licence for those components. Nothing in this Licence limits your rights under those licences, including, where a component's licence (such as the LGPL) requires it, the right to modify that component and to reverse engineer the App to debug such modifications.
+
 ## Restrictions
 
 You must not:
 
-- decompile, reverse engineer, disassemble, or attempt to derive the source code of the App, except to the extent applicable law expressly permits this despite this restriction;
+- decompile, reverse engineer, disassemble, or attempt to derive the source code of the App, except to the extent applicable law expressly permits this despite this restriction, or as allowed under "Open-source components" above;
 - remove, alter, or obscure any copyright, trademark, or other proprietary notices in the App;
 - rent, lease, sell, sublicense, or otherwise transfer your licence key or the App to anyone else; or
 - circumvent or attempt to circumvent the App's licence activation or validation.
