@@ -147,14 +147,14 @@ export function SidecarDemo() {
             <li
               aria-hidden={!rated}
               className={cn(
-                "flex items-center gap-3 bg-peach-light/50 px-5 transition-opacity duration-(--motion-base) ease-(--ease-standard)",
+                "flex items-center gap-3 bg-peach-light/50 px-5 py-2.5 transition-opacity duration-(--motion-base) ease-(--ease-standard)",
                 rated ? "opacity-100" : "opacity-0",
               )}
             >
               <span className="flex h-8 w-12 shrink-0 items-center justify-center rounded-[3px] border border-dashed border-[rgba(111,59,15,0.35)] text-[9px] font-medium text-peach-dark">
                 XMP
               </span>
-              <span className="flex-1 truncate py-2.5 text-[13px] font-medium text-peach-dark">
+              <span className="flex-1 truncate text-[13px] font-medium text-peach-dark">
                 {SIDECAR}
               </span>
               <span className="w-16 shrink-0 text-right text-[12px] text-peach-dark tabular-nums">
