@@ -2,10 +2,12 @@
 layout: ../components/site/LegalPage.astro
 title: Terms and Conditions
 description: The terms Qeepa and its website are offered under.
-updated: Last updated 20 September 2026
+updated: Last updated 25 September 2026
 ---
 
-We're Qeepa ("we", "us", or "our"), trading as Qeepa, a company registered in Sydney, under ABN 87196498634, and these Terms and conditions (our "Terms") form a legally binding agreement between you and us.
+We're Qeepa ("we", "us", or "our"), the trading name of [Julian's legal name], a sole trader based in Sydney, under ABN 87196498634, and these Terms and conditions (our "Terms") form a legally binding agreement between you and us.
+
+Qeepa is sold through our reseller, Lemon Squeezy ([qeepa.lemonsqueezy.com](https://qeepa.lemonsqueezy.com)), which acts as the merchant of record for your purchase and handles payment processing, invoicing, and sales tax on our behalf. Your transaction with Lemon Squeezy is also subject to [Lemon Squeezy's buyer terms](https://www.lemonsqueezy.com/terms). We remain the licensor of the App under our [Software Licence](/licence).
 
 ## About Our Services
 
@@ -116,9 +118,9 @@ If you are a consumer in Australia, nothing in these Terms excludes, restricts, 
 
 Some of our Services are offered as a one-time purchase rather than a recurring subscription. Where you make a one-time purchase, the full price is payable at the time of purchase, and your access to the Service begins once payment has been successfully processed. A one-time purchase grants you a personal, non-exclusive, non-transferable, and revocable licence to access and use the Service in accordance with these Terms. It does not transfer ownership of the Service, or any intellectual property in it, to you, and all rights not expressly granted to you are reserved by us.
 
-Your purchase grants access to the Service for as long as we continue to make it available. We are under no obligation to release, maintain, or continue any particular feature, update, or version. Where we release a new version, we may offer it separately, and it may be subject to new or additional terms.
+Where the Service is the App, your purchase is a one-time purchase you own forever, with no subscription required, as detailed in our [Software Licence](/licence). The App keeps working even if you are offline, if our servers are unreachable, or if we stop operating — your access only ends in the limited circumstances described in the Licence, such as a refunded or disabled licence key. We are under no obligation to release, maintain, or continue any particular future feature or version, and where we release a new version, we may offer some or all of it separately, subject to the Licence's "What updates are included" section.
 
-We will not intentionally remove your access to the features available to you at the time of your purchase, except where required by these Terms or applicable law. Beyond this, your purchase is not conditional on the release of any future feature, functionality, or version, and we make no commitment and accept no obligation in relation to any public statement we may have made about future development. We may modify, suspend, or discontinue the Service, in whole or in part, in accordance with our Service Updates and Changes and Discontinuation sections. Except where applicable law provides otherwise, or under our Money-Back Guarantee, payments for one-time purchases are non-refundable once access to the Service has been provided.
+We will not intentionally remove your access to the features available to you at the time of your purchase, except where required by these Terms, the Licence, or applicable law. Beyond this, your purchase is not conditional on the release of any future feature, functionality, or version, and we make no commitment and accept no obligation in relation to any public statement we may have made about future development. Except where applicable law provides otherwise, or under our Money-Back Guarantee, payments for one-time purchases are non-refundable once access to the Service has been provided.
 
 ## Money-Back Guarantee
 
@@ -146,7 +148,7 @@ We aim to keep the Services available and reliable. However, the Services may oc
 
 ### Automatic App Updates
 
-If you install our App on your device, you agree that the App may receive automatic updates where this function is enabled in your device settings. These updates may be required to ensure security, performance, or continued compatibility.
+The App checks for updates automatically; this cannot be turned off in the App's own settings. When a check happens, the App shares its version number, your macOS version and processor architecture, and your IP address with our update service, and downloads any available update from our GitHub Releases. These updates may be required to ensure security, performance, or continued compatibility.
 
 ## Beta Versions and Experimental Features
 
@@ -168,7 +170,7 @@ All rights not expressly granted to you are reserved by Qeepa and its licensors.
 
 ### Use of Our Brand and Materials
 
-If you publicly publish or distribute materials generated by or exported from our Services, you must include reasonable attribution to us, such as a visible credit or link to our website, unless we provide specific attribution guidelines, in which case those guidelines apply.
+Photos and other files you export from the App are yours, and you are free to publish, share, or distribute them without any attribution to us.
 
 You may refer to our company name and brand in a factual and truthful manner. You must not use our name, logo, trademarks, or other brand assets in any way that implies endorsement, sponsorship, or affiliation with us without our prior written consent.
 
@@ -182,9 +184,11 @@ For more information about Australia's copyright law, please visit [https://www.
 
 ## User-Generated Content
 
-"User-Generated Content" refers to any content, materials, information, feedback, ideas, suggestions, feature requests, reviews, or communications that you submit, post, upload, share, or otherwise provide to us or through our Services, whether publicly or privately.
+Your photos, files, and any other content you manage within the App stay on your device. We never receive, access, or store them, and we claim no rights of any kind over them.
 
-By submitting User-Generated Content to us or through our Services, you grant us a non-exclusive, royalty-free, transferable, sub-licensable, worldwide license to use, distribute, modify, run, copy, publicly display, translate, or otherwise create derivative works of your content in a manner that is consistent with your privacy preferences and our Privacy Policy. This includes, without limitation, the right to use feedback, ideas, suggestions, and feature requests to develop, improve, and promote our Services without any obligation or compensation to you.
+"User-Generated Content" in this section refers only to feedback, ideas, suggestions, feature requests, support messages, or reviews that you actively submit to us, such as through the App's feedback form or by emailing us — not to your photos or files.
+
+By submitting User-Generated Content to us, you grant us a non-exclusive, royalty-free, transferable, sub-licensable, worldwide license to use, distribute, modify, run, copy, publicly display, translate, or otherwise create derivative works of it, in a manner that is consistent with your privacy preferences and our Privacy Policy. This includes, without limitation, the right to use feedback, ideas, suggestions, and feature requests to develop, improve, and promote our Services without any obligation or compensation to you.
 
 You retain your intellectual property ownership rights over your User-Generated Content. By submitting User-Generated Content, you represent and warrant that you own or have the necessary rights, licenses, and permissions to grant the license above, and that your content does not infringe, misappropriate, or violate the rights of any third party.
 
