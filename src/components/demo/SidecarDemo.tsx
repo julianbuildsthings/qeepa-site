@@ -1,8 +1,9 @@
-import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
+import { motion, MotionConfig, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
-import { cycle, distance, durations, easings, presets, stagger } from "@/lib/motion";
+import { cycle, distance, durations, easings, stagger } from "@/lib/motion";
 import { frameBorder, pipEmpty, pipFilled, type ToneName, tones } from "@/lib/tones";
+import { cn } from "@/lib/utils";
 
 /**
  * Row two, local-first.
@@ -128,32 +129,51 @@ export function SidecarDemo() {
               </li>
             ))}
 
-            <AnimatePresence initial={false}>
-              {rated && (
-                <motion.li
-                  animate={{ height: "auto", opacity: 1 }}
-                  className="flex items-center gap-3 overflow-hidden bg-peach-light/50 px-5"
-                  exit={{ height: 0, opacity: 0 }}
-                  initial={{ height: 0, opacity: 0 }}
-                  transition={presets.gentle}
-                >
-                  <span className="flex h-8 w-12 shrink-0 items-center justify-center rounded-[3px] border border-dashed border-[rgba(111,59,15,0.35)] text-[9px] font-medium text-peach-dark">
-                    XMP
-                  </span>
-                  <span className="flex-1 truncate py-2.5 text-[13px] font-medium text-peach-dark">
-                    {SIDECAR}
-                  </span>
-                  <span className="w-16 shrink-0 text-right text-[12px] text-peach-dark tabular-nums">
-                    2 KB
-                  </span>
-                </motion.li>
+            {/*
+              Always in the list rather than mounted only once rated.
+              Animating `height` from 0 grew the whole card, and below `lg`
+              nothing gives the card a fixed size to absorb that in — the
+              row's entrance pushed every section beneath it down the page.
+              A fade in place costs nothing: the row's height is reserved
+              from the first render, so it appearing changes no one's height.
+
+              A CSS transition, not Motion's `animate`: this row's opacity
+              toggles on the same interval-driven `rated` flip that also
+              swaps the caption below by remounting it, and racing a Motion
+              tween against that remount left it a full cycle behind — the
+              same reason the floating bar's surface colour is a CSS
+              transition rather than a Motion one.
+            */}
+            <li
+              aria-hidden={!rated}
+              className={cn(
+                "flex items-center gap-3 bg-peach-light/50 px-5 transition-opacity duration-(--motion-base) ease-(--ease-standard)",
+                rated ? "opacity-100" : "opacity-0",
               )}
-            </AnimatePresence>
+            >
+              <span className="flex h-8 w-12 shrink-0 items-center justify-center rounded-[3px] border border-dashed border-[rgba(111,59,15,0.35)] text-[9px] font-medium text-peach-dark">
+                XMP
+              </span>
+              <span className="flex-1 truncate py-2.5 text-[13px] font-medium text-peach-dark">
+                {SIDECAR}
+              </span>
+              <span className="w-16 shrink-0 text-right text-[12px] text-peach-dark tabular-nums">
+                2 KB
+              </span>
+            </li>
           </ul>
 
+          {/*
+            `min-h-[61px]` and `flex items-center`: the rated caption's extra
+            clause wraps to a second line below `sm`, and the shorter caption
+            alone was one line — the swap changed the card's height on every
+            cycle, which below `lg` nothing absorbs, so it pushed the section
+            after this one down the page. Reserved to the two-line height, the
+            one-line caption centres in it instead of shrinking the box.
+          */}
           <motion.p
             animate={{ opacity: 1, y: 0 }}
-            className="border-t border-[rgba(43,38,33,0.08)] px-5 py-3 text-[12px] text-text-secondary"
+            className="flex min-h-[61px] items-center border-t border-[rgba(43,38,33,0.08)] px-5 py-3 text-[12px] text-text-secondary"
             initial={{ opacity: 0, y: distance.hover }}
             key={String(rated)}
             transition={{ duration: durations.base, ease: easings.enter }}
