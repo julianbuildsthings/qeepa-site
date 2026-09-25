@@ -7,7 +7,7 @@ updated: Last updated 25 September 2026
 
 This is the End User Licence Agreement ("Licence") for Qeepa, the macOS application ("the App"). It applies alongside our [Terms and Conditions](/terms) and [Privacy Policy](/privacy). If there is a conflict between this Licence and the Terms on a point specific to using the App, this Licence controls.
 
-Qeepa is sold as a one-time purchase through our reseller, Lemon Squeezy ([qeepa.lemonsqueezy.com](https://qeepa.lemonsqueezy.com)), which is the merchant of record for your transaction. [Julian's legal name], trading as Qeepa ("we", "us", "our"), remains the licensor of the App itself, and Lemon Squeezy's own buyer terms govern the sale.
+Qeepa is sold as a one-time purchase through our reseller, Lemon Squeezy ([qeepa.lemonsqueezy.com](https://qeepa.lemonsqueezy.com)), which is the merchant of record for your transaction. Julian Stephens, trading as Qeepa ("we", "us", "our"), remains the licensor of the App itself, and Lemon Squeezy's own buyer terms govern the sale.
 
 ## The licence we grant you
 

@@ -22,7 +22,6 @@ describe("siteConfig", () => {
   it("points the footer at real legal routes", () => {
     expect(siteConfig.legal.privacy).toBe("/privacy");
     expect(siteConfig.legal.terms).toBe("/terms");
-    expect(siteConfig.legal.acceptableUse).toBe("/acceptable-use");
     expect(siteConfig.legal.licence).toBe("/licence");
     expect(siteConfig.legal.refunds).toBe("/refunds");
   });

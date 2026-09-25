@@ -5,7 +5,7 @@ description: The terms Qeepa and its website are offered under.
 updated: Last updated 25 September 2026
 ---
 
-We're Qeepa ("we", "us", or "our"), the trading name of [Julian's legal name], a sole trader based in Sydney, under ABN 87196498634, and these Terms and conditions (our "Terms") form a legally binding agreement between you and us.
+We're Qeepa ("we", "us", or "our"), the trading name of Julian Stephens, a sole trader based in Sydney, under ABN 87196498634, and these Terms and conditions (our "Terms") form a legally binding agreement between you and us.
 
 Qeepa is sold through our reseller, Lemon Squeezy ([qeepa.lemonsqueezy.com](https://qeepa.lemonsqueezy.com)), which acts as the merchant of record for your purchase and handles payment processing, invoicing, and sales tax on our behalf. Your transaction with Lemon Squeezy is also subject to [Lemon Squeezy's buyer terms](https://www.lemonsqueezy.com/terms). We remain the licensor of the App under our [Software Licence](/licence).
 
@@ -152,11 +152,9 @@ The App checks for updates automatically; this cannot be turned off in the App's
 
 ## Beta Versions and Experimental Features
 
-We may, at our discretion, grant you access to experimental features, pre-release functionality, or developmental tools that have not been released to our general customer base ("Experimental Features"). Such Experimental Features are provided on a provisional basis for evaluation and internal assessment purposes only, and must be limited to non-commercial evaluation and testing within your internal operations.
+We may, at our discretion, give you access to experimental features, pre-release functionality, or developmental tools that have not been released to our general customer base ("Experimental Features"). Experimental Features are provided on an "as is" basis for evaluation purposes and may be incomplete, unstable, or changed or removed without notice.
 
-By accessing Experimental Features, you acknowledge that Experimental Features constitute our proprietary and confidential information, and you agree to maintain strict confidentiality regarding any aspects of these features, including their existence, capabilities, performance characteristics, and any related documentation. You must not disclose, demonstrate, or discuss Experimental Features with any external parties or use them for any purpose beyond internal testing within your organisation.
-
-We reserve the right to withdraw, modify, suspend, or discontinue your access to any Experimental Features without prior notice or obligation. You further acknowledge that we make no commitment to incorporate any Experimental Features into our commercially available Services and provide no assurances, express or implied, regarding their reliability, availability, performance, or future availability.
+We make no commitment to incorporate any Experimental Feature into our commercially available Services and provide no assurances, express or implied, regarding its reliability, availability, or performance.
 
 ## Intellectual Property
 
