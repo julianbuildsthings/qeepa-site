@@ -292,6 +292,9 @@ Surfaces are flat. Depth belongs only to objects the app itself would float: the
 
 ## Components
 
+### Logomark
+Three dots in the track colours (track-raw, track-jpg, track-af), RAW alone above JPG and EDIT — the app's own track dots turned into a mark, at equal size with no overlap. It exists only as the favicon (`favicon.svg`, transparent) and the source for the macOS app icon and `apple-touch-icon.png` (both on a peach-light tile, since browsers other than the current page's own chrome, and iOS/macOS home screens, need an opaque ground). It is not used inline on the page: the header wordmark stays text-only, in Erode, as before.
+
 ### Floating Bar (navigation)
 
 Adapted from the app's floating bar. It is sticky 16px from the top on the 120px rail, 48px tall and fully round.
@@ -378,6 +381,6 @@ Markdown in `src/pages`, laid out by `LegalPage.astro` and styled by `.legal` in
 - **Don't** add a colour outside the warm family other than the track dots, and don't use grey hairlines or neutral shadows.
 - **Don't** lay feature content in a grid of equal cards, or present the product as a floating framed screenshot.
 - **Don't** split rows into two columns below lg, or let the copy column fall under 340px.
-- **Don't** add a live download, buy or signup control, a price, a date, testimonials or a logomark. None exist, and Get Qeepa stays disabled until one does.
+- **Don't** add a live download, buy or signup control, a price, a date or testimonials. None exist, and Get Qeepa stays disabled until one does.
 - **Don't** hide server-rendered content that isn't gated behind `.js` and a motion preference, and don't start a Motion animation from opacity 0 on first render.
 - **Don't** add a sixth spring preset without asking first.
