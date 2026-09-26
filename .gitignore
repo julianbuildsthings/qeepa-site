@@ -33,3 +33,6 @@ dev_server.log
 .claude/
 # design-detector cache, regenerated on every scan
 .impeccable/hook.cache.json
+
+# brainstorming visual companion scratch files
+.superpowers/

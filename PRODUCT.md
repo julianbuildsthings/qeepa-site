@@ -102,8 +102,11 @@ be demonstrated.
 - The palette in `src/styles/global.css` is committed: white ground, warm
   neutral surfaces, a single peach accent, and three track colours for
   RAW / JPEG / AFPHOTO.
-- The header wordmark is the name typeset in Erode. No logomark exists.
-  (Confirmed this session.)
+- The header wordmark is the name typeset in Erode. A logomark now exists
+  alongside it: three dots in the RAW, JPG and EDIT track colours, RAW alone
+  above JPG and EDIT — the app's own track dots turned into a mark. It is the
+  favicon and the source for the app icon; the header wordmark on the page
+  itself stays text-only. (Decided this session.)
 - Voice is plain, warm, and unhyped. The landing copy approved in the brief
   doc is used verbatim.
 
@@ -112,11 +115,12 @@ be demonstrated.
 - **Real:** the landing page copy, approved verbatim. The running app in the
   adjacent repository, available read-only as the reference for any product
   demonstration. The design tokens and fonts already in `qeepa-site`.
-- **Does not exist and must not be fabricated:** a logomark or app icon; any
-  price; a release date; testimonials, customer names, press, download counts,
-  or review quotes; performance benchmarks. `public/og-image.png` and
-  `public/favicon.svg` are leftovers from the Astro template and carry no
-  brand meaning.
+- **Does not exist and must not be fabricated:** any price; a release date;
+  testimonials, customer names, press, download counts, or review quotes;
+  performance benchmarks. `public/favicon.svg`, `public/favicon.ico`,
+  `public/apple-touch-icon.png` and `public/og-image.png` are the real
+  brand assets (the track-dot logomark, and the link-preview card carrying
+  it with the "Qeepa." wordmark) — no longer template leftovers.
 - The hero carries no availability, pricing, signup or purchase content at
   all. (Confirmed this session.)
 
