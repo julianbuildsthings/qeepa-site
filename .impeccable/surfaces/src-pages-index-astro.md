@@ -6,7 +6,8 @@ related_targets: []
 ---
 
 Scope: the Qeepa marketing landing page (`src/pages/index.astro`) — hero,
-five feature rows, closing availability section, footer. Visitor mode:
+five feature rows, closing availability section, screenshot carousel, footer.
+Visitor mode:
 **Persuade**.
 
 Audience: photographers who shoot RAW and cull large shoots on their own Mac.
@@ -75,7 +76,7 @@ against these, not flag them as drift.
 
 - **Type scale, down.** The user found the copy "too big and zoomed in".
   Headline `clamp(34px, 4.7vw, 62px)`, feature heading `clamp(26px, 2.4vw,
-  34px)`, subheading `clamp(17px, 1.4vw, 20px)`, body 15px, lede 16px capped at
+34px)`, subheading `clamp(17px, 1.4vw, 20px)`, body 15px, lede 16px capped at
   560px. The 80/84 and 44/48 figures above no longer apply.
 - **Material: flat, light tones with metadata chrome, not gradients.** The
   gradient tiles were rejected as immature and jarring; the user then asked
@@ -115,6 +116,25 @@ against these, not flag them as drift.
   heading alone: the feature copy and the closing rise out of per-line masks,
   heading through body, in one stagger. The whole-block fade is retired for
   copy; visuals keep it.
+
+## Amendments (2026-09-26)
+
+- **Real screenshots under the closing.** At the user's request, and a
+  deliberate exception to the thesis's refusal of the framed screenshot: four
+  curated captures of the shipping app (library, shoot insights, photo detail,
+  share) in a carousel directly beneath the closing copy, before the footer.
+  They are the page's one piece of literal proof, placed after the argument
+  rather than leading it, so the thesis above still governs everything before
+  them. The captures are shipped unaltered (a second set replaced the first,
+  which had a capture band and a stray home-indicator pill).
+- **Carousel, revised after the user's first review.** It plays itself (4s a
+  screenshot, forward only, on the page's loop rules) rather than waiting to
+  be paged. No visible captions; the factual text is alt text only. The arrows
+  take the floating bar's surface as 48px circles and sit outside the
+  screenshot, in the rail's gutter from lg, with the dots close beneath it.
+  The gap from the closing down to it equals the gap from it down to the
+  footer, 256px from lg (160px below), deeper than the closing's top after
+  the user found 176px too tight.
 
 ## Unresolved
 

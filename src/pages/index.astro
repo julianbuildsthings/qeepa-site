@@ -8,6 +8,7 @@ import Closing from "@/components/site/Closing.astro";
 import FeatureRow from "@/components/site/FeatureRow.astro";
 import { FloatingBar } from "@/components/site/FloatingBar";
 import Hero from "@/components/site/Hero.astro";
+import { ScreenshotCarousel } from "@/components/site/ScreenshotCarousel";
 import SiteFooter from "@/components/site/SiteFooter.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { barSections } from "@/lib/bar";
@@ -58,6 +59,15 @@ const CLOSING_ID = "availability";
     </FeatureRow>
 
     <Closing id={CLOSING_ID} />
+
+    {/* No id of its own: the bar keeps naming the closing through here. */}
+    <div
+      class="mx-auto max-w-[1440px] px-6 pb-40 lg:px-[120px] lg:pb-64"
+      data-reveal
+      style="--reveal-index: 0"
+    >
+      <ScreenshotCarousel client:visible />
+    </div>
   </main>
 
   <SiteFooter />

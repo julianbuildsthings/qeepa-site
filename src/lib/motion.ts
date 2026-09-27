@@ -130,6 +130,11 @@ export const cycle = {
   reset: 1100,
   /** RAW → JPG → EDIT on the tracks demonstration. */
   track: 1400,
+  /**
+   * Dwell on each screenshot in the carousel. Long, because a screenshot is
+   * a whole screen of the app to take in, not one change to notice.
+   */
+  screenshot: 4000,
 };
 
 /**
