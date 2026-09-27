@@ -179,7 +179,7 @@ components:
 
 **Creative North Star: "The Sunlit Gallery"**
 
-The site shows the product demonstrating itself on a white page. Every visual is a piece of the app's own interface: a window with muted traffic lights, a grid of near-white photo frames, the track pill, a file listing, an insights panel, a filter toolbar. None of it is a framed screenshot on a plinth. Copy ranges left on a single 120px rail. Each feature gets a full row, never a card, and the rows alternate sides down the page. The page ends with a status line, not a call to action, because there is nothing to download yet.
+The site shows the product demonstrating itself on a white page. Every visual is a piece of the app's own interface: a window with muted traffic lights, a grid of near-white photo frames, the track pill, a file listing, an insights panel, a filter toolbar. None of it is a framed screenshot on a plinth. Copy ranges left on a single 120px rail. Each feature gets a full row, never a card, and the rows alternate sides down the page. The page ends with a status line, not a call to action, because there is nothing to download yet. Beneath that status, and only there, real screenshots of the app follow as the one piece of literal proof (see Screenshot Carousel).
 
 The material is warm and light. Photographs are stood in for by flat, near-white warm tones. What makes a tone read as a photo rather than a swatch is its metadata chrome: a track dot, rating pips, a frame number. The only non-warm colours on the page are the functional JPG and EDIT track dots. Depth comes from soft, warm-tinted shadows under objects the app would float. Surfaces themselves stay flat.
 
@@ -189,7 +189,7 @@ Motion shares one physics vocabulary with the app. Loops demonstrate a claim, pa
 
 - White ground, one warm family, three functional track colours.
 - Satoshi Bold display with tight negative tracking. Erode appears only in the wordmark and the floating bar's section names.
-- Flat light tones with metadata chrome stand in for photographs. No gradients, no imagery.
+- Flat light tones with metadata chrome stand in for photographs. No gradients, and no imagery outside the screenshot carousel under the closing.
 - App chrome (window, pill, bar, chips) is the recurring material, taken from the product rather than invented.
 - One motion registry, enforced by a test.
 
@@ -264,7 +264,8 @@ A white page with warm neutral text, a single peach accent at three depths, a li
 - **Hero window by columns, never rows.** The hero grid is 2 columns, 3 from sm and 5 from md. Frames that no longer fit are hidden, not wrapped, so the row count and the track pill's position hold at every width. The pill sits on the exact centre line of row two, computed with the fixed 12px gaps taken out.
 - **Demo canvas.** Row visuals share a 716 : 496 aspect box. The fast-performance viewport is 716 : 280. Frames are 3 : 2.
 - **Breakpoints** (Tailwind defaults): sm 640, md 768, lg 1024, xl 1280. Things that change at each: the bar's photo count appears from md. Large-frame chrome scales up from sm. Pill segment padding goes from 12px to 18px at sm. Footer links drop from 44px to 24px tall at sm.
-- **Closing.** Centred, type only, 128px vertical padding (176px from lg).
+- **Closing.** Centred, type only, 128px top padding (176px from lg) and 160px below (256px from lg).
+- **Screenshot carousel.** The screenshot takes the rail's full width (1200px at 1440), directly under the closing; from lg its arrows sit outside it, in the rail's gutter. The gap from the closing's copy down to it and the gap from its dots down to the footer are the same, 160px (256px from lg).
 
 ## Elevation & Depth
 
@@ -272,7 +273,7 @@ Surfaces are flat. Depth belongs only to objects the app itself would float: the
 
 ### Shadow Vocabulary
 
-- **Window** (`0 1px 3px rgba(43,38,33,0.05), 0 28px 64px -24px rgba(43,38,33,0.20)`): the hero window and the fast-performance window.
+- **Window** (`0 1px 3px rgba(43,38,33,0.05), 0 28px 64px -24px rgba(43,38,33,0.20)`): the hero window, the fast-performance window and the screenshot carousel's frame.
 - **Panel** (`0 1px 3px rgba(43,38,33,0.05), 0 24px 56px -24px rgba(43,38,33,0.20)`): the sidecar listing, the insights panel and the filter panel.
 - **Print** (`0 2px 6px rgba(43,38,33,0.07), 0 30px 64px -24px rgba(43,38,33,0.28)`): the stacked track frames, so the frames behind read as a stack and not as a shadow.
 - **Pill** (`0 1px 2px rgba(43,38,33,0.08), 0 10px 28px -4px rgba(43,38,33,0.28)`): the track pill floating over a grid.
@@ -293,6 +294,7 @@ Surfaces are flat. Depth belongs only to objects the app itself would float: the
 ## Components
 
 ### Logomark
+
 Three dots in the track colours (track-raw, track-jpg, track-af), RAW alone above JPG and EDIT — the app's own track dots turned into a mark, at equal size with no overlap. It exists only as the favicon (`favicon.svg`, transparent) and the source for the macOS app icon and `apple-touch-icon.png` (both on a peach-light tile, since browsers other than the current page's own chrome, and iOS/macOS home screens, need an opaque ground). It is not used inline on the page: the header wordmark stays text-only, in Erode, as before.
 
 ### Floating Bar (navigation)
@@ -343,6 +345,20 @@ The file listing, the insights panel and the filter panel: white, 14px radius, a
 
 6px tall and fully round, because at 4px it reads as a divider. The track is peach-light and the fill peach-accent. It fills once on entry with `presets.gentle`, staggered by `stagger.relaxed`, and never loops. The in-view observer goes on the track, not on the zero-width fill.
 
+### Screenshot Carousel
+
+`ScreenshotCarousel` is the page's one exception to showing the product through its own recreated parts: four real screenshots of the shipping app (library, shoot insights, photo detail, share), placed under the closing so they confirm the argument rather than make it.
+
+- **Images** are the owner's full-resolution macOS captures (3024 × 1898), unaltered apart from one resize (`sips`) and one WebP encode (q90, `-sharp_yuv` for clean UI text edges), at 1200 and 2400px wide: 2400 is what the 1200px slot needs on a 2x screen, so nothing is stretched. Always export from the original PNGs — copies sent through chat arrive capped at 2000px and read as hazy. They ship from `src/assets/screenshots/` through `src/lib/screenshots.ts`, since the Cloudflare adapter's default image service is the Images binding, which this project does not use. Lazy in the server HTML, eager once the island hydrates, so a slide never arrives blank.
+- **Frame:** a white, 16px-radius box with a 10% ink hairline and the Window shadow — the same object as the fast-performance window, without a `WindowBar`, because the screenshot carries the app's real chrome.
+- **Plays itself**, one screenshot per `cycle.screenshot` (4s), on the page's loop rules: never paused by hover, paused while one of its controls has keyboard focus, stopped for good once a control is used, and never started under reduced motion. It only travels forward on its own: a hidden copy of the first screenshot follows the last, so the wrap is one step onto the copy and an unseen jump back, never a rewind across all four. Previous from the first does the same in reverse.
+- **Arrows:** the floating bar's surface as a 48px circle — white at 96%, the Bar shadow, an 18px chevron in umber grey that turns ink on hover. From lg they flank the screenshot in the rail's gutter, 24px out and centred on it; below lg they flank the dots. The arrow keys page from any of its controls, and the ends wrap, so neither arrow ever disables under keyboard focus.
+- **Motion:** the strip moves by a percentage of its own width on `presets.gentle`, so travel is always one slide and nothing is measured.
+- **Dots:** 12px under the screenshot. 8px ink at 18%; the current one is a 20px peach-accent capsule, so shape carries the state as well as the faint peach. 24px targets, 44px tall on coarse pointers.
+- **No captions.** Each screenshot's text in `copy.ts` is its alt text and its dot's label, and names only what the screenshot shows and PRODUCT.md confirms shipped.
+- **Accessibility:** a region with `aria-roledescription="carousel"`; each slide a group labelled "n of 4", with the ones not on show and the wrap copy `aria-hidden`. The slides are a live region only once the visitor has taken control (`off` while it plays itself, then `polite`).
+- The bar needs nothing: the section has no id, so the bar keeps its closing state over it.
+
 ### Footer and links
 
 The footer has a 9% ink top rule. Links are 14px umber grey and turn ink and underline (4px offset) on hover. They are 44px tall below sm and 24px from sm. The skip link appears on focus, fixed at the top left. The footer links the four legal pages (Privacy Policy, Terms and Conditions, Software Licence, Refunds), and the current page's link reads in ink.
@@ -357,7 +373,7 @@ Markdown in `src/pages`, laid out by `LegalPage.astro` and styled by `.legal` in
 - **Section reveals** are CSS, and apply only under `.js` (added before first paint) and `prefers-reduced-motion: no-preference`. A feature row's visual fades and rises 16px over `--motion-editorial` with `--ease-enter`. They reveal once via IntersectionObserver, and everything shows at once without it. Anything scrolled past unrevealed, by a fast scroll or an anchor jump, is revealed when the next thing is.
 - **Copy line rise** (the signature entrance for type). The hero copy, the feature copy and the closing are split into their rendered lines after the fonts load, and again when the width changes. Each line rises out of its own mask over `durations.line` (0.8s) with `easings.rise`, an exponential ease-out, one `stagger.line` (70ms) after the last, running from the heading through the subheading into the body. In a feature row the copy starts one `--reveal-stagger` behind its visual. Hard breaks are kept: lines are measured where they render, so the hero headline holds its three approved lines from lg and rewraps below. Screen readers get the unsplit text. Under reduced motion nothing is split or hidden.
 - **Page-load entrances**, on the line rise's `durations.line` and `easings.rise` so the first screen lands as one movement: the floating bar drops in from above on load (every page); the hero's lines rise; the hero window rises `distance.panel` (32px) and fades in, three `stagger.line` behind the hero copy's reveal. Same guards as the reveals: `.js` only, never under reduced motion.
-- **Loops** (the hero window, the tracks cycle, the sidecar write, the filter pass, the gallery scroll) never pause on hover — a deliberate departure from the usual guidance, at the user's decision: a pointer resting on a graphic early meant the visitor never saw it move. Loops with a control (the pills, the filter chips) pause while it has keyboard focus and pin their state when it is clicked; every loop is still, from the first frame, under reduced motion. The gallery strip travels at a constant `speeds.gallery` px/s, never a fixed duration.
+- **Loops** (the hero window, the tracks cycle, the sidecar write, the filter pass, the gallery scroll, the screenshot carousel) never pause on hover — a deliberate departure from the usual guidance, at the user's decision: a pointer resting on a graphic early meant the visitor never saw it move. Loops with a control (the pills, the filter chips) pause while it has keyboard focus and pin their state when it is clicked; every loop is still, from the first frame, under reduced motion. The gallery strip travels at a constant `speeds.gallery` px/s, never a fixed duration.
 - `initial={false}` is used wherever the server HTML must show the settled state. `MotionConfig reducedMotion="user"` wraps every island. Only `transform` and `opacity` animate on frames.
 - `popLayout` exits need a positioned parent (`FilterReveal.test.tsx`).
 
@@ -379,7 +395,7 @@ Markdown in `src/pages`, laid out by `LegalPage.astro` and styled by `.legal` in
 - **Don't** put a kicker or eyebrow above a heading.
 - **Don't** use gradients as photo stand-ins. They read as swatches at any size.
 - **Don't** add a colour outside the warm family other than the track dots, and don't use grey hairlines or neutral shadows.
-- **Don't** lay feature content in a grid of equal cards, or present the product as a floating framed screenshot.
+- **Don't** lay feature content in a grid of equal cards, or present the product as a floating framed screenshot. The screenshot carousel under the closing is the one sanctioned exception: real screenshots go there and nowhere else, and never lead the page.
 - **Don't** split rows into two columns below lg, or let the copy column fall under 340px.
 - **Don't** add a live download, buy or signup control, a price, a date or testimonials. None exist, and Get Qeepa stays disabled until one does.
 - **Don't** hide server-rendered content that isn't gated behind `.js` and a motion preference, and don't start a Motion animation from opacity 0 on first render.

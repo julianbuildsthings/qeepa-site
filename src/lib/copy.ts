@@ -61,6 +61,26 @@ export const closing = {
   heading: "Qeepa is coming soon to macOS.",
 };
 
+export type ScreenshotId = "insights" | "library" | "photo-detail" | "share";
+
+/**
+ * The carousel of real app screenshots under the closing. No caption is shown;
+ * `alt` is the image's alt text and its dot's label, and names only what the
+ * screenshot shows and PRODUCT.md confirms shipped.
+ */
+export const screenshots: {
+  label: string;
+  slides: { alt: string; id: ScreenshotId }[];
+} = {
+  label: "Screenshots of Qeepa",
+  slides: [
+    { alt: "A library, organised into shoots", id: "library" },
+    { alt: "Every shoot’s gear and settings, at a glance", id: "insights" },
+    { alt: "A photo and all its tracks, in one place", id: "photo-detail" },
+    { alt: "Photos selected together in a shoot, ready to share", id: "share" },
+  ],
+};
+
 export const footer = {
   copyright: "© Qeepa",
   links: [

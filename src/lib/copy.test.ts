@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { closing, features, footer, hero } from "@/lib/copy";
+import { closing, features, footer, hero, screenshots } from "@/lib/copy";
 
 const everyString = [
   ...hero.headline,
@@ -8,6 +8,8 @@ const everyString = [
   ...features.flatMap((feature) => [feature.heading, feature.subheading, feature.body]),
   closing.heading,
   closing.body,
+  screenshots.label,
+  ...screenshots.slides.map((slide) => slide.alt),
   ...footer.links.map((link) => link.label),
 ];
 
@@ -24,6 +26,18 @@ describe("page copy", () => {
       "insights",
       "management",
     ]);
+  });
+
+  it("describes every screenshot, in carousel order", () => {
+    expect(screenshots.slides.map((slide) => slide.id)).toEqual([
+      "library",
+      "insights",
+      "photo-detail",
+      "share",
+    ]);
+    for (const slide of screenshots.slides) {
+      expect(slide.alt.length, slide.id).toBeGreaterThan(0);
+    }
   });
 
   it("gives every feature a two-tier heading, never a bare label", () => {

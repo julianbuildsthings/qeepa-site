@@ -36,10 +36,10 @@ The dev server may serve a stale dependency cache after a dependency changes, wh
 
 ## Architecture
 
-- `src/pages/index.astro` — the landing page: hero, five feature rows, closing, footer.
+- `src/pages/index.astro` — the landing page: hero, five feature rows, closing, screenshot carousel, footer.
 - `src/pages/{privacy,terms,licence,refunds}.md` — the legal pages. Markdown with `LegalPage.astro` as their layout; the text is the owner's, published as supplied.
 - `src/layouts/BaseLayout.astro` — the HTML shell, and the inline scripts for the scroll reveals and the copy's line-by-line rise (it splits each `[data-lines]` element into its rendered lines after the fonts load).
-- `src/components/site/` — the page's own sections: `Hero`, `FeatureRow`, `Closing`, `SiteFooter`, `LegalPage` and the `FloatingBar` island.
+- `src/components/site/` — the page's own sections: `Hero`, `FeatureRow`, `Closing`, `SiteFooter`, `LegalPage`, and the `FloatingBar` and `ScreenshotCarousel` islands. The carousel is the only place real screenshots appear; they live in `src/assets/screenshots/` at two widths, wired up in `src/lib/screenshots.ts`.
 - `src/components/demo/` — the product demonstrations, one per feature row, plus `HeroGallery` and the shared `PhotoFrame` / `TrackPill` / `WindowBar`.
 - `src/lib/` — `copy.ts` (all page copy), `tones.ts` (the flat photo tones, tracks and hero data), `tiles.ts` (the tile census the bar's counts come from), `bar.ts`, `motion.ts` and `config.ts`.
 - `src/components/ui/` — vendored shadcn/ui primitives the page does not use. Regenerate rather than hand-edit.
