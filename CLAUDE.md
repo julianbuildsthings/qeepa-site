@@ -41,7 +41,8 @@ The dev server may serve a stale dependency cache after a dependency changes, wh
 - `src/layouts/BaseLayout.astro` — the HTML shell, and the inline scripts for the scroll reveals and the copy's line-by-line rise (it splits each `[data-lines]` element into its rendered lines after the fonts load).
 - `src/components/site/` — the page's own sections: `Hero`, `FeatureRow`, `Closing`, `SiteFooter`, `LegalPage`, and the `FloatingBar` and `ScreenshotCarousel` islands. The carousel is the only place real screenshots appear; they live in `src/assets/screenshots/` at two widths, wired up in `src/lib/screenshots.ts`.
 - `src/components/demo/` — the product demonstrations, one per feature row, plus `HeroGallery` and the shared `PhotoFrame` / `TrackPill` / `WindowBar`.
-- `src/lib/` — `copy.ts` (all page copy), `tones.ts` (the flat photo tones, tracks and hero data), `tiles.ts` (the tile census the bar's counts come from), `bar.ts`, `motion.ts` and `config.ts`.
+- `src/lib/` — `copy.ts` (all page copy), `photos.ts` (the owner's photographs: which appear where, the hero's shuffle and the gallery strip), `tones.ts` (the frame colours, tracks and hero ratings), `tiles.ts` (the tile census the bar's counts come from), `bar.ts`, `motion.ts` and `config.ts`.
+- `src/assets/photos/` — the photographs, made by `node scripts/photos.mjs <folder of originals>` (macOS: it reads the RAW through `sips`). The originals stay out of the repo; the script records each crop and strips camera metadata.
 - `src/components/ui/` — vendored shadcn/ui primitives the page does not use. Regenerate rather than hand-edit.
 - React components are Astro islands: without an explicit `client:*` directive they render as static HTML only.
 - Path alias `@/*` → `src/*` (`tsconfig.json`, mirrored in `vitest.config.mts`).

@@ -1,4 +1,5 @@
-import { heroTileOrder, trackOrder } from "@/lib/tones";
+import { heroPhotoOrder } from "@/lib/photos";
+import { trackOrder } from "@/lib/tones";
 
 /**
  * How many photo frames each demonstration actually draws.
@@ -37,7 +38,7 @@ export const demoFrames = {
 export const shootSize = 1127;
 
 export const pageTileCounts = {
-  hero: heroTileOrder.length,
+  hero: heroPhotoOrder.length,
   tracks: trackOrder.length,
   "local-first": demoFrames.localFirst,
   performance: shootSize,

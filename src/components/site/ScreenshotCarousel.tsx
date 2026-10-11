@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Real screenshots of the app, under the closing — the one place the page
- * shows the product itself rather than its flat-tone demonstrations.
+ * shows the product itself rather than its recreated demonstrations.
  *
  * It plays itself, one screenshot per `cycle.screenshot`, on the rules every
  * loop on the page follows: never paused by hover (a pointer resting on it

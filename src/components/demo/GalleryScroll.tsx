@@ -6,8 +6,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { WindowBar } from "@/components/demo/WindowBar";
 import { easings, speeds } from "@/lib/motion";
+import { galleryStrip, photoIds, photos } from "@/lib/photos";
 import { demoFrames } from "@/lib/tiles";
-import { scatterTones, tones } from "@/lib/tones";
 
 /**
  * Row three, fast performance.
@@ -20,8 +20,8 @@ import { scatterTones, tones } from "@/lib/tones";
  * The window is what makes it read as the app. An earlier version was a bare
  * rounded box of eight-wide swatches and read as a texture instead.
  *
- * The frames themselves are bare tones, without the track dot, rating and
- * number the hero's carry. With sixty-odd frames passing at speed, that chrome
+ * The frames are every photo on the page, bare, without the track dot, rating
+ * and number the hero's carry. With sixty-odd frames passing at speed, that chrome
  * repeated on every one was too heavy — the strip's job is to convey volume
  * and pace, and the hero has already shown what a single frame carries.
  *
@@ -42,11 +42,19 @@ import { scatterTones, tones } from "@/lib/tones";
  *
  * Rows are cut at the top and bottom of the viewport rather than fitting a
  * whole number — a strip that ends flush looks like it stopped.
+ *
+ * The photos load all at once as the window approaches, not one by one. Left
+ * to the browser's lazy loading, a frame clipped by the window counts as
+ * off-screen, so each row would only start fetching as it scrolled into view
+ * and arrive visibly late.
  */
 const COLUMNS = 5;
 
-/** One strip. Scattered, so no tone lines up down a column. */
-const STRIP = scatterTones(demoFrames.performance, COLUMNS);
+/** One strip: every photo on the page, in passes, so none is on screen twice. */
+const STRIP = galleryStrip(demoFrames.performance / photoIds.length);
+
+/** How far ahead of the viewport the photos start loading. */
+const APPROACH = "100% 0px";
 
 export function GalleryScroll() {
   const reduceMotion = useReducedMotion();
@@ -54,6 +62,7 @@ export function GalleryScroll() {
   const playback = useRef<AnimationPlaybackControls | null>(null);
   const y = useMotionValue(0);
   const [width, setWidth] = useState(0);
+  const [near, setNear] = useState(false);
 
   useEffect(() => {
     const grid = gridRef.current;
@@ -66,6 +75,22 @@ export function GalleryScroll() {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const viewport = gridRef.current?.parentElement;
+    if (!viewport || near) return;
+
+    // The window, not the grid: the grid runs far past the window's clip.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) setNear(true);
+      },
+      { rootMargin: APPROACH },
+    );
+    observer.observe(viewport);
+
+    return () => observer.disconnect();
+  }, [near]);
 
   useLayoutEffect(() => {
     const grid = gridRef.current;
@@ -112,12 +137,13 @@ export function GalleryScroll() {
             ref={gridRef}
             style={{ gridTemplateColumns: `repeat(${COLUMNS}, minmax(0, 1fr))`, y }}
           >
-            {[...STRIP, ...STRIP].map((tone, index) => (
+            {[...STRIP, ...STRIP].map((photo, index) => (
               <PhotoFrame
                 className="aspect-3/2"
+                eager={near}
                 // biome-ignore lint/suspicious/noArrayIndexKey: fixed-length decorative grid
                 key={index}
-                tone={tones[tone]}
+                src={photos[photo]}
               />
             ))}
           </motion.div>

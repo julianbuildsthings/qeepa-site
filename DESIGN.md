@@ -15,16 +15,10 @@ colors:
   track-af: "#6b4fa8"
   pip-filled: "#EEA767"
   pip-empty: "#2B26211F"
+  pip-empty-on-photo: "#FFFFFF59"
   frame-border: "#2B262114"
   stack-border: "#2B26211F"
-  tone-almond: "#F8EBDC"
-  tone-bisque: "#F9EEE1"
-  tone-chalk: "#FEFAF6"
-  tone-ivory: "#FDF8F2"
-  tone-linen: "#FBF2E8"
-  tone-oat: "#FAF0E5"
-  tone-shell: "#FCF5ED"
-  tone-wheat: "#FDF7F0"
+  frame-fill: "#FBF2E8"
   bar-browse: "#FFFFFFF5"
 typography:
   display:
@@ -161,7 +155,7 @@ components:
     rounded: "{rounded.full}"
     padding: "6px 12px"
   photo-frame:
-    backgroundColor: "{colors.tone-shell}"
+    backgroundColor: "{colors.frame-fill}"
     rounded: "{rounded.frame}"
   app-window:
     backgroundColor: "{colors.cream-base}"
@@ -179,9 +173,9 @@ components:
 
 **Creative North Star: "The Sunlit Gallery"**
 
-The site shows the product demonstrating itself on a white page. Every visual is a piece of the app's own interface: a window with muted traffic lights, a grid of near-white photo frames, the track pill, a file listing, an insights panel, a filter toolbar. None of it is a framed screenshot on a plinth. Copy ranges left on a single 120px rail. Each feature gets a full row, never a card, and the rows alternate sides down the page. The page ends with a status line, not a call to action, because there is nothing to download yet. Beneath that status, and only there, real screenshots of the app follow as the one piece of literal proof (see Screenshot Carousel).
+The site shows the product demonstrating itself on a white page. Every visual is a piece of the app's own interface: a window with muted traffic lights, a grid of photo frames holding the owner's own photographs, the track pill, a file listing, an insights panel, a filter toolbar. None of it is a framed screenshot on a plinth. Copy ranges left on a single 120px rail. Each feature gets a full row, never a card, and the rows alternate sides down the page. The page ends with a status line, not a call to action, because there is nothing to download yet. Beneath that status, and only there, real screenshots of the app follow as the one piece of literal proof (see Screenshot Carousel).
 
-The material is warm and light. Photographs are stood in for by flat, near-white warm tones. What makes a tone read as a photo rather than a swatch is its metadata chrome: a track dot, rating pips, a frame number. The only non-warm colours on the page are the functional JPG and EDIT track dots. Depth comes from soft, warm-tinted shadows under objects the app would float. Surfaces themselves stay flat.
+The material is warm and light, and the photographs are real: thirty of the owner's own frames, from their own shoots, fill every photo frame on the page. What makes a frame read as a preview in the app rather than a picture on a website is its metadata chrome: a track dot, rating pips, a frame number, each on its own small frosted backing. Apart from the photographs, the only non-warm colours on the page are the functional JPG and EDIT track dots. Depth comes from soft, warm-tinted shadows under objects the app would float. Surfaces themselves stay flat.
 
 Motion shares one physics vocabulary with the app. Loops demonstrate a claim, pause on hover or focus, and stop under reduced motion. Server HTML always shows a settled, legible state, and nothing is hidden unless JavaScript is present and motion is welcome.
 
@@ -189,13 +183,13 @@ Motion shares one physics vocabulary with the app. Loops demonstrate a claim, pa
 
 - White ground, one warm family, three functional track colours.
 - Satoshi Bold display with tight negative tracking. Erode appears only in the wordmark and the floating bar's section names.
-- Flat light tones with metadata chrome stand in for photographs. No gradients, and no imagery outside the screenshot carousel under the closing.
+- The owner's own photographs, carrying the app's metadata chrome, fill every photo frame. No stock imagery, no gradients, and no other imagery beyond the screenshot carousel under the closing.
 - App chrome (window, pill, bar, chips) is the recurring material, taken from the product rather than invented.
 - One motion registry, enforced by a test.
 
 ## Colors
 
-A white page with warm neutral text, a single peach accent at three depths, a light warm tone family for photo stand-ins, and three functional track colours.
+A white page with warm neutral text, a single peach accent at three depths, a warm near-white fill behind the photographs, and three functional track colours.
 
 ### Primary
 
@@ -208,9 +202,10 @@ A white page with warm neutral text, a single peach accent at three depths, a li
 - **Track RAW / Burnt Apricot** (track-raw): the RAW track dot. Ratings in page content — photo frames and the local-first listing alike — are the rating pips.
 - **Track JPG / Export Blue** (track-jpg) and **Track EDIT / Working-File Violet** (track-af): the JPG and EDIT track dots. These are the only non-warm colours on the page, and they appear only as dots beside a text label or on a frame.
 
-### Tertiary: photo tones
+### Tertiary: photo frames
 
-- **The eight tones** (tone-almond, tone-bisque, tone-chalk, tone-ivory, tone-linen, tone-oat, tone-shell, tone-wheat): flat stand-ins for photographs, at HSL hue 15 to 45 and lightness above 75, with the whole family inside an 8-point lightness band so a grid reads as one field. The tracks row maps RAW to chalk, JPG to wheat and EDIT to almond, palest to deepest.
+- **Frame Fill** (frame-fill): what a frame shows until its photo decodes, or if images are blocked. Warm and near-white, kept from the flat tones that stood in for photographs before there were any.
+- **Chrome backing**: text-primary at 35% with a 6px backdrop blur, behind the frame number and the rating pips, so the chrome reads over any photograph, from the near-white skylight to a near-black concert shot. On it the frame number is white and an empty pip is white at 35% (pip-empty-on-photo). The track dot has no backing, only a 70% white ring. An opaque white backing was tried first and rejected: it cut a hole in every photo.
 - **Rating Pip** (pip-filled / pip-empty): tuned between track-raw, which was too loud across a grid, and peach-accent, which vanished. Empty pips are text-primary at 12% alpha.
 
 ### Neutral
@@ -219,14 +214,14 @@ A white page with warm neutral text, a single peach accent at three depths, a li
 - **Warm Stone** (surface-2): inactive chip and gear-chip fill.
 - **Ink** (text-primary): headings, subheadings and data values.
 - **Umber Grey** (text-secondary): lede, body copy, captions and inactive pill labels.
-- **Pebble** (text-tertiary): frame numbers, file sizes, breadcrumb, copyright and the disabled button label. Keep it off tinted surfaces at small sizes (see the APCA note under Components).
+- **Pebble** (text-tertiary): file sizes, breadcrumb, copyright and the disabled button label. Keep it off tinted surfaces at small sizes (see the APCA note under Components).
 - **Hairlines**: all borders are text-primary (`rgba(43,38,33,…)`) at low alpha, never neutral grey. Container edge 0.10, window-bar divider 0.08, list dividers 0.06, panel section rule 0.07, footer rule 0.09. Photo frames use frame-border (8%); overlapping stacked frames use stack-border (12%).
 
 ### Named Rules
 
-**The Warm-Only Rule.** Everything is warm (hue 15 to 45) except the JPG and EDIT track dots, which earn their colour by carrying meaning. `tones.test.ts` enforces this for the tone family and the bar colours.
+**The Warm-Only Rule.** Everything is warm (hue 15 to 45) except the JPG and EDIT track dots, which earn their colour by carrying meaning, and the photographs, which are content rather than palette. `tones.test.ts` enforces this for the frame fill and the bar colours.
 
-**The Light-Tone Rule.** A photo stand-in stays above 75% lightness. A tone dark enough to compete with the type has stopped being a photo and become a block of colour.
+**The Backed-Chrome Rule.** Chrome on a photograph always sits on its own translucent, frosted backing, never on the bare picture, never on an opaque block, and never under a scrim laid across the frame: the backing is the smallest thing that keeps a mark legible, and it lets the photograph show through.
 
 **The Printed-Number Rule.** The proportion bar's peach-on-peach pair is 1.46:1, below the 3:1 floor for graphics. That is acceptable only because every bar has its percentage printed beside it ("Aperture · 62%"). `InsightsPanel.test.tsx` fails if a bar ever loses its number, and at that point the fill has to darken.
 
@@ -319,16 +314,18 @@ The app's track switcher. It appears in the hero and the Photo tracks row.
 
 ### Photo Frame (signature)
 
-`PhotoFrame` is the only place frame chrome is defined. It is a flat tone, a 1px frame-border and a 5px radius. It is always `aria-hidden`.
+`PhotoFrame` is the only place frame chrome is defined. It is one of the owner's photographs (`src/lib/photos.ts`), already cropped to 3:2, over the frame fill, with a 1px frame-border and a 5px radius. It is always `aria-hidden`.
 
-- **Chrome** where it earns its weight: a 5px track dot top-right, five rating pips bottom-left, and a frame number bottom-right in pebble. `size="large"` scales the chrome from sm up.
+- **Chrome** where it earns its weight: a 5px track dot top-right, five rating pips bottom-left, and a frame number bottom-right in white, the pips and number each on a frosted backing. `size="large"` scales the chrome from sm up.
 - **Bare** where it does not: the 48 × 32 local-first thumbnails and the scrolling fast-performance strip.
 - Most frames are unrated (`rating: null`).
-- Grids use `scatterTones()`: deterministic, with no tone repeated to the left of or above itself, so a grid never stripes.
+- Each section shows its own photos, and no photo appears in two sections; the fast-performance strip is the exception, because it is every photo on the page (`galleryStrip()`: the set in one seeded order, repeated, so a photo recurs six rows later and never twice in the window). `photos.test.ts` guards both.
+- Photos load lazily, except the hero's (the first thing on the page) and the strip's, which all load together as its window approaches: a frame clipped by the window counts as off-screen, so left to the browser each row would fetch only as it scrolled in.
+- **Assets.** `scripts/photos.mjs` makes them from the owner's originals, which stay out of the repo: a recorded 3:2 crop per photo, 480px WebP (the tracks shot at 720 and 1440), camera metadata stripped. The tracks row's RAW is Apple's default development of the .ORF; JPG and EDIT both show the finished JPG, for now, at the owner's request.
 
 ### App Window
 
-The hero's window is live (`HeroGallery`). It steps RAW → JPG → EDIT on the tracks row's `cycle.track`, and every frame follows the pill: its dot takes the track's colour and its name the track's extension (`4821.raw`, `.jpg`, `.psd`, the page's one set in `trackExtension`, also used by the tracks row's `522.*`). At each switch the tones rearrange (`shuffledTones`: seeded, at least half the frames change, never a tone beside itself), cross-fading over `--motion-editorial`. After each full pass, half a dwell after the switch back to RAW, two frames are re-rated from the four-state `heroRatings` loop, the squares filling one `stagger.base` apart. The pill pins a track and ends the loop; hover and focus pause it; reduced motion never starts it. The first render is the approved still.
+The hero's window is live (`HeroGallery`). It steps RAW → JPG → EDIT on the tracks row's `cycle.track`, and every frame follows the pill: its dot takes the track's colour and its name the track's extension (`4821.raw`, `.jpg`, `.psd`, the page's one set in `trackExtension`, also used by the tracks row's `522.*`). At each switch the photos rearrange (`shuffledPhotos`: seeded, at least half the frames change), cross-fading over `durations.editorial`. After each full pass, half a dwell after the switch back to RAW, two frames are re-rated from the four-state `heroRatings` loop, the squares filling one `stagger.base` apart. The pill pins a track and ends the loop; hover and focus pause it; reduced motion never starts it. The first render is the approved still.
 
 `WindowBar` is the only place window chrome is defined. It sits over an 18px-inset grid with 12px gaps, uses the Window shadow and an 18px top radius, and has a white surface.
 
@@ -382,9 +379,9 @@ Markdown in `src/pages`, laid out by `LegalPage.astro` and styled by `.legal` in
 ### Do:
 
 - **Do** take every duration, easing, spring, delay and travel distance from `src/lib/motion.ts`. In CSS, read the variables from `motionCssVariables()`. `motion-discipline.test.ts` fails on inlined values in demo, site, page and layout code.
-- **Do** render photographs as `PhotoFrame` tones and windows through `WindowBar`, so the chrome has one owner.
+- **Do** render photographs through `PhotoFrame` and windows through `WindowBar`, so the chrome has one owner.
 - **Do** derive any count the bar states from `src/lib/tiles.ts`, so it equals the frames actually drawn. The only exception is the performance strip, which names the shoot (1127). `tiles.test.ts` guards this.
-- **Do** keep new tones warm (hue 15 to 45), above 75% lightness, and inside the gallery's 8-point band (`tones.test.ts`).
+- **Do** add a photograph by running `scripts/photos.mjs` with its crop recorded there, never by committing a camera file: the originals carry GPS position and the camera's serial number.
 - **Do** give every control a 2px `:focus-visible` ring in peach-accent, a 24px minimum hit area, and 44px on coarse pointers via `extend-touch-target-y`.
 - **Do** pair every colour signal with text: track dots with labels, bars with printed percentages.
 - **Do** judge text contrast with APCA and record the reading when a pairing changes.
@@ -393,7 +390,7 @@ Markdown in `src/pages`, laid out by `LegalPage.astro` and styled by `.legal` in
 ### Don't:
 
 - **Don't** put a kicker or eyebrow above a heading.
-- **Don't** use gradients as photo stand-ins. They read as swatches at any size.
+- **Don't** use gradients or stock imagery in the photo frames. Gradients read as swatches at any size, and every photograph on the page is the owner's own.
 - **Don't** add a colour outside the warm family other than the track dots, and don't use grey hairlines or neutral shadows.
 - **Don't** lay feature content in a grid of equal cards, or present the product as a floating framed screenshot. The screenshot carousel under the closing is the one sanctioned exception: real screenshots go there and nowhere else, and never lead the page.
 - **Don't** split rows into two columns below lg, or let the copy column fall under 340px.

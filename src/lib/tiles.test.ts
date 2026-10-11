@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import { features } from "@/lib/copy";
+import { heroPhotoOrder } from "@/lib/photos";
 import { demoFrames, pageTileCounts, shootSize } from "@/lib/tiles";
-import { heroTileOrder, trackOrder } from "@/lib/tones";
+import { trackOrder } from "@/lib/tones";
 
 describe("page tile census", () => {
   it("derives each count from the data that renders it", () => {
-    expect(pageTileCounts.hero).toBe(heroTileOrder.length);
+    expect(pageTileCounts.hero).toBe(heroPhotoOrder.length);
     expect(pageTileCounts.tracks).toBe(trackOrder.length);
     expect(pageTileCounts["local-first"]).toBe(demoFrames.localFirst);
     expect(pageTileCounts.insights).toBe(demoFrames.insights);
@@ -39,7 +40,7 @@ describe("page tile census", () => {
     const sampled = new Set(["performance"]);
     for (const [id, count] of Object.entries(pageTileCounts)) {
       if (sampled.has(id)) continue;
-      const rendered = Object.values(demoFrames).concat([heroTileOrder.length, trackOrder.length]);
+      const rendered = Object.values(demoFrames).concat([heroPhotoOrder.length, trackOrder.length]);
       expect(rendered, id).toContain(count);
     }
   });

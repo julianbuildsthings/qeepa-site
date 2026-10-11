@@ -136,6 +136,21 @@ against these, not flag them as drift.
   footer, 256px from lg (160px below), deeper than the closing's top after
   the user found 176px too tight.
 
+## Amendments (2026-09-29)
+
+- **Material: the owner's own photographs, superseding flat tones.** Thirty
+  frames from the owner's shoots replace the light tone family in every photo
+  frame. Portraits are cropped to the unchanged 3:2 frames, with each crop
+  chosen by eye and recorded in `scripts/photos.mjs`. Each section has its own
+  photos; the fast-performance strip reuses all thirty. The tracks row is one
+  real shot: RAW developed from the .ORF, and the finished JPG shown for both
+  JPG and EDIT until the page presents the edit as its own file.
+- **Chrome on frosted backings.** The frame number and rating pips sit on
+  small backings of translucent warm ink with a backdrop blur, the number in
+  white; the track dot takes a soft white ring. Opaque white backings came
+  first and were rejected by the user: at full opacity they carved into the
+  photos. No scrim across the frame.
+
 ## Unresolved
 
 - ~~"Shoot Insights" is not evidenced~~ — confirmed shipped (`summarise()` in
