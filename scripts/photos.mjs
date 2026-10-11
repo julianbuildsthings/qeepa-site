@@ -12,12 +12,12 @@
 // JPGs carry GPS position, capture time and the body's serial number. The
 // orientation flag is applied to the pixels first, so nothing arrives rotated.
 //
-// The RAW rendering of the tracks shot is Apple's default RAW development of
-// the .ORF, the same picture Finder and Preview show for it, read through
-// `sips`. That makes this step macOS-only.
+// The tracks shot has three renderings (see STACK). Its RAW is Apple's default
+// development of the .ORF, the picture Finder and Preview show for it, read
+// through `sips`. That makes this step macOS-only.
 
 import { execFileSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import sharp from "sharp";
@@ -83,10 +83,25 @@ const PHOTOS = {
   "red-window": { file: "16. Red Window_Graded.jpg", focus: 0.5 },
 };
 
-/** The tracks shot: the RAW and the JPG of one frame, at the stack's sizes. */
+/**
+ * The tracks shot, as each track shows it, at the stack's sizes: three real
+ * renderings of one frame.
+ *
+ * - raw: Apple's development of the .ORF.
+ * - camera: the camera's own JPEG of the frame, which Olympus embeds in every
+ *   .ORF (3200 × 2400). Stored sideways, without an orientation flag, so it is
+ *   turned upright here.
+ * - edit: the owner's graded export of their Affinity document.
+ */
 const STACK = {
-  "jubs0103-jpg": { file: "JUBS0103.jpg", focus: PHOTOS.jubs0103.focus },
-  "jubs0103-raw": { file: "JUBS0103.ORF", focus: PHOTOS.jubs0103.focus },
+  "jubs0103-camera": {
+    file: "JUBS0103.ORF",
+    focus: PHOTOS.jubs0103.focus,
+    from: "embedded",
+    turn: 90,
+  },
+  "jubs0103-edit": { file: "JUBS0103.jpg", focus: PHOTOS.jubs0103.focus },
+  "jubs0103-raw": { file: "JUBS0103.ORF", focus: PHOTOS.jubs0103.focus, from: "developed" },
 };
 
 /** The 3:2 box inside an upright image, held at `focus` along the long side. */
@@ -117,6 +132,28 @@ function develop(raw, scratch) {
   return tiff;
 }
 
+/**
+ * The largest JPEG inside a RAW file: the camera's own rendering of the frame.
+ * Found by trying each JPEG start marker in the file, since the thumbnails
+ * stored alongside it are JPEGs too.
+ */
+async function embedded(raw, turn) {
+  const bytes = readFileSync(raw);
+  let best = null;
+  for (let at = bytes.indexOf(SOI); at !== -1; at = bytes.indexOf(SOI, at + 1)) {
+    const candidate = bytes.subarray(at);
+    const meta = await sharp(candidate)
+      .metadata()
+      .catch(() => null);
+    if (meta?.width && meta.width > (best?.width ?? 0)) best = { candidate, width: meta.width };
+  }
+  if (!best) throw new Error(`No embedded JPEG in ${raw}`);
+  return sharp(best.candidate).rotate(turn).toBuffer();
+}
+
+/** A JPEG starts FF D8 FF. */
+const SOI = Buffer.from([0xff, 0xd8, 0xff]);
+
 mkdirSync(OUT, { recursive: true });
 const scratch = mkdtempSync(join(tmpdir(), "qeepa-photos-"));
 
@@ -125,8 +162,14 @@ try {
     await write(join(source, file), focus, TILE_WIDTH, `${id}.webp`);
   }
 
-  for (const [id, { file, focus }] of Object.entries(STACK)) {
-    const input = file.endsWith(".ORF") ? develop(join(source, file), scratch) : join(source, file);
+  for (const [id, { file, focus, from, turn }] of Object.entries(STACK)) {
+    const path = join(source, file);
+    const input =
+      from === "developed"
+        ? develop(path, scratch)
+        : from === "embedded"
+          ? await embedded(path, turn)
+          : path;
     for (const width of STACK_WIDTHS) await write(input, focus, width, `${id}-${width}.webp`);
   }
 } finally {

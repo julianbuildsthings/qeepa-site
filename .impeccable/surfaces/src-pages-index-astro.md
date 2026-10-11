@@ -109,7 +109,7 @@ against these, not flag them as drift.
   further rows is open, not required.
 - **The hero window is live.** At the user's request it runs on the tracks
   row's cadence: every frame follows the pill (dot and extension: .raw, .jpg,
-  .psd), the tones rearrange at each switch, and two ratings change after
+  .psd, now .af), the tones rearrange at each switch, and two ratings change after
   each full pass. The hero copy takes the same line rise as the rest.
 - **Copy enters line by line.** Chosen by the user from four directions (slide,
   handoff, editorial rise, developing wipe), with every line rather than the
@@ -142,9 +142,12 @@ against these, not flag them as drift.
   frames from the owner's shoots replace the light tone family in every photo
   frame. Portraits are cropped to the unchanged 3:2 frames, with each crop
   chosen by eye and recorded in `scripts/photos.mjs`. Each section has its own
-  photos; the fast-performance strip reuses all thirty. The tracks row is one
-  real shot: RAW developed from the .ORF, and the finished JPG shown for both
-  JPG and EDIT until the page presents the edit as its own file.
+  photos; the fast-performance strip reuses all thirty.
+- **Tracks: three real renderings of one shot.** RAW developed from the .ORF,
+  JPG the camera's own JPEG embedded in it (the user's choice over a separate
+  in-camera file), EDIT the user's graded export of the Affinity document.
+  The edit extension is `.af`, not `.psd`, page-wide, and the tracks labels
+  carry the real file sizes (14.5 MB, 927 KB, 141 MB).
 - **Chrome on frosted backings.** The frame number and rating pips sit on
   small backings of translucent warm ink with a backdrop blur, the number in
   white; the track dot takes a soft white ring. Opaque white backings came

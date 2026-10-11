@@ -77,11 +77,11 @@ export const trackOrder: TrackName[] = ["raw", "jpg", "edit"];
 /**
  * The file extension each track's frames carry, written lower-case as the
  * frames print it. One set for the whole page, so the hero and the tracks row
- * name the same kinds of file. `.psd` for the edit: short enough for the
- * smallest frame's chrome, and the working file most photographers know.
+ * name the same kinds of file. `.af` for the edit: the owner edits in
+ * Affinity, and the tracks shot's working file is one.
  */
 export const trackExtension: Record<TrackName, string> = {
-  edit: "psd",
+  edit: "af",
   jpg: "jpg",
   raw: "raw",
 };

@@ -48,13 +48,9 @@ describe("tracks photo", () => {
     for (const track of trackOrder) expect(trackPhoto[track].src, track).toMatch(/jubs0103/);
   });
 
-  it("shows the RAW as its own rendering", () => {
-    expect(trackPhoto.raw.src).not.toBe(trackPhoto.jpg.src);
-  });
-
-  // The owner's decision, until the page presents them as two different files.
-  it("shows the edit and the export as the same picture, for now", () => {
-    expect(trackPhoto.edit).toEqual(trackPhoto.jpg);
+  it("gives every track its own rendering", () => {
+    const sources = trackOrder.map((track) => trackPhoto[track].src);
+    expect(new Set(sources).size).toBe(trackOrder.length);
   });
 });
 

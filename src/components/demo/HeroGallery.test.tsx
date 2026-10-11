@@ -62,7 +62,7 @@ describe("HeroGallery", () => {
     expect(container.querySelector("[data-track]")).toHaveAttribute("data-track", "jpg");
 
     advance(cycle.track);
-    expect(labels(container)[0]).toBe("4821.psd");
+    expect(labels(container)[0]).toBe("4821.af");
   });
 
   it("rearranges the photos at each switch", () => {
@@ -99,8 +99,8 @@ describe("HeroGallery", () => {
     const { container } = render(<HeroGallery />);
 
     fireEvent.click(screen.getByRole("button", { name: /EDIT/ }));
-    expect(labels(container)[0]).toBe("4821.psd");
+    expect(labels(container)[0]).toBe("4821.af");
     advance(cycle.track * 6);
-    expect(labels(container)[0]).toBe("4821.psd");
+    expect(labels(container)[0]).toBe("4821.af");
   });
 });
