@@ -321,7 +321,7 @@ The app's track switcher. It appears in the hero and the Photo tracks row.
 - Most frames are unrated (`rating: null`).
 - Each section shows its own photos, and no photo appears in two sections; the fast-performance strip is the exception, because it is every photo on the page (`galleryStrip()`: the set in one seeded order, repeated, so a photo recurs six rows later and never twice in the window). `photos.test.ts` guards both.
 - Photos load lazily, except the hero's (the first thing on the page) and the strip's, which all load together as its window approaches: a frame clipped by the window counts as off-screen, so left to the browser each row would fetch only as it scrolled in.
-- **Assets.** `scripts/photos.mjs` makes them from the owner's originals, which stay out of the repo: a recorded 3:2 crop per photo, 480px WebP (the tracks shot at 720 and 1440), camera metadata stripped. The tracks row's RAW is Apple's default development of the .ORF; JPG and EDIT both show the finished JPG, for now, at the owner's request.
+- **Assets.** `scripts/photos.mjs` makes them from the owner's originals, which stay out of the repo: a recorded 3:2 crop per photo, 480px WebP (the tracks shot at 720 and 1440), camera metadata stripped. The tracks row's RAW is Apple's default development of the .ORF and JPG is the finished export; EDIT is that export brightened slightly in the script, at the owner's request, so it reads as its own version.
 
 ### App Window
 

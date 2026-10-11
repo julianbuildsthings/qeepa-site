@@ -52,9 +52,8 @@ describe("tracks photo", () => {
     expect(trackPhoto.raw.src).not.toBe(trackPhoto.jpg.src);
   });
 
-  // The owner's decision, until the page presents them as two different files.
-  it("shows the edit and the export as the same picture, for now", () => {
-    expect(trackPhoto.edit).toEqual(trackPhoto.jpg);
+  it("shows the edit as its own rendering, apart from the export", () => {
+    expect(trackPhoto.edit.src).not.toBe(trackPhoto.jpg.src);
   });
 });
 

@@ -83,8 +83,13 @@ const PHOTOS = {
   "red-window": { file: "16. Red Window_Graded.jpg", focus: 0.5 },
 };
 
-/** The tracks shot: the RAW and the JPG of one frame, at the stack's sizes. */
+/**
+ * The tracks shot, at the stack's sizes: the RAW, the JPG, and the edit. The
+ * edit is the JPG brightened by `exposure`, at the owner's request, so it reads
+ * as its own version beside the export at a glance.
+ */
 const STACK = {
+  "jubs0103-edit": { exposure: 1.18, file: "JUBS0103.jpg", focus: PHOTOS.jubs0103.focus },
   "jubs0103-jpg": { file: "JUBS0103.jpg", focus: PHOTOS.jubs0103.focus },
   "jubs0103-raw": { file: "JUBS0103.ORF", focus: PHOTOS.jubs0103.focus },
 };
@@ -125,8 +130,13 @@ try {
     await write(join(source, file), focus, TILE_WIDTH, `${id}.webp`);
   }
 
-  for (const [id, { file, focus }] of Object.entries(STACK)) {
-    const input = file.endsWith(".ORF") ? develop(join(source, file), scratch) : join(source, file);
+  for (const [id, { exposure, file, focus }] of Object.entries(STACK)) {
+    const rendered = file.endsWith(".ORF")
+      ? develop(join(source, file), scratch)
+      : join(source, file);
+    const input = exposure
+      ? await sharp(rendered).rotate().modulate({ brightness: exposure }).toBuffer()
+      : rendered;
     for (const width of STACK_WIDTHS) await write(input, focus, width, `${id}-${width}.webp`);
   }
 } finally {
