@@ -91,7 +91,9 @@ const PHOTOS = {
  * - camera: the camera's own JPEG of the frame, which Olympus embeds in every
  *   .ORF (3200 × 2400). Stored sideways, without an orientation flag, so it is
  *   turned upright here.
- * - edit: the owner's graded export of their Affinity document.
+ * - edit: the owner's graded export of their Affinity document, brightened
+ *   by `exposure` at the owner's request, so the edit reads as a distinct
+ *   version beside the other two at a glance.
  */
 const STACK = {
   "jubs0103-camera": {
@@ -100,7 +102,7 @@ const STACK = {
     from: "embedded",
     turn: 90,
   },
-  "jubs0103-edit": { file: "JUBS0103.jpg", focus: PHOTOS.jubs0103.focus },
+  "jubs0103-edit": { exposure: 1.18, file: "JUBS0103.jpg", focus: PHOTOS.jubs0103.focus },
   "jubs0103-raw": { file: "JUBS0103.ORF", focus: PHOTOS.jubs0103.focus, from: "developed" },
 };
 
@@ -162,14 +164,17 @@ try {
     await write(join(source, file), focus, TILE_WIDTH, `${id}.webp`);
   }
 
-  for (const [id, { file, focus, from, turn }] of Object.entries(STACK)) {
+  for (const [id, { exposure, file, focus, from, turn }] of Object.entries(STACK)) {
     const path = join(source, file);
-    const input =
+    const rendered =
       from === "developed"
         ? develop(path, scratch)
         : from === "embedded"
           ? await embedded(path, turn)
           : path;
+    const input = exposure
+      ? await sharp(rendered).rotate().modulate({ brightness: exposure }).toBuffer()
+      : rendered;
     for (const width of STACK_WIDTHS) await write(input, focus, width, `${id}-${width}.webp`);
   }
 } finally {

@@ -72,7 +72,8 @@ export const photos = Object.fromEntries(photoIds.map((id) => [id, file(id)])) a
  *
  * - RAW: Apple's default development of the camera's .ORF.
  * - JPG: the camera's own JPEG of the frame, which Olympus embeds in the .ORF.
- * - EDIT: the owner's graded export of their Affinity document. The .af itself
+ * - EDIT: the owner's graded export of their Affinity document, brightened
+ *   slightly at their request so it reads as its own version. The .af itself
  *   has no browser rendering, so the export is what stands for it.
  *
  * The RAW and the camera's JPEG look close, because Apple develops a RAW with

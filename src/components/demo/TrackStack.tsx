@@ -47,22 +47,15 @@ const OFFSET = { x: 5.8, y: -8.6 };
  * and contradict the sentence beside the stack. The extensions are the page's
  * one set (`trackExtension`), the same the hero prints. Ratings are per file,
  * as they are in the app, so the versions may differ.
- *
- * Sizes are the real files', as Finder reports them: the .ORF, the camera's
- * JPEG inside it, and the owner's Affinity document. The edit is the only one
- * that is not a picture but a working file, and its size says so where the
- * picture cannot: the browser can only show an export of it.
  */
 const RATINGS: Record<TrackName, number> = { edit: 5, jpg: 3, raw: 4 };
-
-const SIZES: Record<TrackName, string> = { edit: "141 MB", jpg: "927 KB", raw: "14.5 MB" };
 
 export const TRACK_META = Object.fromEntries(
   trackOrder.map((track) => [
     track,
-    { label: `522.${trackExtension[track]}`, rating: RATINGS[track], size: SIZES[track] },
+    { label: `522.${trackExtension[track]}`, rating: RATINGS[track] },
   ]),
-) as Record<TrackName, { label: string; rating: number; size: string }>;
+) as Record<TrackName, { label: string; rating: number }>;
 
 export function TrackStack() {
   const [active, setActive] = useState<TrackName>("raw");
@@ -127,7 +120,7 @@ export function TrackStack() {
             >
               <PhotoFrame
                 className="h-full w-full rounded-[10px]"
-                frameNumber={`${TRACK_META[track].label} · ${TRACK_META[track].size}`}
+                frameNumber={TRACK_META[track].label}
                 rating={TRACK_META[track].rating}
                 size="large"
                 // The frame is 92% of its column: most of the page below lg,

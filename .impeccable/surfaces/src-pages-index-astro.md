@@ -146,8 +146,9 @@ against these, not flag them as drift.
 - **Tracks: three real renderings of one shot.** RAW developed from the .ORF,
   JPG the camera's own JPEG embedded in it (the user's choice over a separate
   in-camera file), EDIT the user's graded export of the Affinity document.
-  The edit extension is `.af`, not `.psd`, page-wide, and the tracks labels
-  carry the real file sizes (14.5 MB, 927 KB, 141 MB).
+  The edit is brightened slightly at the user's request, so it reads as its
+  own version. The edit extension is `.af`, not `.psd`, page-wide. File sizes
+  on the labels were tried and rejected by the user.
 - **Chrome on frosted backings.** The frame number and rating pips sit on
   small backings of translucent warm ink with a backdrop blur, the number in
   white; the track dot takes a soft white ring. Opaque white backings came
