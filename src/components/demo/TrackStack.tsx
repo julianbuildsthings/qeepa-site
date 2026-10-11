@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { TrackPill } from "@/components/demo/TrackPill";
 import { cycle, presets } from "@/lib/motion";
-import { trackExtension, type TrackName, trackOrder, trackTone } from "@/lib/tones";
+import { trackPhoto } from "@/lib/photos";
+import { trackExtension, type TrackName, trackOrder } from "@/lib/tones";
 
 /**
  * Approved comp `T3 · Tracks — stack`.
  *
- * Three renderings of the same shot, fanned as a stack of prints. The stack
+ * Three renderings of the same shot, fanned as a stack of prints: the RAW as
+ * the camera recorded it, and the finished JPG (see `trackPhoto`). The stack
  * cycles RAW → JPG → EDIT on its own, because the point being made is that
  * every version is one shot — and watching it happen says that faster than
  * reading it.
@@ -27,8 +29,9 @@ import { trackExtension, type TrackName, trackOrder, trackTone } from "@/lib/ton
 
 /**
  * Per-step depth offset, as a percentage of the frame's own size. Wider than
- * the comp's 28px: with flat tones on a white page the frames behind need more
- * of themselves showing to read as a stack rather than a shadow.
+ * the comp's 28px: set when the frames were flat near-white tones on a white
+ * page, where the frames behind needed more of themselves showing to read as a
+ * stack rather than a shadow.
  *
  * Proportional rather than the 38px it was tuned at, which was right on a
  * 716px column and ran two frames' worth of fan out of a phone's column and
@@ -120,7 +123,11 @@ export function TrackStack() {
                 frameNumber={TRACK_META[track].label}
                 rating={TRACK_META[track].rating}
                 size="large"
-                tone={trackTone[track]}
+                // The frame is 92% of its column: most of the page below lg,
+                // and at most about 610px beside the copy from lg up.
+                sizes="(min-width: 1024px) 610px, 92vw"
+                src={trackPhoto[track].src}
+                srcSet={trackPhoto[track].srcSet}
                 track={track}
               />
             </motion.div>

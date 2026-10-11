@@ -2,7 +2,8 @@ import { motion, MotionConfig } from "motion/react";
 
 import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { distance, durations, easings, presets, stagger } from "@/lib/motion";
-import { barFill, barTrack, type ToneName, tones, type TrackName } from "@/lib/tones";
+import { type PhotoId, photos } from "@/lib/photos";
+import { barFill, barTrack, type TrackName } from "@/lib/tones";
 
 /**
  * Row four, shoot insights.
@@ -32,10 +33,11 @@ const GEAR: { count: number; label: string }[] = [
   { count: 110, label: "RF 35mm F1.8" },
 ];
 
-const FRAMES: { rating: number | null; tone: ToneName; track: TrackName }[] = [
-  { rating: 5, tone: "shell", track: "raw" },
-  { rating: null, tone: "wheat", track: "jpg" },
-  { rating: 4, tone: "linen", track: "raw" },
+/** Three frames from one of the owner's concert shoots. */
+const FRAMES: { photo: PhotoId; rating: number | null; track: TrackName }[] = [
+  { photo: "jubs1715", rating: 5, track: "raw" },
+  { photo: "jubs2001", rating: null, track: "jpg" },
+  { photo: "jubs1156", rating: 4, track: "raw" },
 ];
 
 export function InsightsPanel() {
@@ -47,9 +49,9 @@ export function InsightsPanel() {
             <PhotoFrame
               className="aspect-3/2"
               frameNumber={4821 + index}
-              key={frame.tone}
+              key={frame.photo}
               rating={frame.rating}
-              tone={tones[frame.tone]}
+              src={photos[frame.photo]}
               track={frame.track}
             />
           ))}

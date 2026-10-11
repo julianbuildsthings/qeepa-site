@@ -1,9 +1,11 @@
 import { AnimatePresence, motion, MotionConfig, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
+import type { TrackName } from "@/lib/tones";
+
 import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { cycle, durations, easings, presets } from "@/lib/motion";
-import { type ToneName, tones, type TrackName } from "@/lib/tones";
+import { type PhotoId, photos } from "@/lib/photos";
 
 /**
  * Row five, photo management.
@@ -26,19 +28,23 @@ import { type ToneName, tones, type TrackName } from "@/lib/tones";
  * Clicking a chip pins the filtered state and stops the loop, matching how the
  * track pill behaves — that is also the pause control this loop needs.
  */
-const FRAMES: { rating: number | null; tone: ToneName; track: TrackName }[] = [
-  { rating: 4, tone: "shell", track: "raw" },
-  { rating: null, tone: "chalk", track: "jpg" },
-  { rating: 2, tone: "bisque", track: "raw" },
-  { rating: 5, tone: "wheat", track: "edit" },
-  { rating: null, tone: "linen", track: "raw" },
-  { rating: 3, tone: "oat", track: "jpg" },
-  { rating: 1, tone: "almond", track: "raw" },
-  { rating: null, tone: "ivory", track: "edit" },
-  { rating: 4, tone: "shell", track: "raw" },
-  { rating: null, tone: "linen", track: "jpg" },
-  { rating: 2, tone: "wheat", track: "raw" },
-  { rating: 5, tone: "chalk", track: "edit" },
+/**
+ * The survivors are the strongest pictures of the twelve, since what is left
+ * after filtering is what the row is asking you to look at.
+ */
+const FRAMES: { photo: PhotoId; rating: number | null; track: TrackName }[] = [
+  { photo: "red-window", rating: 4, track: "raw" },
+  { photo: "jubs0230", rating: null, track: "jpg" },
+  { photo: "jubs0271", rating: 2, track: "raw" },
+  { photo: "jubs0925", rating: 5, track: "edit" },
+  { photo: "jubs1909", rating: null, track: "raw" },
+  { photo: "jubs0973", rating: 3, track: "jpg" },
+  { photo: "jubs2838", rating: 1, track: "raw" },
+  { photo: "p4186744", rating: null, track: "edit" },
+  { photo: "jubs1881", rating: 4, track: "raw" },
+  { photo: "jubs0478", rating: null, track: "jpg" },
+  { photo: "p4065252", rating: 2, track: "raw" },
+  { photo: "p4075354", rating: 5, track: "edit" },
 ];
 
 const ALL = FRAMES.map((_, index) => index);
@@ -143,7 +149,7 @@ export function FilterReveal() {
                 <PhotoFrame
                   className="aspect-3/2"
                   rating={FRAMES[index]!.rating}
-                  tone={tones[FRAMES[index]!.tone]}
+                  src={photos[FRAMES[index]!.photo]}
                   track={FRAMES[index]!.track}
                 />
               </motion.div>

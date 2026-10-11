@@ -5,15 +5,8 @@ import { PhotoFrame } from "@/components/demo/PhotoFrame";
 import { TrackPill } from "@/components/demo/TrackPill";
 import { WindowBar } from "@/components/demo/WindowBar";
 import { cycle } from "@/lib/motion";
-import {
-  heroRatings,
-  heroTileOrder,
-  shuffledTones,
-  tones,
-  trackExtension,
-  type TrackName,
-  trackOrder,
-} from "@/lib/tones";
+import { heroPhotoOrder, photos, shuffledPhotos } from "@/lib/photos";
+import { heroRatings, trackExtension, type TrackName, trackOrder } from "@/lib/tones";
 
 /**
  * The hero's app window: chrome strip, a grid of photo frames, and the track
@@ -22,8 +15,9 @@ import {
  * It runs on the tracks row's cadence, one track every `cycle.track`, RAW →
  * JPG → EDIT. Every frame follows the pill, as choosing a track does in the
  * app: its dot takes the track's colour and its name the track's extension
- * (`4821.raw`, `4821.jpg`, `4821.psd`). The tones rearrange at each switch, so
- * each track reads as its own set of files rather than one grid relabelled.
+ * (`4821.raw`, `4821.jpg`, `4821.psd`). The photos rearrange at each switch,
+ * cross-fading into their new places, so each track reads as its own set of
+ * files rather than one grid relabelled.
  *
  * A second, slower moment: after each full pass through the tracks, two
  * frames are re-rated, half a track's dwell after the switch back to RAW so it
@@ -32,7 +26,7 @@ import {
  * As in the tracks row, the pill is the pause control: clicking a segment pins
  * that track and ends the loop for good. It pauses while the pill has keyboard
  * focus, never on hover, and never starts under `prefers-reduced-motion`. The first render
- * is the approved still — RAW, the approved tones and ratings — so the
+ * is the approved still — RAW, the approved photos and ratings — so the
  * server's HTML is the settled state and hydration changes nothing.
  *
  * The grid is decorative — the surrounding copy carries the meaning — so it is
@@ -54,7 +48,7 @@ const START_NUMBER = 4821;
 /** Row gap in px. Must match the `gap-3` on the grid below. */
 const GAP = 12;
 
-const ROWS = Math.ceil(heroTileOrder.length / COLUMNS);
+const ROWS = Math.ceil(heroPhotoOrder.length / COLUMNS);
 
 /** Frames beyond these indices are hidden below sm, and below md. */
 const VISIBLE_BELOW_SM = ROWS * 2;
@@ -70,7 +64,7 @@ const TRACK_HEIGHT = `(100% - ${(ROWS - 1) * GAP}px)`;
 const PILL_TOP = `calc(${(PILL_ROW - 0.5) / ROWS} * ${TRACK_HEIGHT} + ${(PILL_ROW - 1) * GAP}px)`;
 
 export function HeroGallery() {
-  /** Track switches so far. The active track and the tones both follow it. */
+  /** Track switches so far. The active track and the photos both follow it. */
   const [step, setStep] = useState(0);
   // The same count, readable from the interval without a state updater —
   // updaters must stay pure, and scheduling the re-rating is a side effect.
@@ -83,7 +77,7 @@ export function HeroGallery() {
 
   const looping = pinned === null && !paused && !reduceMotion;
   const active = pinned ?? trackOrder[step % trackOrder.length]!;
-  const frameTones = shuffledTones(heroTileOrder, step);
+  const framePhotos = shuffledPhotos(heroPhotoOrder, step);
   const ratings = heroRatings[ratingStep % heroRatings.length]!;
 
   useEffect(() => {
@@ -125,7 +119,7 @@ export function HeroGallery() {
               className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5"
               data-track={active}
             >
-              {frameTones.map((tone, index) => {
+              {framePhotos.map((photo, index) => {
                 const number = START_NUMBER + index;
                 return (
                   <PhotoFrame
@@ -136,11 +130,14 @@ export function HeroGallery() {
                           ? "hidden aspect-3/2 sm:block"
                           : "aspect-3/2"
                     }
+                    // All ten, even those a phone hides: the shuffle brings
+                    // every photo into view, and it must already be there.
+                    eager
                     frameNumber={`${number}.${trackExtension[active]}`}
                     key={number}
                     rating={ratings[index] ?? null}
                     ratingSlot
-                    tone={tones[tone]}
+                    src={photos[photo]}
                     track={active}
                   />
                 );

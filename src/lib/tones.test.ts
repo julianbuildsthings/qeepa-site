@@ -1,20 +1,15 @@
 import { describe, expect, it } from "vitest";
 
+import { heroPhotoOrder } from "@/lib/photos";
 import {
   barFill,
   barTrack,
   contrastRatio,
+  frameFill,
   heroRatings,
-  heroTileOrder,
   hexToHsl,
-  scatterTones,
-  shuffledTones,
-  tones,
   trackOrder,
-  trackTone,
 } from "@/lib/tones";
-
-const allTones = [...Object.values(tones), ...Object.values(trackTone)];
 
 describe("hexToHsl", () => {
   it("reads lightness", () => {
@@ -61,115 +56,24 @@ describe("proportion bars", () => {
   });
 });
 
-describe("scatterTones", () => {
-  const COLUMNS = 8;
-  const grid = scatterTones(96, COLUMNS);
-
-  it("returns one tone per cell", () => {
-    expect(grid).toHaveLength(96);
-    for (const tone of grid) {
-      expect(Object.keys(tones)).toContain(tone);
-    }
-  });
-
-  it("is deterministic, so the server and the client agree", () => {
-    expect(scatterTones(96, COLUMNS)).toEqual(grid);
-  });
-
-  it("never repeats a tone beside itself", () => {
-    const pairs = grid.flatMap((tone, index) =>
-      index % COLUMNS === 0 ? [] : [[index, tone, grid[index - 1]] as const],
-    );
-
-    for (const [index, tone, left] of pairs) {
-      expect(tone, `cell ${index} matches its left neighbour`).not.toBe(left);
-    }
-  });
-
-  it("never repeats a tone above itself", () => {
-    const pairs = grid.flatMap((tone, index) =>
-      index < COLUMNS ? [] : [[index, tone, grid[index - COLUMNS]] as const],
-    );
-
-    for (const [index, tone, above] of pairs) {
-      expect(tone, `cell ${index} matches the cell above`).not.toBe(above);
-    }
-  });
-
-  /*
-   * The bug this function exists to fix. With eight tones and eight columns,
-   * `index % length` gave every column a single tone all the way down, and the
-   * grid read as stripes.
-   */
-  it("never lays a single tone down a whole column", () => {
-    for (let column = 0; column < COLUMNS; column++) {
-      const down = grid.filter((_, index) => index % COLUMNS === column);
-      expect(new Set(down).size, `column ${column}`).toBeGreaterThan(1);
-    }
-  });
-
-  it("uses the whole palette rather than favouring a few tones", () => {
-    expect(new Set(grid).size).toBe(Object.keys(tones).length);
+describe("frame fill", () => {
+  it("stays warm and near-white, so a frame still loading reads as the page's material", () => {
+    const { h, l } = hexToHsl(frameFill);
+    expect(h).toBeGreaterThanOrEqual(15);
+    expect(h).toBeLessThanOrEqual(45);
+    expect(l).toBeGreaterThan(75);
   });
 });
 
-describe("tone palette", () => {
-  it("keeps every tone warm", () => {
-    for (const hex of allTones) {
-      const { h, s } = hexToHsl(hex);
-      if (s < 4) continue; // near-white has no meaningful hue
-      expect(h, hex).toBeGreaterThanOrEqual(15);
-      expect(h, hex).toBeLessThanOrEqual(45);
-    }
-  });
-
-  it("keeps every tone light enough to stay a surface, not a block of colour", () => {
-    for (const hex of allTones) {
-      expect(hexToHsl(hex).l, hex).toBeGreaterThan(75);
-    }
-  });
-
-  it("holds the gallery tones inside a tight range, so the grid reads as one field", () => {
-    const lightness = Object.values(tones).map((hex) => hexToHsl(hex).l);
-    expect(Math.max(...lightness) - Math.min(...lightness)).toBeLessThan(8);
-  });
-});
-
-describe("track tones", () => {
-  it("draws from the same scheme as every other frame on the page", () => {
-    for (const hex of Object.values(trackTone)) {
-      expect(Object.values(tones)).toContain(hex);
-    }
-  });
-
-  it("orders raw palest through to edit deepest", () => {
-    const raw = hexToHsl(trackTone.raw).l;
-    const jpg = hexToHsl(trackTone.jpg).l;
-    const edit = hexToHsl(trackTone.edit).l;
-
-    expect(raw).toBeGreaterThan(jpg);
-    expect(jpg).toBeGreaterThan(edit);
-  });
-
-  it("gives each track its own tone, so no two frames look identical", () => {
-    expect(new Set(Object.values(trackTone)).size).toBe(3);
-  });
-
+describe("tracks", () => {
   it("lists every track in capture-to-deliverable order", () => {
     expect(trackOrder).toEqual(["raw", "jpg", "edit"]);
   });
 });
 
-describe("hero grid", () => {
-  it("fills the approved 5x2 grid", () => {
-    expect(heroTileOrder).toHaveLength(10);
-    for (const ratings of heroRatings) expect(ratings).toHaveLength(heroTileOrder.length);
-  });
-
-  it("never repeats a tone in adjacent cells", () => {
-    for (let i = 1; i < heroTileOrder.length; i++) {
-      expect(heroTileOrder[i]).not.toBe(heroTileOrder[i - 1]);
-    }
+describe("hero ratings", () => {
+  it("rates every frame of the hero grid", () => {
+    for (const ratings of heroRatings) expect(ratings).toHaveLength(heroPhotoOrder.length);
   });
 
   it("leaves most frames unrated in every state, the way a shoot in progress looks", () => {
@@ -204,32 +108,5 @@ describe("hero grid", () => {
       const changed = from.flatMap((rating, index) => (rating !== to[index] ? [index] : []));
       expect(changed.some((index) => index < phoneFrames)).toBe(true);
     }
-  });
-});
-
-describe("shuffledTones", () => {
-  it("keeps the approved order before anything moves", () => {
-    expect(shuffledTones(heroTileOrder, 0)).toBe(heroTileOrder);
-  });
-
-  it("rearranges the same tones at every switch, never side by side", () => {
-    for (let step = 1; step < 30; step++) {
-      const tones = shuffledTones(heroTileOrder, step);
-      expect(tones.toSorted()).toEqual(heroTileOrder.toSorted());
-      for (let i = 1; i < tones.length; i++) expect(tones[i]).not.toBe(tones[i - 1]);
-    }
-  });
-
-  it("moves most frames to a new tone at each switch", () => {
-    for (let step = 1; step < 30; step++) {
-      const before = shuffledTones(heroTileOrder, step - 1);
-      const after = shuffledTones(heroTileOrder, step);
-      const changed = after.filter((tone, index) => tone !== before[index]).length;
-      expect(changed).toBeGreaterThanOrEqual(heroTileOrder.length / 2);
-    }
-  });
-
-  it("is deterministic, so the server and the island agree", () => {
-    expect(shuffledTones(heroTileOrder, 7)).toEqual(shuffledTones(heroTileOrder, 7));
   });
 });

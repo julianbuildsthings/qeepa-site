@@ -4,7 +4,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { HeroGallery } from "@/components/demo/HeroGallery";
 import { cycle } from "@/lib/motion";
-import { heroRatings, heroTileOrder, pipFilled, tones } from "@/lib/tones";
+import { heroPhotoOrder, photos } from "@/lib/photos";
+import { heroRatings, pipFilled } from "@/lib/tones";
 
 beforeEach(() => {
   vi.useFakeTimers();
@@ -16,6 +17,11 @@ afterEach(() => {
 
 function frames(container: HTMLElement) {
   return [...container.querySelectorAll("[data-track] > div")] as HTMLElement[];
+}
+
+/** The photo each frame is showing, or cross-fading to. */
+function shown(container: HTMLElement) {
+  return frames(container).map((frame) => frame.dataset.photo);
 }
 
 function labels(container: HTMLElement) {
@@ -40,13 +46,11 @@ function advance(ms: number) {
 }
 
 describe("HeroGallery", () => {
-  it("renders the approved still first: RAW, the approved tones and ratings", () => {
+  it("renders the approved still first: RAW, the approved photos and ratings", () => {
     const { container } = render(<HeroGallery />);
 
-    expect(labels(container)).toEqual(heroTileOrder.map((_, index) => `${4821 + index}.raw`));
-    expect(frames(container).map((frame) => frame.style.backgroundColor)).toEqual(
-      heroTileOrder.map((tone) => tones[tone]),
-    );
+    expect(labels(container)).toEqual(heroPhotoOrder.map((_, index) => `${4821 + index}.raw`));
+    expect(shown(container)).toEqual(heroPhotoOrder.map((photo) => photos[photo]));
     expect(ratings(container)).toEqual(heroRatings[0]);
   });
 
@@ -54,18 +58,18 @@ describe("HeroGallery", () => {
     const { container } = render(<HeroGallery />);
     advance(cycle.track);
 
-    expect(labels(container)).toEqual(heroTileOrder.map((_, index) => `${4821 + index}.jpg`));
+    expect(labels(container)).toEqual(heroPhotoOrder.map((_, index) => `${4821 + index}.jpg`));
     expect(container.querySelector("[data-track]")).toHaveAttribute("data-track", "jpg");
 
     advance(cycle.track);
     expect(labels(container)[0]).toBe("4821.psd");
   });
 
-  it("rearranges the tones at each switch", () => {
+  it("rearranges the photos at each switch", () => {
     const { container } = render(<HeroGallery />);
-    const before = frames(container).map((frame) => frame.style.backgroundColor);
+    const before = shown(container);
     advance(cycle.track);
-    const after = frames(container).map((frame) => frame.style.backgroundColor);
+    const after = shown(container);
 
     expect(after).not.toEqual(before);
     expect(after.toSorted()).toEqual(before.toSorted());
