@@ -15,7 +15,7 @@ import { heroRatings, trackExtension, type TrackName, trackOrder } from "@/lib/t
  * It runs on the tracks row's cadence, one track every `cycle.track`, RAW →
  * JPG → EDIT. Every frame follows the pill, as choosing a track does in the
  * app: its dot takes the track's colour and its name the track's extension
- * (`4821.raw`, `4821.jpg`, `4821.af`). The photos rearrange at each switch,
+ * (`4821.raw`, `4821.jpg`, `4821.psd`). The photos rearrange at each switch,
  * cross-fading into their new places, so each track reads as its own set of
  * files rather than one grid relabelled.
  *

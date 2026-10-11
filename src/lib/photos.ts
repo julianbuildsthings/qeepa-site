@@ -67,17 +67,12 @@ export const photos = Object.fromEntries(photoIds.map((id) => [id, file(id)])) a
 >;
 
 /**
- * The tracks row's shot, as each track shows it: three real renderings of one
- * frame, capture to deliverable.
+ * The tracks row's shot, as each track shows it. RAW is Apple's default
+ * development of the camera's .ORF; JPG is the finished export.
  *
- * - RAW: Apple's default development of the camera's .ORF.
- * - JPG: the camera's own JPEG of the frame, which Olympus embeds in the .ORF.
- * - EDIT: the owner's graded export of their Affinity document, brightened
- *   slightly at their request so it reads as its own version. The .af itself
- *   has no browser rendering, so the export is what stands for it.
- *
- * The RAW and the camera's JPEG look close, because Apple develops a RAW with
- * the camera's own defaults; the edit is where the picture changes.
+ * EDIT is the JPG brightened slightly, at the owner's request, so it reads as
+ * its own version beside the export. The working file is an Affinity
+ * document, which has no browser rendering of its own.
  */
 function stack(name: string) {
   return {
@@ -88,7 +83,7 @@ function stack(name: string) {
 
 export const trackPhoto: Record<TrackName, { src: string; srcSet: string }> = {
   edit: stack("jubs0103-edit"),
-  jpg: stack("jubs0103-camera"),
+  jpg: stack("jubs0103-jpg"),
   raw: stack("jubs0103-raw"),
 };
 
