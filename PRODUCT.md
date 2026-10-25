@@ -116,7 +116,7 @@ be demonstrated.
   adjacent repository, available read-only as the reference for any product
   demonstration. The design tokens and fonts already in `qeepa-site`.
 - **Real, from the owner:** Qeepa is on sale for macOS through the Lemon
-  Squeezy checkout at `https://qeepa.lemonsqueezy.com/checkout`, as a one-time
+  Squeezy checkout at `https://qeepa.lemonsqueezy.com/checkout/buy/dd07c7d9-27cc-4e8d-a39d-699c1e436e41`, as a one-time
   purchase at a launch price of $5 AUD. The page states no figure: the closing
   calls it "the price of a coffee".
 - **Does not exist and must not be fabricated:** any

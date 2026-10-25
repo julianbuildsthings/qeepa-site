@@ -15,7 +15,7 @@ export const siteConfig: SiteConfig = {
   legal: { licence: "/licence", privacy: "/privacy", refunds: "/refunds", terms: "/terms" },
   links: {
     // The Lemon Squeezy checkout every Get Qeepa control points at.
-    checkout: "https://qeepa.lemonsqueezy.com/checkout",
+    checkout: "https://qeepa.lemonsqueezy.com/checkout/buy/dd07c7d9-27cc-4e8d-a39d-699c1e436e41",
     github: "https://github.com/julianbuildsthings/qeepa-site",
   },
   name: "Qeepa",
