@@ -115,7 +115,12 @@ be demonstrated.
 - **Real:** the landing page copy, approved verbatim. The running app in the
   adjacent repository, available read-only as the reference for any product
   demonstration. The design tokens and fonts already in `qeepa-site`.
-- **Does not exist and must not be fabricated:** any price; a release date;
+- **Real, from the owner:** Qeepa is on sale for macOS through the Lemon
+  Squeezy checkout at `https://qeepa.lemonsqueezy.com/checkout`, as a one-time
+  purchase at a launch price of $5 AUD. The page states no figure: the closing
+  calls it "the price of a coffee".
+- **Does not exist and must not be fabricated:** any
+  price figure on the page; a release date;
   testimonials, customer names, press, download counts, or review quotes;
   performance benchmarks. `public/favicon.svg`, `public/favicon.ico`,
   `public/apple-touch-icon.png` and `public/og-image.png` are the real

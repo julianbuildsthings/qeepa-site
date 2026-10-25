@@ -121,12 +121,17 @@ components:
     rounded: "{rounded.full}"
     height: "48px"
     padding: "0 6px 0 20px"
-  button-get-disabled:
-    backgroundColor: "rgba(43,38,33,0.06)"
-    textColor: "{colors.text-tertiary}"
+  button-get:
+    backgroundColor: "{colors.peach-accent}"
+    textColor: "#5C300C"
     typography: "{typography.label}"
     rounded: "{rounded.full}"
     padding: "9px 20px"
+  button-get-closing:
+    backgroundColor: "{colors.peach-accent}"
+    textColor: "#5C300C"
+    rounded: "{rounded.full}"
+    padding: "12px 24px"
   track-pill:
     backgroundColor: "rgba(255,255,255,0.96)"
     rounded: "{rounded.full}"
@@ -173,7 +178,7 @@ components:
 
 **Creative North Star: "The Sunlit Gallery"**
 
-The site shows the product demonstrating itself on a white page. Every visual is a piece of the app's own interface: a window with muted traffic lights, a grid of photo frames holding the owner's own photographs, the track pill, a file listing, an insights panel, a filter toolbar. None of it is a framed screenshot on a plinth. Copy ranges left on a single 120px rail. Each feature gets a full row, never a card, and the rows alternate sides down the page. The page ends with a status line, not a call to action, because there is nothing to download yet. Beneath that status, and only there, real screenshots of the app follow as the one piece of literal proof (see Screenshot Carousel).
+The site shows the product demonstrating itself on a white page. Every visual is a piece of the app's own interface: a window with muted traffic lights, a grid of photo frames holding the owner's own photographs, the track pill, a file listing, an insights panel, a filter toolbar. None of it is a framed screenshot on a plinth. Copy ranges left on a single 120px rail. Each feature gets a full row, never a card, and the rows alternate sides down the page. The page ends with its one call to action: Get Qeepa, a link to the checkout. Beneath it, and only there, real screenshots of the app follow as the one piece of literal proof (see Screenshot Carousel).
 
 The material is warm and light, and the photographs are real: thirty of the owner's own frames, from their own shoots, fill every photo frame on the page. What makes a frame read as a preview in the app rather than a picture on a website is its metadata chrome: a track dot, rating pips, a frame number, each on its own small frosted backing. Apart from the photographs, the only non-warm colours on the page are the functional JPG and EDIT track dots. Depth comes from soft, warm-tinted shadows under objects the app would float. Surfaces themselves stay flat.
 
@@ -214,7 +219,7 @@ A white page with warm neutral text, a single peach accent at three depths, a wa
 - **Warm Stone** (surface-2): inactive chip and gear-chip fill.
 - **Ink** (text-primary): headings, subheadings and data values.
 - **Umber Grey** (text-secondary): lede, body copy, captions and inactive pill labels.
-- **Pebble** (text-tertiary): file sizes, breadcrumb, copyright and the disabled button label. Keep it off tinted surfaces at small sizes (see the APCA note under Components).
+- **Pebble** (text-tertiary): file sizes, breadcrumb, copyright. Keep it off tinted surfaces at small sizes (see the APCA note under Components).
 - **Hairlines**: all borders are text-primary (`rgba(43,38,33,…)`) at low alpha, never neutral grey. Container edge 0.10, window-bar divider 0.08, list dividers 0.06, panel section rule 0.07, footer rule 0.09. Photo frames use frame-border (8%); overlapping stacked frames use stack-border (12%).
 
 ### Named Rules
@@ -249,7 +254,7 @@ A white page with warm neutral text, a single peach accent at three depths, a wa
 
 **The No-Kicker Rule.** No small label sits above a heading anywhere. The subheading is always below the title. Stated in `copy.ts` and `FeatureRow.astro`.
 
-**The Curly-Apostrophe Rule.** All copy lives in `src/lib/copy.ts`, uses curly apostrophes, and never states a price, a date or social proof. `copy.test.ts` enforces all three.
+**The Curly-Apostrophe Rule.** All copy lives in `src/lib/copy.ts`, uses curly apostrophes, and never states a price figure, a date or social proof. `copy.test.ts` enforces all three.
 
 ## Layout
 
@@ -282,7 +287,7 @@ Surfaces are flat. Depth belongs only to objects the app itself would float: the
 
 - Photo frames have gently rounded corners (5px), stacked prints 10px, file-list thumbnails 3px, pips 1px (2px on large frames).
 - Panels are 14px. Windows are 18px. The hero window is rounded at the top only and has no bottom border, so it ends open-edged. The fast-performance window is closed on all sides because it sits inside a row as a whole object.
-- The bar, the pill, pill segments, chips, the disabled button and proportion bars are fully round.
+- The bar, the pill, pill segments, chips, the Get Qeepa links and proportion bars are fully round.
 - The window strip is 46px tall and white, with three muted 11px traffic lights (ink at 15%), 8px apart, 18px in from the edge, and a hairline beneath. The strip carries nothing else.
 - Every edge is a 1px ink hairline at the alphas listed under Colors.
 
@@ -299,8 +304,12 @@ Adapted from the app's floating bar. It is sticky 16px from the top on the 120px
 - **Surface:** a single near-white surface at all times — no separate browse/selection state.
 - **Title:** the brand "Qeepa" in Erode, linking home, and "10 photos" from md over the hero. Scrolling into a feature swaps the label to that feature's name and count; the closing swaps it back to "Qeepa" (linking home) with no count. The label fades at `durations.quick`. The bar adopts a section when that section's top passes 50% of the viewport height.
 - **Back** (legal pages only): the app's Back button as its bar draws it — 36px round, surface-2 fill, 15px chevron, 6px in from the bar's left edge (the bar's left padding tightens from 20px to match) — a link home rather than `history.back()`, so it lands on the home page however the visitor arrived. Beside it the bar names the page (e.g. "Software Licence") in Erode, as plain text: Back is the one way home. The legal pages show no Get Qeepa: a policy page is not where anyone decides to get the app. The home page has no Back button.
-- **Get Qeepa:** a real disabled button (ink at 6% fill, pebble label, not-allowed cursor). It stays disabled until there is something to get.
+- **Get Qeepa:** a link to the Lemon Squeezy checkout (`siteConfig.links.checkout`), styled as the track pill's active segment: peach-accent fill, the `#5C300C` label (APCA Lc 63.5), turning ink on hover (Lc 69.9). The fill does not darken on hover: a darker peach drops the label under Lc 60.
 - The label is not a live region.
+
+### Closing CTA
+
+The closing's heading and body are followed by the same Get Qeepa link at 15px (12px × 24px padding), fading up as a `[data-reveal]` after the copy's lines rise.
 
 ### Track Pill (signature)
 
@@ -394,6 +403,6 @@ Markdown in `src/pages`, laid out by `LegalPage.astro` and styled by `.legal` in
 - **Don't** add a colour outside the warm family other than the track dots, and don't use grey hairlines or neutral shadows.
 - **Don't** lay feature content in a grid of equal cards, or present the product as a floating framed screenshot. The screenshot carousel under the closing is the one sanctioned exception: real screenshots go there and nowhere else, and never lead the page.
 - **Don't** split rows into two columns below lg, or let the copy column fall under 340px.
-- **Don't** add a live download, buy or signup control, a price, a date or testimonials. None exist, and Get Qeepa stays disabled until one does.
+- **Don't** add a signup control, a price figure, a date or testimonials. Get Qeepa (the bar and the closing) is the only purchase control.
 - **Don't** hide server-rendered content that isn't gated behind `.js` and a motion preference, and don't start a Motion animation from opacity 0 on first render.
 - **Don't** add a sixth spring preset without asking first.

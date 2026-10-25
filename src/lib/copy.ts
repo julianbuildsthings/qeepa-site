@@ -3,8 +3,9 @@
  * approved brief and guarded by copy.test.ts.
  *
  * Two things the tests enforce and a future edit must not break: apostrophes
- * are curly, and nothing here invents a price, a date or social proof. The
- * product is pre-release — PRODUCT.md lists what actually exists.
+ * are curly, and nothing here states a price figure, a date or social proof.
+ * The closing calls the price "the price of a coffee"; PRODUCT.md
+ * lists what actually exists.
  *
  * Each feature's `heading` and `subheading` form a two-tier heading. The
  * subheading is never rendered as a small label above the heading; a kicker is
@@ -57,8 +58,9 @@ export const features: FeatureCopy[] = [
 ];
 
 export const closing = {
-  body: "We’re putting the finishing touches on the first release. Qeepa will be a one-time purchase you own forever, with no subscription required.",
-  heading: "Qeepa is coming soon to macOS.",
+  body: "Buy once and own it forever, while it’s just the price of a coffee.",
+  cta: "Get Qeepa",
+  heading: "Get Qeepa for macOS.",
 };
 
 export type ScreenshotId = "insights" | "library" | "photo-detail" | "share";

@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { type BarSection, FloatingBar } from "@/components/site/FloatingBar";
 import { barSections } from "@/lib/bar";
+import { siteConfig } from "@/lib/config";
 import { features } from "@/lib/copy";
 import { pageTileCounts } from "@/lib/tiles";
 
@@ -61,9 +62,12 @@ describe("FloatingBar", () => {
     expect(screen.getByText("4 photos")).toBeInTheDocument();
   });
 
-  it("offers Get Qeepa as a genuinely disabled button, not a styled one", () => {
+  it("offers Get Qeepa as a link to the checkout", () => {
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
-    expect(screen.getByRole("button", { name: "Get Qeepa" })).toBeDisabled();
+    expect(screen.getByRole("link", { name: "Get Qeepa" })).toHaveAttribute(
+      "href",
+      siteConfig.links.checkout,
+    );
   });
 
   /*
@@ -118,7 +122,7 @@ describe("FloatingBar", () => {
 
   it("drops Get Qeepa when asked to, as on the legal pages", () => {
     render(<FloatingBar backHref="/" brand={BRAND} offer={false} sections={[]} />);
-    expect(screen.queryByRole("button", { name: "Get Qeepa" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Get Qeepa" })).not.toBeInTheDocument();
   });
 
   it("has no Back button on the home page", () => {
@@ -126,9 +130,11 @@ describe("FloatingBar", () => {
     expect(screen.queryByRole("link", { name: "Back to home" })).not.toBeInTheDocument();
   });
 
-  it("offers nothing but the brand name and the button on the right", () => {
+  it("offers nothing but the brand name and Get Qeepa", () => {
     render(<FloatingBar brand={BRAND} sections={SECTIONS} />);
-    expect(screen.getAllByRole("button").map((button) => button.textContent)).toEqual([
+    expect(screen.queryAllByRole("button")).toHaveLength(0);
+    expect(screen.getAllByRole("link").map((link) => link.textContent)).toEqual([
+      BRAND.title,
       "Get Qeepa",
     ]);
   });
