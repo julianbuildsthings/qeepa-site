@@ -2,6 +2,7 @@ import { ChevronLeft } from "lucide-react";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { useEffect, useState } from "react";
 
+import { siteConfig } from "@/lib/config";
 import { durations, easings } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -16,8 +17,10 @@ import { cn } from "@/lib/utils";
  * The features come in as a prop from `copy.ts` rather than being
  * discovered, so the label can never name a section the page does not have.
  *
- * Get Qeepa is a real disabled button until there is something to get. It is
- * greyed out rather than hidden so the bar's shape is settled now.
+ * Get Qeepa is a link to the checkout, styled as the track pill's active
+ * segment: peach-accent fill and its APCA-checked brown label (Lc 63.5 at
+ * 13px), turning ink on hover (Lc 69.9) — darkening the fill instead would
+ * drop the label under 60.
  *
  * Surface values follow the app: 48px tall, fully rounded, `#FFFFFFF5`,
  * `0px 10px 30px rgba(43,38,33,0.14)`. `sticky` rather than the app's
@@ -211,13 +214,12 @@ export function FloatingBar({ backHref, brand, endId, offer = true, sections }: 
             <div className="flex-1" />
 
             {offer && (
-              <button
-                className="inline-flex shrink-0 cursor-not-allowed items-center rounded-full bg-[rgba(43,38,33,0.06)] px-4 py-[9px] text-[13px] leading-4 font-medium text-text-tertiary sm:px-5"
-                disabled
-                type="button"
+              <a
+                className="extend-touch-target-y inline-flex shrink-0 items-center rounded-full bg-primary px-4 py-[9px] text-[13px] leading-4 font-medium text-[#5C300C] transition-colors duration-(--motion-quick) ease-(--ease-standard) hover:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:transition-none sm:px-5"
+                href={siteConfig.links.checkout}
               >
                 Get Qeepa
-              </button>
+              </a>
             )}
           </div>
         </div>

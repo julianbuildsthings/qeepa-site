@@ -2,7 +2,7 @@ export type SiteConfig = {
   contactEmail: string;
   description: string;
   legal: { licence: string; privacy: string; refunds: string; terms: string };
-  links: { github: string };
+  links: { checkout: string; github: string };
   name: string;
   url: string;
 };
@@ -13,7 +13,11 @@ export const siteConfig: SiteConfig = {
   description:
     "A local-first photo manager for photographers who shoot in RAW. Cull, compare, and keep your edits.",
   legal: { licence: "/licence", privacy: "/privacy", refunds: "/refunds", terms: "/terms" },
-  links: { github: "https://github.com/julianbuildsthings/qeepa-site" },
+  links: {
+    // The Lemon Squeezy checkout every Get Qeepa control points at.
+    checkout: "https://qeepa.lemonsqueezy.com/checkout",
+    github: "https://github.com/julianbuildsthings/qeepa-site",
+  },
   name: "Qeepa",
   url: "https://qeepa.app",
 };

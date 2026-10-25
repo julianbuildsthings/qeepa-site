@@ -1,10 +1,13 @@
 ---
+import { siteConfig } from "@/lib/config";
 import { closing } from "@/lib/copy";
 
 /**
- * The closing section: availability stated as a status, never a call to
- * action. There is nothing to download yet, so a button here would be a lie —
- * the bar's Get Qeepa stays disabled for the same reason.
+ * The closing section: the page's one call to action, a link to the checkout
+ * styled as the bar's Get Qeepa at a larger size — the track pill's active
+ * segment, peach-accent with its APCA-checked brown label, turning ink on
+ * hover. It fades up as a `[data-reveal]` after the copy's lines rise, and is
+ * simply there without JavaScript or motion.
  *
  * Type only. The plan once placed a blank peach square here as a stand-in for
  * the app icon, but no icon exists and PRODUCT.md forbids inventing one, and a
@@ -40,4 +43,12 @@ const { id } = Astro.props;
   >
     {closing.body}
   </p>
+  <div class="mt-10" data-reveal style="--reveal-index: 2">
+    <a
+      class="inline-flex items-center rounded-full bg-primary px-6 py-3 text-[15px] leading-5 font-medium text-[#5C300C] transition-colors duration-(--motion-quick) ease-(--ease-standard) hover:text-text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:transition-none"
+      href={siteConfig.links.checkout}
+    >
+      {closing.cta}
+    </a>
+  </div>
 </section>

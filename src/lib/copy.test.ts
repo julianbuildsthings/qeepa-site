@@ -10,6 +10,7 @@ const everyString = [
   closing.body,
   screenshots.label,
   ...screenshots.slides.map((slide) => slide.alt),
+  closing.cta,
   ...footer.links.map((link) => link.label),
 ];
 
@@ -87,6 +88,6 @@ describe("page copy", () => {
 
   it("states availability honestly in the closing section", () => {
     expect(closing.heading.toLowerCase()).toContain("macos");
-    expect(closing.body.toLowerCase()).toContain("one-time purchase");
+    expect(closing.body.toLowerCase()).toContain("buy once");
   });
 });

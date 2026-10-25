@@ -11,10 +11,10 @@ Visitor mode:
 **Persuade**.
 
 Audience: photographers who shoot RAW and cull large shoots on their own Mac.
-Job on this page: decide whether Qeepa is worth waiting for. Action: none —
-the product is pre-release, so the page ends in a status, not a CTA. Proof is
-the product demonstrating itself; there are no testimonials, prices, dates or
-benchmarks, and none may be invented.
+Job on this page: decide whether Qeepa is worth buying. Action: Get Qeepa,
+a link to the checkout, in the bar and at the closing. Proof is the product
+demonstrating itself; there are no testimonials, prices, dates or benchmarks,
+and none may be invented. The closing calls the price "the price of a coffee".
 
 ## Direction contract
 
@@ -40,9 +40,9 @@ appears in the hero and in at least two feature rows.
 
 STORY: The visitor understands that Qeepa is a local-first Mac app that groups
 every version of a shot into tracks and makes culling fast. They come to
-believe it is made with care and will not touch their files. They do nothing —
-they reach the availability status, learn it is coming to macOS as a one-time
-purchase, and leave knowing the name.
+believe it is made with care and will not touch their files. They reach the
+closing, learn it is a one-time purchase for macOS for the price of a coffee,
+and get it.
 
 FIRST VIEWPORT: Wordmark "Qeepa." in Erode 24/600 at x=120, y=33, over a
 hairline rule at y=96 spanning full width. Headline Satoshi 700 at 80/84,
@@ -52,7 +52,7 @@ constrained to 716px so its right edge matches the headline's first line.
 App window x=120 to x=1320 from y=596, running past the fold uncropped-bottom,
 carrying a 5-wide grid of warm gradient tiles at 223×149 and the track pill
 floating over the grid with RAW active. No CTA, no availability, no nav, no
-eyebrow anywhere on the page.
+eyebrow in the hero; the bar carries Get Qeepa.
 
 FORM: Left rail with hard-cropped product — candidate 4 of 7 on the ordered
 structural list, dealt as the lead by seed key `945ca8fd`
@@ -88,8 +88,8 @@ against these, not flag them as drift.
 - **Header: the app's floating bar, not a wordmark over a rule.** White browse
   state over the hero ("Qeepa · 10 photos"); peach-light selection state inside
   a feature, naming it and its count. Five centred stars, the nth feature fills
-  n, each a link to its section. A disabled "Get Qeepa". Feature names set in
-  Erode, matching the app's bar at the user's request. At the closing it stays
+  n, each a link to its section. A "Get Qeepa" link to the checkout. Feature
+  names set in Erode, matching the app's bar at the user's request. At the closing it stays
   in the selection state with all five stars lit and names "Qeepa", with no
   count. No Features menu.
 - **Ratings are squares everywhere on the page content.** The local-first
