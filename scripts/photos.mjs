@@ -1,6 +1,6 @@
 // Turns the owner's photographs into the page's photo assets.
 //
-//   node scripts/photos.mjs ~/Desktop/qeepa-photos
+//   node scripts/photos.mjs ~/Desktop/qeepa-photos [photo ids to redo]
 //
 // The originals are 3472 × 4640 JPGs and stay out of the repo. Every frame on
 // the page is 3:2, so each photo is cropped to 3:2 here, once, rather than by
@@ -23,8 +23,9 @@ import { join } from "node:path";
 import sharp from "sharp";
 
 const source = process.argv[2];
+const only = process.argv.slice(3);
 if (!source) {
-  console.error("usage: node scripts/photos.mjs <folder of originals>");
+  console.error("usage: node scripts/photos.mjs <folder of originals> [photo ids to redo]");
   process.exit(1);
 }
 
@@ -61,7 +62,7 @@ const PHOTOS = {
   jubs0103: { file: "JUBS0103.jpg", focus: 0.68 },
   jubs0114: { file: "JUBS0114.jpg", focus: 0.55 },
   jubs0230: { file: "JUBS0230.jpg", focus: 0.45 },
-  jubs0271: { file: "JUBS0271.jpg", focus: 0.4 },
+  jubs0016: { file: "JUBS0016.jpg", focus: 0.75 },
   jubs0449: { file: "JUBS0449_GRADED.jpg", focus: 0.3 },
   jubs0478: { file: "JUBS0478_GRADED.jpg", focus: 0.72 },
   jubs0925: { file: "JUBS0925.jpg", focus: 0.5 },
@@ -72,7 +73,7 @@ const PHOTOS = {
   jubs1881: { file: "JUBS1881.jpg", focus: 0.5 },
   jubs1909: { file: "JUBS1909.jpg", focus: 0.5 },
   jubs1936: { file: "JUBS1936.jpg", focus: 0.5 },
-  jubs2001: { file: "JUBS2001.jpg", focus: 0.4 },
+  jubs0838: { file: "JUBS0838.jpg", focus: 0.5 },
   jubs2330: { file: "JUBS2330_GRADED.jpg", focus: 0.45 },
   jubs2838: { file: "JUBS2838_GRADED.jpg", focus: 0.5 },
   p4065252: { file: "P4065252.jpg", focus: 0.5 },
@@ -127,10 +128,12 @@ const scratch = mkdtempSync(join(tmpdir(), "qeepa-photos-"));
 
 try {
   for (const [id, { file, focus }] of Object.entries(PHOTOS)) {
+    if (only.length && !only.includes(id)) continue;
     await write(join(source, file), focus, TILE_WIDTH, `${id}.webp`);
   }
 
   for (const [id, { exposure, file, focus }] of Object.entries(STACK)) {
+    if (only.length && !only.includes(id)) continue;
     const rendered = file.endsWith(".ORF")
       ? develop(join(source, file), scratch)
       : join(source, file);
