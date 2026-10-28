@@ -35,7 +35,7 @@ import { type PhotoId, photos } from "@/lib/photos";
 const FRAMES: { photo: PhotoId; rating: number | null; track: TrackName }[] = [
   { photo: "red-window", rating: 4, track: "raw" },
   { photo: "jubs0230", rating: null, track: "jpg" },
-  { photo: "jubs0271", rating: 2, track: "raw" },
+  { photo: "jubs0016", rating: 2, track: "raw" },
   { photo: "jubs0925", rating: 5, track: "edit" },
   { photo: "jubs1909", rating: null, track: "raw" },
   { photo: "jubs0973", rating: 3, track: "jpg" },

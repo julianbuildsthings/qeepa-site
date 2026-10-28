@@ -36,7 +36,7 @@ const GEAR: { count: number; label: string }[] = [
 /** Three frames from one of the owner's concert shoots. */
 const FRAMES: { photo: PhotoId; rating: number | null; track: TrackName }[] = [
   { photo: "jubs1715", rating: 5, track: "raw" },
-  { photo: "jubs2001", rating: null, track: "jpg" },
+  { photo: "jubs0838", rating: null, track: "jpg" },
   { photo: "jubs1156", rating: 4, track: "raw" },
 ];
 
